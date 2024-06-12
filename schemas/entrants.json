@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "items": {
+        "$ref": "defs/entrant.json#/entrant"
+    },
+    "default": [
+        {
+            "id": "000",
+            "name": "Placeholder Entrant 1",
+            "participants": [
+                {
+                    "id": "0001",
+                    "name": "Placeholder Entrant 1"
+                }
+            ]
+        },
+        {
+            "id": "111",
+            "name": "Placeholder Entrant 2",
+            "participants": [
+                {
+                    "id": "1111",
+                    "name": "Placeholder Entrant 2"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+/* eslint-disable */
+// @ts-ignore
+export * from './configschema';
+// @ts-ignore
+export * from './activeMatch';
+// @ts-ignore
+export * from './entrants';
+// @ts-ignore
+export * from './nextMatch';
+// @ts-ignore
+export * from './tournamentData';

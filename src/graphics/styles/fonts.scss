@@ -1,0 +1,14 @@
+@use 'constants';
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+body {
+    font-family: 'Rubik', 'Kosugi Maru', 'Noto Sans', sans-serif;
+    font-weight: 400;
+    font-optical-sizing: auto;
+    color: constants.$text-color;
+}
+
+.font-numeric {
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+}

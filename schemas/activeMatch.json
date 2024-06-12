@@ -1,0 +1,79 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "activeMatchEntrant": {
+            "allOf": [
+                {
+                    "$ref": "defs/entrant.json#/entrant"
+                },
+                {
+                    "properties": {
+                        "score": {
+                            "type": "number"
+                        }
+                    },
+                    "required": ["score"]
+                }
+            ]
+        }
+    },
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "entrantA": {
+            "$ref": "#/definitions/activeMatchEntrant"
+        },
+        "entrantB": {
+            "$ref": "#/definitions/activeMatchEntrant"
+        },
+        "match": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "numberOfGames": {
+                    "type": "number"
+                },
+                "playType": {
+                    "type": "string",
+                    "enum": [
+                        "PLAY_ALL",
+                        "BEST_OF"
+                    ]
+                }
+            },
+            "required": ["name", "numberOfGames", "playType"]
+        }
+    },
+    "default": {
+        "entrantA": {
+            "id": "000",
+            "name": "Placeholder Entrant 1",
+            "score": 0,
+            "participants": [
+                {
+                    "id": "0001",
+                    "name": "Placeholder Entrant 1"
+                }
+            ]
+        },
+        "entrantB": {
+            "id": "111",
+            "name": "Placeholder Entrant 2",
+            "score": 0,
+            "participants": [
+                {
+                    "id": "1111",
+                    "name": "Placeholder Entrant 2"
+                }
+            ]
+        },
+        "match": {
+            "name": "Placeholder Round",
+            "numberOfGames": 3,
+            "playType": "BEST_OF"
+        }
+    }
+}
