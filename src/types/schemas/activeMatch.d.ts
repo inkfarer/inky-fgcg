@@ -11,9 +11,9 @@ export type ActiveMatchEntrant = Entrant & {
 };
 
 export interface ActiveMatch {
-	entrantA?: ActiveMatchEntrant;
-	entrantB?: ActiveMatchEntrant;
-	match?: {
+	entrantA: ActiveMatchEntrant;
+	entrantB: ActiveMatchEntrant;
+	match: {
 		name: string;
 		numberOfGames: number;
 		playType: 'PLAY_ALL' | 'BEST_OF';
