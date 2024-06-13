@@ -7,6 +7,7 @@
                     "$ref": "defs/entrant.json#/entrant"
                 },
                 {
+                    "type": "object",
                     "properties": {
                         "score": {
                             "type": "number"
