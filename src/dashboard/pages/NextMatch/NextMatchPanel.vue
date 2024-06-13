@@ -22,6 +22,7 @@
             :model-value="String(numberOfGames)"
             :options="numberOfGamesOptions"
             label="Number of Games"
+            name="numberOfGames"
             @update:model-value="numberOfGames = Number($event)"
         />
         <ipl-button
