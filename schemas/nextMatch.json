@@ -30,6 +30,7 @@
             "required": ["name", "numberOfGames", "playType"]
         }
     },
+    "required": ["entrantA", "entrantB", "match"],
     "default": {
         "entrantA": {
             "id": "000",

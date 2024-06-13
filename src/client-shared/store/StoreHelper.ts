@@ -1,6 +1,7 @@
 import type NodeCGTypes from '@nodecg/types';
 import type * as Pinia from 'pinia';
 import cloneDeep from 'lodash/cloneDeep';
+import { Ref, watch, WatchSource } from 'vue';
 
 export function createReplicantStoreInitializer(
     reps: NodeCGTypes.ClientReplicant<unknown>[],
@@ -17,4 +18,10 @@ export function createReplicantStoreInitializer(
         });
         await NodeCG.waitForReplicants(...Object.values(reps));
     };
+}
+
+export function updateRefOnValueChange<T>(source: WatchSource<T>, targetRef: Ref<T>) {
+    watch(source, newValue => {
+        targetRef.value = newValue;
+    }, { immediate: true });
 }

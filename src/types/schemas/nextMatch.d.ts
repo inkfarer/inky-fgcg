@@ -6,9 +6,9 @@
  */
 
 export interface NextMatch {
-	entrantA?: Entrant;
-	entrantB?: Entrant;
-	match?: {
+	entrantA: Entrant;
+	entrantB: Entrant;
+	match: {
 		name: string;
 		numberOfGames: number;
 		playType: 'PLAY_ALL' | 'BEST_OF';
