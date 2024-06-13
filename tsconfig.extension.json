@@ -5,7 +5,7 @@
             "ESNext"
         ],
         "module": "commonjs",
-        "rootDir": "src/extension",
+        "rootDir": "src/",
         "moduleResolution": "node",
         "baseUrl": ".",
         "paths": {
@@ -20,6 +20,7 @@
         "skipLibCheck": true
     },
     "include": [
-        "src/extension/**/*.ts"
+        "src/extension/**/*.ts",
+        "src/types/**/*.ts"
     ]
 }
