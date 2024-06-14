@@ -10,8 +10,8 @@
             <fitted-content :align="props.entrant === 'A' ? 'right' : 'left'">
                 <opacity-swap-transition>
                     <span :key="`${entrant.name}_${entrant.prefix}`">
-                        <span class="prefix">{{ entrant.prefix }}</span>
-                        {{ entrant.name }}
+                        <span class="prefix">{{ $helpers.addDots(entrant.prefix) }}</span>
+                        {{ $helpers.addDots(entrant.name) }}
                     </span>
                 </opacity-swap-transition>
             </fitted-content>
