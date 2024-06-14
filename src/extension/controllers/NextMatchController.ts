@@ -8,7 +8,7 @@ export class NextMatchController extends BaseController {
         super(nodecg);
 
         const entrants = nodecg.Replicant<Entrants>('entrants');
-        const nextMatch = nodecg.Replicant<NextMatch>('nextMatch');
+        const nextMatch = nodecg.Replicant('nextMatch') as unknown as NodeCG.ServerReplicantWithSchemaDefault<NextMatch>;
 
         this.listen('nextMatch:update', data => {
              const entrantA = getEntrant(entrants.value!, data.entrantAId);
@@ -21,7 +21,8 @@ export class NextMatchController extends BaseController {
                      name: data.matchName,
                      numberOfGames: data.numberOfGames,
                      playType: 'BEST_OF'
-                 }
+                 },
+                 showOnStream: nextMatch.value.showOnStream
              };
         });
     }

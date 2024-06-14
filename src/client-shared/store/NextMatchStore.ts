@@ -11,7 +11,14 @@ interface NextMatchStore {
 export const useNextMatchStore = defineStore('nextMatch', {
     state: () => ({
         nextMatch: null
-    } as unknown as NextMatchStore)
+    } as unknown as NextMatchStore),
+    actions: {
+        setShowOnStream(newValue: boolean) {
+            if (nextMatch.value) {
+                nextMatch.value.showOnStream = newValue;
+            }
+        }
+    }
 });
 
 export const initNextMatchStore = createReplicantStoreInitializer([nextMatch], useNextMatchStore);

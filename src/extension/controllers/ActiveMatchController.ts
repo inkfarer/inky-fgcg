@@ -12,13 +12,18 @@ export class ActiveMatchController extends BaseController {
         const nextMatch = nodecg.Replicant('nextMatch') as unknown as NodeCG.ServerReplicantWithSchemaDefault<NextMatch>;
 
         this.listen('activeMatch:addScore', side => {
-             if (activeMatch.value.entrantA.score + activeMatch.value.entrantB.score >= activeMatch.value.match.numberOfGames) return;
+            const scoreSum = activeMatch.value.entrantA.score + activeMatch.value.entrantB.score;
+            if (scoreSum >= activeMatch.value.match.numberOfGames) return;
 
-             if (side === EntrantSide.ALPHA) {
-                 activeMatch.value.entrantA.score++;
-             } else if (side === EntrantSide.BRAVO) {
-                 activeMatch.value.entrantB.score++;
-             }
+            if (scoreSum === 0) {
+                nextMatch.value.showOnStream = false;
+            }
+
+            if (side === EntrantSide.ALPHA) {
+                activeMatch.value.entrantA.score++;
+            } else if (side === EntrantSide.BRAVO) {
+                activeMatch.value.entrantB.score++;
+            }
         });
 
         this.listen('activeMatch:subtractScore', side => {

@@ -1,6 +1,12 @@
 <template>
     <error-display class="m-b-8" />
     <ipl-space>
+        <ipl-small-toggle
+            v-model="showOnStream"
+            label="Show on Stream"
+        />
+    </ipl-space>
+    <ipl-space class="m-t-8">
         <div class="layout horizontal">
             <entrant-select
                 v-model="entrantA"
@@ -23,6 +29,7 @@
             :options="numberOfGamesOptions"
             label="Number of Games"
             name="numberOfGames"
+            class="m-t-8"
             @update:model-value="numberOfGames = Number($event)"
         />
         <ipl-button
@@ -36,7 +43,7 @@
 
 <script setup lang="ts">
 import { useNextMatchStore } from 'client-shared/store/NextMatchStore';
-import { IplButton, IplInput, IplRadio, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplRadio, IplSmallToggle, IplSpace } from '@iplsplatoon/vue-components';
 import EntrantSelect from '../../components/EntrantSelect.vue';
 import { computed, ref } from 'vue';
 import { Entrant } from 'types/schemas';
@@ -50,6 +57,14 @@ const entrantA = ref<Entrant | null>(null);
 const entrantB = ref<Entrant | null>(null);
 const matchName = ref<string>('');
 const numberOfGames = ref<number>(3);
+const showOnStream = computed({
+    get() {
+        return nextMatchStore.nextMatch.showOnStream;
+    },
+    set(newValue: boolean) {
+        nextMatchStore.setShowOnStream(newValue);
+    }
+});
 
 updateRefOnValueChange(() => nextMatchStore.nextMatch.entrantA, entrantA);
 updateRefOnValueChange(() => nextMatchStore.nextMatch.entrantB, entrantB);

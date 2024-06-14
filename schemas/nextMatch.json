@@ -28,9 +28,12 @@
                 }
             },
             "required": ["name", "numberOfGames", "playType"]
+        },
+        "showOnStream": {
+            "type": "boolean"
         }
     },
-    "required": ["entrantA", "entrantB", "match"],
+    "required": ["entrantA", "entrantB", "match", "showOnStream"],
     "default": {
         "entrantA": {
             "id": "000",
@@ -56,6 +59,7 @@
             "name": "Next Placeholder Round",
             "numberOfGames": 3,
             "playType": "BEST_OF"
-        }
+        },
+        "showOnStream": false
     }
 }
