@@ -39,13 +39,11 @@ export function useSlides(slideRef: MaybeRefOrGetter<Array<Slide>>): { activeCom
     let slideChangeTimeout: number | undefined;
     const setSlideChangeTimeout = () => {
         const slides = toValue(slideRef);
-        if (activeIndex.value != null) {
-            const activeSlide = slides[activeIndex.value];
-            slideChangeTimeout = window.setTimeout(() => {
-                findNextVisibleSlide();
-                setSlideChangeTimeout();
-            }, (activeSlide?.duration ?? 30) * 1000);
-        }
+        const activeSlide = activeIndex.value == null ? null : slides[activeIndex.value];
+        slideChangeTimeout = window.setTimeout(() => {
+            findNextVisibleSlide();
+            setSlideChangeTimeout();
+        }, (activeSlide?.duration ?? 30) * 1000);
     };
 
     let forceAllowSlide = false;
