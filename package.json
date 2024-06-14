@@ -45,11 +45,24 @@
                 "file": "active-match.html",
                 "workspace": "Yo Mana",
                 "headerColor": "#262F40"
+            },
+            {
+                "name": "intermission",
+                "title": "Intermission",
+                "width": 2,
+                "file": "intermission.html",
+                "workspace": "Yo Mana",
+                "headerColor": "#262F40"
             }
         ],
         "graphics": [
             {
                 "file": "gameplay.html",
+                "width": 1920,
+                "height": 1080
+            },
+            {
+                "file": "bottom-bar.html",
                 "width": 1920,
                 "height": 1080
             }
@@ -78,6 +91,7 @@
         "@tourneyview/importer": "~0.6.0",
         "@tourneyview/renderer": "~0.6.0",
         "@types/lodash": "^4.14.171",
+        "@types/luxon": "^3.4.2",
         "@types/node": "^15.14.9",
         "@types/uuid": "^9.0.8",
         "@vitejs/plugin-vue": "^4.4.0",
@@ -98,6 +112,7 @@
     },
     "dependencies": {
         "axios": "^1.6.8",
+        "luxon": "^3.4.4",
         "uuid": "^10.0.0"
     }
 }

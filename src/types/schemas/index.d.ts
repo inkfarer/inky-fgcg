@@ -4,6 +4,8 @@ export * from './configschema';
 // @ts-ignore
 export * from './activeMatch';
 // @ts-ignore
+export * from './bottomBarData';
+// @ts-ignore
 export * from './entrants';
 // @ts-ignore
 export * from './nextMatch';

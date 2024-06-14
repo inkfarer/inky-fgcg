@@ -3,7 +3,7 @@
         class="entrant"
         :class="`entrant-${props.entrant.toLowerCase()}`"
     >
-        <div class="entrant-score font-numeric">
+        <div class="entrant-score">
             {{ entrant.score }}
         </div>
         <div class="entrant-name">
