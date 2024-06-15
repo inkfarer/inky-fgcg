@@ -51,11 +51,10 @@ import ErrorDisplay from '../../components/ErrorDisplay.vue';
 import { IplButton, IplInput, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { ref } from 'vue';
 import { sendMessage } from 'client-shared/helpers/NodecgHelper';
-import { SelectOptions } from '@iplsplatoon/vue-components/dist/types/select';
 import { pluralize } from '@iplsplatoon/vue-components';
 
 const slug = ref('');
-const eventOptions = ref<SelectOptions>([]);
+const eventOptions = ref<{ name: string, value: string }[]>([]);
 const selectedEvent = ref<string | null>(null);
 const importedEntrantCount = ref<number | null>(null);
 

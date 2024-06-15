@@ -53,6 +53,14 @@
                 "file": "intermission.html",
                 "workspace": "Yo Mana",
                 "headerColor": "#262F40"
+            },
+            {
+                "name": "brackets",
+                "title": "Brackets",
+                "width": 2,
+                "file": "brackets.html",
+                "workspace": "Yo Mana",
+                "headerColor": "#262F40"
             }
         ],
         "graphics": [
@@ -63,6 +71,11 @@
             },
             {
                 "file": "bottom-bar.html",
+                "width": 1920,
+                "height": 1080
+            },
+            {
+                "file": "bracket.html",
                 "width": 1920,
                 "height": 1080
             }
