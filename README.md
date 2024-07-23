@@ -14,11 +14,17 @@ To configure this bundle, create the file `<nodecg>/cfg/yo-mana-fgc-overlays.jso
 
 ```json
 {
+  "event": {
+    "timezone": "Europe/Tallinn",
+    "location": "Tallinn, Estonia"
+  },
   "startgg": {
     "apiKey": "start.gg API key"
   }
 }
 ```
+
+Find a list of time zones [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
 
 #### Other npm commands
 

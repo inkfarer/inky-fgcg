@@ -1,9 +1,15 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
-    "additionalProperties": false,
     "required": ["startgg"],
     "properties": {
+        "event": {
+            "type": "object",
+            "properties": {
+                "timezone": { "type": "string" },
+                "location": { "type": "string" }
+            }
+        },
         "startgg": {
             "type": "object",
             "additionalProperties": false,

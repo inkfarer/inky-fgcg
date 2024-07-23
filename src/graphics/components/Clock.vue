@@ -4,7 +4,7 @@
             <span class="time font-numeric">{{ time }}</span>
         </div>
         <div class="zone">{{ utcOffset }}</div>
-        <div class="location">Tallinn, Estonia</div>
+        <div class="location">{{ location }}</div>
     </div>
 </template>
 
@@ -12,16 +12,18 @@
 import { defineComponent } from 'vue';
 import { DateTime } from 'luxon';
 import { onUnmounted, ref } from 'vue';
+import { Configschema } from 'types/schemas';
 
 export default defineComponent({
     name: 'Clock',
 
     setup() {
-        const CENTRAL_ZONE = 'Europe/Tallinn';
+        const zone = (nodecg.bundleConfig as Configschema)?.event?.timezone ?? 'Etc/GMT';
         const time = ref('--:--');
+        const location = (nodecg.bundleConfig as Configschema).event?.location;
 
         function getCurrentTime(): DateTime {
-            return DateTime.now().setZone(CENTRAL_ZONE);
+            return DateTime.now().setZone(zone);
         }
 
         function setTime(now: DateTime): void {
@@ -35,7 +37,11 @@ export default defineComponent({
 
         const now = getCurrentTime();
         setTime(now);
-        const utcOffset = `UTC+${Math.abs(now.offset / 60)}`;
+        const utcOffset = now.offset === 0
+            ? 'UTC'
+            : now.offset > 0
+                ? `UTC+${now.offset / 60}`
+                : `UTC${now.offset / 60}`;
 
         onUnmounted(() => {
             clearInterval(timeChangeInterval);
@@ -43,7 +49,8 @@ export default defineComponent({
 
         return {
             time,
-            utcOffset
+            utcOffset,
+            location
         };
     }
 });

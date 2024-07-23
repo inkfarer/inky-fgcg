@@ -6,7 +6,13 @@
  */
 
 export interface Configschema {
+	event?: {
+		timezone?: string;
+		location?: string;
+		[k: string]: unknown;
+	};
 	startgg: {
 		apiKey: string;
 	};
+	[k: string]: unknown;
 }
