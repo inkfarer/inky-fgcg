@@ -44,15 +44,25 @@
             />
         </template>
     </ipl-space>
+    <ipl-space class="m-t-8">
+        <div class="title">Loaded data</div>
+        <ipl-data-row
+            label="Slug"
+            :value="tournamentDataStore.tournamentData.slug"
+            copiable
+        />
+    </ipl-space>
 </template>
 
 <script lang="ts" setup>
 import ErrorDisplay from '../../components/ErrorDisplay.vue';
-import { IplButton, IplInput, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplDataRow, IplInput, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { ref } from 'vue';
 import { sendMessage } from 'client-shared/helpers/NodecgHelper';
 import { pluralize } from '@iplsplatoon/vue-components';
+import { useTournamentDataStore } from 'client-shared/store/TournamentDataStore';
 
+const tournamentDataStore = useTournamentDataStore();
 const slug = ref('');
 const eventOptions = ref<{ name: string, value: string }[]>([]);
 const selectedEvent = ref<string | null>(null);
