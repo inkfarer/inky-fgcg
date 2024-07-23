@@ -38,7 +38,6 @@ export class ActiveMatchController extends BaseController {
             const nextMatchData = cloneDeep(nextMatch.value);
 
             activeMatch.value = {
-                ...nextMatchData,
                 entrantA: {
                     ...nextMatchData.entrantA,
                     score: 0
@@ -46,7 +45,8 @@ export class ActiveMatchController extends BaseController {
                 entrantB: {
                     ...nextMatchData.entrantB,
                     score: 0
-                }
+                },
+                match: nextMatchData.match
             }
         });
     }
