@@ -47,14 +47,19 @@
     <ipl-space class="m-t-8">
         <div class="title">Loaded data</div>
         <ipl-data-row
+            label="Name"
+            :value="tournamentDataStore.tournamentData.name"
+        />
+        <ipl-data-row
+            v-if="tournamentDataStore.tournamentData.source === 'startgg'"
             label="Slug"
-            :value="tournamentDataStore.tournamentData.slug"
+            :value="tournamentDataStore.tournamentData.sourceSpecificData?.startgg?.slug"
             copiable
         />
         <ipl-button
             label="Refresh"
             async
-            :disabled="tournamentDataStore.tournamentData.eventId == null"
+            :disabled="tournamentDataStore.tournamentData.sourceSpecificData?.startgg?.eventId == null"
             class="m-t-8"
             @click="onRefresh"
         />
@@ -96,8 +101,8 @@ async function importEntrants(eventId: number) {
 }
 
 async function onRefresh() {
-    if (tournamentDataStore.tournamentData.eventId == null) return;
+    if (tournamentDataStore.tournamentData.sourceSpecificData?.startgg?.eventId == null) return;
 
-    await importEntrants(tournamentDataStore.tournamentData.eventId);
+    await importEntrants(tournamentDataStore.tournamentData.sourceSpecificData?.startgg?.eventId);
 }
 </script>

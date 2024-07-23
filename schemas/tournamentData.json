@@ -6,15 +6,49 @@
         "name": {
             "type": "string"
         },
-        "slug": {
-            "type": "string"
+        "source": {
+            "type": "string",
+            "enum": ["startgg", "unknown"]
         },
-        "eventId": {
-            "type": "number"
+        "sourceSpecificData": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "startgg": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["slug", "eventId", "streams"],
+                    "properties": {
+                        "slug": {
+                            "type": "string"
+                        },
+                        "eventId": {
+                            "type": "number"
+                        },
+                        "streams": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "streamName": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": ["id", "streamName"]
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
-    "required": ["name"],
+    "required": ["name", "source"],
     "default": {
-        "name": "Placeholder Tournament"
+        "name": "Placeholder Tournament",
+        "source": "unknown"
     }
 }

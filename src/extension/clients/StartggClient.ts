@@ -75,6 +75,10 @@ query TournamentData($eventId: ID!) {
     tournament {
       slug
       name
+      streams {
+        id
+        streamName
+      }
     }
   }
 }`;
@@ -85,6 +89,10 @@ interface GetTournamentDataResponse {
             tournament: {
                 slug: string
                 name: string
+                streams: {
+                    id: number
+                    streamName: string
+                }[]
             }
         }
     }
@@ -169,8 +177,14 @@ export class StartggClient {
 
         return {
             name: tournamentDataResponse.data.data.event.tournament.name,
-            slug: tournamentDataResponse.data.data.event.tournament.slug,
-            eventId
+            source: 'startgg',
+            sourceSpecificData: {
+                startgg: {
+                    slug: tournamentDataResponse.data.data.event.tournament.slug,
+                    eventId,
+                    streams: tournamentDataResponse.data.data.event.tournament.streams
+                }
+            }
         };
     }
 }

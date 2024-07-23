@@ -7,6 +7,15 @@
 
 export interface TournamentData {
 	name: string;
-	slug?: string;
-	eventId?: number;
+	source: 'startgg' | 'unknown';
+	sourceSpecificData?: {
+		startgg?: {
+			slug: string;
+			eventId: number;
+			streams: {
+				id: number;
+				streamName: string;
+			}[];
+		};
+	};
 }
