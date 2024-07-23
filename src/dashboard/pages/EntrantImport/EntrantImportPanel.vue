@@ -51,6 +51,13 @@
             :value="tournamentDataStore.tournamentData.slug"
             copiable
         />
+        <ipl-button
+            label="Refresh"
+            async
+            :disabled="tournamentDataStore.tournamentData.eventId == null"
+            class="m-t-8"
+            @click="onRefresh"
+        />
     </ipl-space>
 </template>
 
@@ -86,5 +93,11 @@ async function onEventImport() {
 async function importEntrants(eventId: number) {
     const result = await sendMessage('entrants:importEntrants', { eventId });
     importedEntrantCount.value = result.count;
+}
+
+async function onRefresh() {
+    if (tournamentDataStore.tournamentData.eventId == null) return;
+
+    await importEntrants(tournamentDataStore.tournamentData.eventId);
 }
 </script>
