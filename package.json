@@ -27,7 +27,7 @@
                 "title": "Entrant Import",
                 "width": 2,
                 "file": "entrant-import.html",
-                "workspace": "Yo Mana Setup",
+                "workspace": "2 - Setup",
                 "headerColor": "#262F40"
             },
             {
@@ -35,7 +35,7 @@
                 "title": "Next Match",
                 "width": 2,
                 "file": "next-match.html",
-                "workspace": "Yo Mana",
+                "workspace": "1 - Main",
                 "headerColor": "#262F40"
             },
             {
@@ -43,7 +43,7 @@
                 "title": "Active Match",
                 "width": 2,
                 "file": "active-match.html",
-                "workspace": "Yo Mana",
+                "workspace": "1 - Main",
                 "headerColor": "#262F40"
             },
             {
@@ -51,7 +51,7 @@
                 "title": "Intermission",
                 "width": 2,
                 "file": "intermission.html",
-                "workspace": "Yo Mana",
+                "workspace": "1 - Main",
                 "headerColor": "#262F40"
             },
             {
@@ -59,7 +59,7 @@
                 "title": "Brackets",
                 "width": 2,
                 "file": "brackets.html",
-                "workspace": "Yo Mana",
+                "workspace": "1 - Main",
                 "headerColor": "#262F40"
             }
         ],
