@@ -11,7 +11,10 @@ interface AssetStore {
 export const useAssetStore = defineStore('assets', {
     state: () => ({
         'assets:sponsors': []
-    } as unknown as AssetStore)
+    } as unknown as AssetStore),
+    getters: {
+        hasSponsors: state => state['assets:sponsors'].length >= 1
+    }
 });
 
 export const initAssetStore = createReplicantStoreInitializer([sponsors], useAssetStore);

@@ -2,8 +2,10 @@
     <div class="bottom-bar-wrapper">
         <div class="bottom-bar">
             <clock />
-            <div class="separator" />
-            <sponsor-rotation class="sponsors" />
+            <template v-if="assetStore.hasSponsors">
+                <div class="separator" />
+                <sponsor-rotation class="sponsors" />
+            </template>
             <div class="separator" />
             <div class="info-text">
                 <fitted-content align="center">
@@ -38,9 +40,11 @@ import { Entrant } from 'types/schemas';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
 import FittedContent from 'components/FittedContent.vue';
+import { useAssetStore } from 'client-shared/store/AssetStore';
 
 const nextMatchStore = useNextMatchStore();
 const intermissionStore = useIntermissionStore();
+const assetStore = useAssetStore();
 
 function getEntrantName(entrant: Entrant): string {
     if (entrant.participants.length >= 1) {

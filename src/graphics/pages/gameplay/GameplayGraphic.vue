@@ -12,7 +12,10 @@
         </div>
         <gameplay-scoreboard-entrant entrant="B" />
     </div>
-    <sponsor-rotation class="sponsor-rotation" />
+    <sponsor-rotation
+        v-if="assetStore.hasSponsors"
+        class="sponsor-rotation"
+    />
 </template>
 
 <script setup lang="ts">
@@ -21,8 +24,10 @@ import FittedContent from 'components/FittedContent.vue';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 import SponsorRotation from 'components/SponsorRotation.vue';
+import { useAssetStore } from 'client-shared/store/AssetStore';
 
 const activeMatchStore = useActiveMatchStore();
+const assetStore = useAssetStore();
 </script>
 
 <style lang="scss" scoped>
