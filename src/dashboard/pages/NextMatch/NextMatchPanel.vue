@@ -3,60 +3,42 @@
     <ipl-space>
         <ipl-small-toggle
             v-model="showOnStream"
-            label="Show on Stream"
+            label="Show on stream"
+        />
+        <ipl-small-toggle
+            v-if="streamMatchesAvailable"
+            v-model="useStreamMatches"
+            label="Use stream matches"
+            class="m-t-4"
         />
     </ipl-space>
-    <ipl-space class="m-t-8">
-        <div class="layout horizontal">
-            <entrant-select
-                v-model="entrantA"
-                label="Entrant A"
-            />
-            <entrant-select
-                v-model="entrantB"
-                label="Entrant B"
-                class="m-l-8"
-            />
-        </div>
-        <ipl-input
-            v-model="matchName"
-            class="m-t-8"
-            label="Match Name"
-            name="matchName"
-        />
-        <ipl-radio
-            :model-value="String(numberOfGames)"
-            :options="numberOfGamesOptions"
-            label="Number of Games"
-            name="numberOfGames"
-            class="m-t-8"
-            @update:model-value="numberOfGames = Number($event)"
-        />
-        <ipl-button
-            label="Update"
-            :color="isChanged ? 'red' : 'blue'"
-            class="m-t-8"
-            @click="onUpdate"
-        />
-    </ipl-space>
+    <stream-match-select
+        v-if="streamMatchesAvailable && useStreamMatches"
+        class="m-t-8"
+    />
+    <manual-team-select
+        v-else
+        class="m-t-8"
+    />
 </template>
 
 <script setup lang="ts">
 import { useNextMatchStore } from 'client-shared/store/NextMatchStore';
-import { IplButton, IplInput, IplRadio, IplSmallToggle, IplSpace } from '@iplsplatoon/vue-components';
-import EntrantSelect from '../../components/EntrantSelect.vue';
+import { IplSmallToggle, IplSpace } from '@iplsplatoon/vue-components';
 import { computed, ref } from 'vue';
-import { Entrant } from 'types/schemas';
-import { updateRefOnValueChange } from 'client-shared/store/StoreHelper';
-import { sendMessage } from 'client-shared/helpers/NodecgHelper';
 import ErrorDisplay from '../../components/ErrorDisplay.vue';
+import ManualTeamSelect from './ManualTeamSelect.vue';
+import { useTournamentDataStore } from 'client-shared/store/TournamentDataStore';
+import StreamMatchSelect from './StreamMatchSelect.vue';
 
 const nextMatchStore = useNextMatchStore();
+const tournamentDataStore = useTournamentDataStore();
 
-const entrantA = ref<Entrant | null>(null);
-const entrantB = ref<Entrant | null>(null);
-const matchName = ref<string>('');
-const numberOfGames = ref<number>(3);
+const streamMatchesAvailable = computed(() =>
+    tournamentDataStore.tournamentData.source === 'startgg'
+    && (tournamentDataStore.tournamentData.sourceSpecificData?.startgg?.streams.length ?? 0) > 0);
+const useStreamMatches = ref(true);
+
 const showOnStream = computed({
     get() {
         return nextMatchStore.nextMatch.showOnStream;
@@ -65,33 +47,4 @@ const showOnStream = computed({
         nextMatchStore.setShowOnStream(newValue);
     }
 });
-
-updateRefOnValueChange(() => nextMatchStore.nextMatch.entrantA, entrantA);
-updateRefOnValueChange(() => nextMatchStore.nextMatch.entrantB, entrantB);
-updateRefOnValueChange(() => nextMatchStore.nextMatch.match.name, matchName);
-updateRefOnValueChange(() => nextMatchStore.nextMatch.match.numberOfGames, numberOfGames);
-
-const numberOfGamesOptions = [
-    { name: '3', value: '3' },
-    { name: '5', value: '5' },
-    { name: '7', value: '7' }
-]
-
-const isChanged = computed(() =>
-    entrantA.value?.id !== nextMatchStore.nextMatch.entrantA.id
-    || entrantB.value?.id !== nextMatchStore.nextMatch.entrantB.id
-    || matchName.value !== nextMatchStore.nextMatch.match.name
-    || numberOfGames.value !== nextMatchStore.nextMatch.match.numberOfGames
-);
-
-async function onUpdate() {
-    if (entrantA.value == null || entrantB.value == null) return;
-
-    await sendMessage('nextMatch:update', {
-        entrantAId: entrantA.value.id,
-        entrantBId: entrantB.value.id,
-        matchName: matchName.value,
-        numberOfGames: numberOfGames.value
-    });
-}
 </script>

@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
-import { Entrant, TournamentData } from 'types/schemas';
+import { Entrant, StreamMatches, TournamentData } from 'types/schemas';
 
 const getEventsQuery = `
 query TournamentEvents($slug: String) {
@@ -82,6 +82,84 @@ query TournamentData($eventId: ID!) {
     }
   }
 }`;
+
+const getStreamQueueQuery = `
+query StreamQueue($slug: String!) {
+  tournament(slug: $slug) {
+    streamQueue {
+      stream {
+        id
+      }
+      sets {
+        id
+        round
+        setGamesType
+        totalGames
+        fullRoundText
+        event {
+          id
+        }
+        phaseGroup {
+          displayIdentifier
+          rounds {
+            number
+            bestOf
+          }
+          phase {
+            name
+            groupCount
+          }
+        }
+        slots {
+          entrant {
+            id
+          }
+        }
+      }
+    }
+  }
+}`;
+
+interface GetStreamQueueResponse {
+    data: {
+        tournament: {
+            streamQueue: {
+                stream: {
+                    id: number
+                }
+                sets: {
+                    id: number
+                    round: number
+                    setGamesType: number
+                    totalGames: number
+                    fullRoundText: string
+                    event: {
+                        id: number
+                    }
+                    games: {
+                        id: number
+                    }[]
+                    phaseGroup: {
+                        displayIdentifier: string
+                        phase: {
+                            name: string
+                            groupCount: number
+                        }
+                        rounds: {
+                            number: number
+                            bestOf: number
+                        }[]
+                    }
+                    slots: {
+                        entrant: {
+                            id: number
+                        }
+                    }[]
+                }[]
+            }[]
+        }
+    }
+}
 
 interface GetTournamentDataResponse {
     data: {
@@ -182,9 +260,56 @@ export class StartggClient {
                 startgg: {
                     slug: tournamentDataResponse.data.data.event.tournament.slug,
                     eventId,
-                    streams: tournamentDataResponse.data.data.event.tournament.streams
+                    streams: tournamentDataResponse.data.data.event.tournament.streams ?? []
                 }
             }
         };
     }
+
+    async getStreamQueue(
+        tournamentSlug: string,
+        eventId: number,
+        streamIds?: number[],
+        getAllStreams?: boolean
+    ): Promise<StreamMatches> {
+        if ((streamIds == null || streamIds.length <= 0) && !getAllStreams) {
+            return [];
+        }
+
+        const streamQueueResponse = await this.axios.post<GetStreamQueueResponse>(
+            '',
+            JSON.stringify({
+                query: getStreamQueueQuery,
+                variables: {
+                    slug: tournamentSlug
+                }
+            })
+        );
+
+
+        if (streamQueueResponse.data.data.tournament.streamQueue == null) {
+            return [];
+        }
+
+        return streamQueueResponse.data.data.tournament.streamQueue
+            .filter(queueItem => (getAllStreams || streamIds?.includes(queueItem.stream.id)))
+            .flatMap(queueItem => queueItem.sets
+                .filter(set =>
+                    set.slots.length === 2
+                    && !set.slots.some(slot => slot.entrant === null)
+                    && set.event.id === eventId)
+                .map(set => ({
+                    id: String(set.id),
+                    entrantAId: String(set.slots[0].entrant.id),
+                    entrantBId: String(set.slots[1].entrant.id),
+                    playType: set.setGamesType === 1 ? 'BEST_OF' : 'PLAY_ALL',
+                    matchName: set.phaseGroup.phase.groupCount > 1
+                        ? `${set.phaseGroup.phase.name} - Pool ${set.phaseGroup.displayIdentifier} - ${set.fullRoundText}`
+                        : `${set.phaseGroup.phase.name} - ${set.fullRoundText}`,
+                    numberOfGames: set.setGamesType === 1
+                        ? set.phaseGroup.rounds?.find(round => round.number === set.round)?.bestOf ?? undefined
+                        : set.totalGames
+                })));
+    }
+
 }

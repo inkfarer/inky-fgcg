@@ -3,9 +3,14 @@ import { Configschema } from 'types/schemas';
 import { EntrantImportController } from './controllers/EntrantImportController';
 import { NextMatchController } from './controllers/NextMatchController';
 import { ActiveMatchController } from './controllers/ActiveMatchController';
+import { StartggClient } from './clients/StartggClient';
 
 export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
-    new EntrantImportController(nodecg);
-    new NextMatchController(nodecg);
+    const startggClient = nodecg.bundleConfig?.startgg?.apiKey == null
+        ? null
+        : new StartggClient(nodecg.bundleConfig.startgg.apiKey);
+
+    new EntrantImportController(nodecg, startggClient);
+    new NextMatchController(nodecg, startggClient);
     new ActiveMatchController(nodecg);
 };

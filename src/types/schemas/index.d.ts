@@ -10,4 +10,6 @@ export * from './entrants';
 // @ts-ignore
 export * from './nextMatch';
 // @ts-ignore
+export * from './streamMatches';
+// @ts-ignore
 export * from './tournamentData';

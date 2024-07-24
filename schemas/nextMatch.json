@@ -20,11 +20,7 @@
                     "type": "number"
                 },
                 "playType": {
-                    "type": "string",
-                    "enum": [
-                        "PLAY_ALL",
-                        "BEST_OF"
-                    ]
+                    "$ref": "defs/playType.json#/playType"
                 }
             },
             "required": ["name", "numberOfGames", "playType"]

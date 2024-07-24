@@ -11,7 +11,10 @@ interface EntrantStore {
 export const useEntrantStore = defineStore('entrants', {
     state: (): EntrantStore => ({
         entrants: []
-    })
+    }),
+    getters: {
+        entrantById: state => (id: string) => state.entrants.find(entrant => entrant.id === id)
+    }
 });
 
 export const initEntrantStore = createReplicantStoreInitializer([entrants], useEntrantStore);

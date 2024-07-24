@@ -14,3 +14,12 @@ export function addDots(value: string | undefined | null, maxLength = 48): strin
 export function isBlank(value: unknown): boolean {
     return typeof value !== 'string' || value.trim() === '';
 }
+
+export function formatPlayType(playType: 'BEST_OF' | 'PLAY_ALL', numberOfGames?: number): string {
+    switch (playType) {
+        case 'BEST_OF':
+            return numberOfGames == null ? 'Best of X' : `Best of ${numberOfGames}`;
+        case 'PLAY_ALL':
+            return numberOfGames == null ? 'Play all X' : `Play all ${numberOfGames}`;
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": ["id", "entrantAId", "entrantBId", "matchName", "playType"],
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "entrantAId": {
+                "type": "string"
+            },
+            "entrantBId": {
+                "type": "string"
+            },
+            "matchName": {
+                "type": "string"
+            },
+            "playType": {
+                "$ref": "defs/playType.json#/playType"
+            },
+            "numberOfGames": {
+                "type": "number"
+            }
+        }
+    },
+    "default": [
+
+    ]
+}

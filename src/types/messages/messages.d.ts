@@ -1,4 +1,4 @@
-import { UpdateNextMatchMessage } from './NextMatch';
+import { GetStreamMatchesMessage, UpdateNextMatchMessage } from './NextMatch';
 import { EntrantSide } from '../enums/EntrantSide';
 
 export interface MessageInputMap {
@@ -6,6 +6,7 @@ export interface MessageInputMap {
     'entrants:importEntrants': { eventId: number }
 
     'nextMatch:update': UpdateNextMatchMessage
+    'nextMatch:getStreamMatches': GetStreamMatchesMessage
 
     'activeMatch:addScore': EntrantSide
     'activeMatch:subtractScore': EntrantSide
