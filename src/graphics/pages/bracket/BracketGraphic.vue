@@ -136,7 +136,7 @@ $bottom-margin: 50px;
         .match-cell {
             color: constants.$text-color-2;
             background-color: constants.$accent-1a;
-            filter: drop-shadow(0 0 2px rgba(208, 212, 251, 0.5));
+            filter: drop-shadow(0 0 2px constants.$drop-shadow);
 
             .match-cell__score-wrapper {
                 background-color: constants.$accent-1c;

@@ -3,11 +3,13 @@
         class="entrant"
         :class="`entrant-${props.entrant.toLowerCase()}`"
     >
-        <div class="entrant-score">
-            {{ entrant.score }}
+        <div class="entrant-score-wrapper">
+            <div class="entrant-score">
+                <span class="entrant-score-text">{{ entrant.score }}</span>
+            </div>
         </div>
         <div class="entrant-name">
-            <fitted-content :align="props.entrant === 'A' ? 'right' : 'left'">
+            <fitted-content align="center">
                 <opacity-swap-transition>
                     <span :key="`${entrant.name}_${entrant.prefix}`">
                         <span class="prefix">{{ $helpers.addDots(entrant.prefix) }}</span>
@@ -59,7 +61,7 @@ const entrant = computed(() => {
     color: constants.$text-color-2;
     display: flex;
     position: relative;
-    overflow: hidden;
+    background-color: constants.$accent-1a;
 
     &:after {
         content: '';
@@ -68,7 +70,7 @@ const entrant = computed(() => {
         height: 100%;
         left: 0;
         top: 0;
-        opacity: 0.25;
+        opacity: 0.05;
         mix-blend-mode: soft-light;
     }
 
@@ -93,47 +95,76 @@ const entrant = computed(() => {
         font-weight: 400;
     }
 
+    .entrant-score-wrapper {
+        min-width: 68px;
+        height: 100%;
+    }
+
     .entrant-score {
-        background-color: constants.$accent-1c;
+        background-color: constants.$accent-1b;
         color: constants.$text-color-2;
         font-weight: 600;
         font-size: 45px;
         line-height: 55px;
-        min-width: 68px;
         text-align: center;
-        border: 0 solid constants.$neutral-2;
+        height: 100%;
+    }
+
+    .entrant-score-text {
+        filter: drop-shadow(1px 1px 4px constants.$drop-shadow);
+        display: inline-block;
     }
 
     &.entrant-a {
-        background: linear-gradient(300deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
         flex-direction: row-reverse;
         border-bottom-left-radius: 12px;
+        border-top-left-radius: 12px;
+        margin-right: 12px;
 
         &:after {
             background:
-                linear-gradient(to bottom, transparent 0%, transparent 20%, transparent 80%, #fff 100%),
-                linear-gradient(to right, #fff 0%, transparent 2%);
+                linear-gradient(to bottom, transparent 0%, transparent 35%, transparent 80%, #fff 100%),
+                linear-gradient(to right, #fff 0%, transparent 4%);
         }
 
         .entrant-score {
-            border-right-width: 8px;
-            border-bottom-left-radius: 8px;
+            padding-left: 6px;
+            clip-path: polygon(85% 0%, 100% 50%, 85% 100%, 0% 100%, 15% 50%, 0% 0%);
+            transform: translateX(8px);
+        }
+
+        .entrant-score-text {
+            transform: translateX(-2px);
+        }
+
+        .entrant-score-wrapper {
+            filter: drop-shadow(-2px 1px 4px constants.$drop-shadow);
         }
     }
 
     &.entrant-b {
-        background: linear-gradient(60deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
         border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+        margin-left: 12px;
 
         &:after {
             background:
-                linear-gradient(to bottom, transparent 0%, transparent 20%, transparent 80%, #fff 100%),
-                linear-gradient(to left, #fff 0%, transparent 2%);
+                linear-gradient(to bottom, transparent 0%, transparent 35%, transparent 80%, #fff 100%),
+                linear-gradient(to left, #fff 0%, transparent 4%);
         }
 
         .entrant-score {
-            border-left-width: 8px;
-            border-bottom-right-radius: 8px;
+            padding-right: 6px;
+            clip-path: polygon(100% 0%, 85% 50%, 100% 100%, 15% 100%, 0% 50%, 15% 0%);
+            transform: translateX(-8px);
+        }
+
+        .entrant-score-text {
+            transform: translateX(2px);
+        }
+
+        .entrant-score-wrapper {
+            filter: drop-shadow(2px 1px 4px constants.$drop-shadow);
         }
     }
 }

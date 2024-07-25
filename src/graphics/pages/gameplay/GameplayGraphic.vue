@@ -1,6 +1,17 @@
 <template>
     <div class="scoreboard-wrapper">
-        <gameplay-scoreboard-entrant entrant="A" />
+        <gameplay-scoreboard-entrant
+            entrant="A"
+            style="justify-self: end"
+        />
+        <img
+            src="../../assets/logo-summer.png"
+            class="event-logo"
+        />
+        <gameplay-scoreboard-entrant
+            entrant="B"
+            style="justify-self: start"
+        />
         <div class="scoreboard-round-info">
             <fitted-content align="center">
                 <opacity-swap-transition>
@@ -10,7 +21,6 @@
                 </opacity-swap-transition>
             </fitted-content>
         </div>
-        <gameplay-scoreboard-entrant entrant="B" />
     </div>
     <sponsor-rotation
         v-if="assetStore.hasSponsors"
@@ -33,16 +43,26 @@ const assetStore = useAssetStore();
 <style lang="scss" scoped>
 @use '../../styles/constants';
 
+.event-logo {
+    width: 100%;
+}
+
 .scoreboard-wrapper {
     position: absolute;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-areas: '. . .' 'round round round';
+    grid-template-columns: 1fr 90px 1fr;
+    column-gap: 12px;
+    row-gap: 8px;
+    top: 16px;
 }
 
 .scoreboard-round-info {
     background-color: constants.$neutral-2;
-    border-radius: 0 0 8px 8px;
+    border-radius: 8px;
     color: constants.$text-color;
     height: 30px;
     font-size: 24px;
@@ -51,6 +71,7 @@ const assetStore = useAssetStore();
     text-align: center;
     padding: 0 12px;
     margin: 0 32px;
+    grid-area: round;
 
     > * {
         width: 100%;

@@ -1,7 +1,10 @@
 <template>
     <div class="bottom-bar-wrapper">
         <div class="bottom-bar">
-            <clock />
+            <div class="clock-background-wrapper">
+                <clock class="clock" />
+                <div class="clock-background" />
+            </div>
             <template v-if="assetStore.hasSponsors">
                 <div class="separator" />
                 <sponsor-rotation class="sponsors" />
@@ -68,17 +71,35 @@ function getEntrantName(entrant: Entrant): string {
     justify-content: center;
 }
 
+.clock-background-wrapper {
+    position: relative;
+    height: 100%;
+    filter: drop-shadow(2px 1px 4px constants.$drop-shadow);
+}
+
+.clock-background {
+    position: absolute;
+    width: calc(100% + 80px);
+    height: 100%;
+    top: 0;
+    left: -24px;
+    background-color: constants.$accent-1b;
+    z-index: -1;
+    clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+}
+
 .bottom-bar {
     display: flex;
     align-items: center;
     width: 1600px;
     height: 120px;
-    background: linear-gradient(120deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
+    background: constants.$accent-1a;
     color: constants.$text-color-2;
     border-radius: 16px;
     padding: 0 24px;
     position: relative;
-    filter: drop-shadow(0 0 2px rgba(208, 212, 251, 0.5));
+    filter: drop-shadow(0 0 2px constants.$drop-shadow);
+    overflow: hidden;
 
     &:after {
         content: '';
@@ -87,23 +108,23 @@ function getEntrantName(entrant: Entrant): string {
         height: 100%;
         left: 0;
         top: 0;
-        opacity: 0.15;
+        opacity: 0.05;
         mix-blend-mode: soft-light;
         border-radius: 16px;
         background:
-            linear-gradient(to bottom, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%),
-            linear-gradient(to right, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%);
+            linear-gradient(to bottom, #fff 0%, transparent 24px, transparent calc(100% - 24px), #fff 100%),
+            linear-gradient(to right, #fff 0%, transparent 24px, transparent calc(100% - 24px), #fff 100%);
     }
 
     > .separator {
-        background-color: constants.$neutral-2;
         height: 80%;
         min-width: 4px;
         margin: 0 24px;
     }
 
-    .clock-wrapper {
-        margin-bottom: 3px;
+    .clock {
+        margin-top: 4px;
+        filter: drop-shadow(1px 1px 4px constants.$drop-shadow);
     }
 
     .info-text {
