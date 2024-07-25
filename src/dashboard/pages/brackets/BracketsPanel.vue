@@ -108,17 +108,17 @@ const activeParamsFilled = computed(() => {
     return Array.from(activeParams.value).every(param => queryResult.value[param] != null);
 });
 
-watch(() => bracketStore.tournamentData.eventId, () => {
+watch(() => bracketStore.tournamentData.sourceSpecificData?.startgg?.eventId, () => {
     bracketQuery.value = [];
 });
 
 async function getMatchQuery() {
     const importer = getImporter();
     bracketQuery.value = [];
-    const options = await Promise.all((await importer.getMatchQueryOptions(bracketStore.tournamentData.slug ?? ''))
+    const options = await Promise.all((await importer.getMatchQueryOptions(bracketStore.tournamentData.sourceSpecificData?.startgg?.slug ?? ''))
         .map(async (option) => {
             // If possible, select the correct event ID automatically.
-            const startggEventId = bracketStore.tournamentData.eventId;
+            const startggEventId = bracketStore.tournamentData.sourceSpecificData?.startgg?.eventId;
             if (
                 startggEventId != null
                 && option.key === 'eventId'
