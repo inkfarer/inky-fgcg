@@ -8,7 +8,7 @@
 export interface Configschema {
 	event?: {
 		timezone?: string;
-		location?: string;
+		location?: string[];
 		[k: string]: unknown;
 	};
 	startgg: {

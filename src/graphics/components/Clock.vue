@@ -4,7 +4,13 @@
             <span class="time font-numeric">{{ time }}</span>
         </div>
         <div class="zone">{{ utcOffset }}</div>
-        <div class="location">{{ location }}</div>
+        <div
+            v-for="(line, i) in location"
+            :class="`location-line_${i}`"
+            class="location"
+        >
+            {{ line }}
+        </div>
     </div>
 </template>
 
@@ -20,7 +26,7 @@ export default defineComponent({
     setup() {
         const zone = (nodecg.bundleConfig as Configschema)?.event?.timezone ?? 'Etc/GMT';
         const time = ref('--:--');
-        const location = (nodecg.bundleConfig as Configschema).event?.location;
+        const location = (nodecg.bundleConfig as Configschema).event?.location ?? [];
 
         function getCurrentTime(): DateTime {
             return DateTime.now().setZone(zone);
@@ -75,12 +81,14 @@ export default defineComponent({
         font-size: 20px;
         line-height: 20px;
         margin-top: -8px;
+        margin-bottom: 2px;
         opacity: 0.75;
     }
 
     .location {
         font-weight: 400;
         font-size: 20px;
+        line-height: 24px;
         margin-top: -4px;
     }
 }

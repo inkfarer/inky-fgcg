@@ -7,7 +7,12 @@
             "type": "object",
             "properties": {
                 "timezone": { "type": "string" },
-                "location": { "type": "string" }
+                "location": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
             }
         },
         "startgg": {

@@ -72,7 +72,7 @@ function getEntrantName(entrant: Entrant): string {
     display: flex;
     align-items: center;
     width: 1600px;
-    height: 110px;
+    height: 120px;
     background: linear-gradient(120deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
     color: constants.$text-color-2;
     border-radius: 16px;

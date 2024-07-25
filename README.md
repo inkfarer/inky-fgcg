@@ -16,7 +16,7 @@ To configure this bundle, create the file `<nodecg>/cfg/yo-mana-fgc-overlays.jso
 {
   "event": {
     "timezone": "Europe/Tallinn",
-    "location": "Tallinn, Estonia"
+    "location": ["Tallinn, Estonia"]
   },
   "startgg": {
     "apiKey": "start.gg API key"
