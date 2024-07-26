@@ -11,7 +11,7 @@ export class CasterController extends BaseController {
 
         this.listen('casters:insert', caster => {
             const casterId = uuidV4();
-            casters.value.push({
+            casters.value.items.push({
                 ...caster,
                 id: casterId
             });
@@ -19,34 +19,34 @@ export class CasterController extends BaseController {
         });
 
         this.listen('casters:update', caster => {
-            const casterIndex = casters.value.findIndex(c => c.id === caster.id);
+            const casterIndex = casters.value.items.findIndex(c => c.id === caster.id);
 
             if (casterIndex === -1) {
                 throw new Error(`Could not find caster ${caster.id}`);
             }
 
-            casters.value[casterIndex] = caster;
+            casters.value.items[casterIndex] = caster;
         });
 
         this.listen('casters:remove', id => {
-            const casterIndex = casters.value.findIndex(c => c.id === id);
+            const casterIndex = casters.value.items.findIndex(c => c.id === id);
 
             if (casterIndex === -1) {
                 throw new Error(`Could not find caster ${id}`);
             }
 
-            casters.value.splice(casterIndex, 1);
+            casters.value.items.splice(casterIndex, 1);
         });
 
         this.listen('casters:setOrder', casterIds => {
-            if (casterIds.length !== casters.value.length) {
+            if (casterIds.length !== casters.value.items.length) {
                 throw new Error('Cannot reorder; Some caster IDs were missing from input');
             }
-            if (casterIds.some(id => casters.value.findIndex(caster => caster.id === id) === -1)) {
+            if (casterIds.some(id => casters.value.items.findIndex(caster => caster.id === id) === -1)) {
                 throw new Error('Cannot reorder; Some caster IDs were missing from input');
             }
 
-            casters.value = casterIds.map(id => casters.value.find(caster => caster.id === id)!);
+            casters.value.items = casterIds.map(id => casters.value.items.find(caster => caster.id === id)!);
         });
     }
 }

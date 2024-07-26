@@ -13,8 +13,8 @@ export interface MessageInputMap {
     'activeMatch:subtractScore': EntrantSide
     'activeMatch:beginNextMatch': never
 
-    'casters:update': Casters[number]
-    'casters:insert': Omit<Casters[number], 'id'>
+    'casters:update': Casters['items'][number]
+    'casters:insert': Omit<Casters['items'][number], 'id'>
     'casters:remove': string
     'casters:setOrder': string[]
 }

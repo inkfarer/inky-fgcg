@@ -1,9 +1,13 @@
 <template>
     <error-display class="m-b-8" />
     <ipl-space>
+        <ipl-toggle
+            v-model="castersVisible"
+        />
         <ipl-button
             label="Add caster"
             color="green"
+            class="m-t-8"
             @click="addUnsavedCaster"
         />
     </ipl-space>
@@ -30,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { IplButton, IplExpandingSpaceGroup, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplExpandingSpaceGroup, IplSpace, IplToggle } from '@iplsplatoon/vue-components';
 import { useCasterStore } from 'client-shared/store/CasterStore';
 import { Casters } from 'types/schemas';
 import { computed, ref, watchEffect } from 'vue';
@@ -41,13 +45,13 @@ import ErrorDisplay from '../../components/ErrorDisplay.vue';
 import Draggable from 'vuedraggable';
 
 const casterStore = useCasterStore();
-const unsavedCasters = ref<Casters>([]);
+const unsavedCasters = ref<Casters['items']>([]);
 const selectedCaster = ref<string | null>(null);
 
-const allCasters = ref<Array<Casters[number] & { unsaved: boolean }>>([]);
+const allCasters = ref<Array<Casters['items'][number] & { unsaved: boolean }>>([]);
 watchEffect(() => {
-    const result: Array<Casters[number] & { unsaved: boolean }> = [];
-    casterStore.casters.forEach(caster => {
+    const result: Array<Casters['items'][number] & { unsaved: boolean }> = [];
+    casterStore.casters.items.forEach(caster => {
         result.push({ ...caster, unsaved: false });
     });
     unsavedCasters.value.forEach(caster => {
@@ -55,7 +59,6 @@ watchEffect(() => {
     });
     allCasters.value = result;
 });
-
 
 function addUnsavedCaster() {
     const newCasterId = uuidV4();
@@ -85,4 +88,13 @@ async function onMove() {
         .filter(caster => !caster.unsaved)
         .map(caster => caster.id));
 }
+
+const castersVisible = computed({
+    get() {
+        return casterStore.casters.visible;
+    },
+    set(newValue: boolean) {
+        casterStore.setVisible(newValue);
+    }
+});
 </script>

@@ -5,12 +5,15 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Casters = {
-	id: string;
-	name: string;
-	pronouns: string;
-	socials: {
-		type: string;
-		username: string;
+export interface Casters {
+	visible: boolean;
+	items: {
+		id: string;
+		name: string;
+		pronouns: string;
+		socials: {
+			type: string;
+			username: string;
+		}[];
 	}[];
-}[];
+}

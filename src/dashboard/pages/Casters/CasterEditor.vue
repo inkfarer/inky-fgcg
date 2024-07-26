@@ -54,17 +54,18 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import cloneDeep from 'lodash/cloneDeep';
 
 library.add(faTimes, faGripVertical);
 
 const props = withDefaults(defineProps<{
-    caster: Casters[number]
+    caster: Casters['items'][number]
     unsaved?: boolean
 }>(), {
     unsaved: false
 });
 
-const internalCaster = ref<Casters[number]>(props.caster);
+const internalCaster = ref<Casters['items'][number]>(props.caster);
 updateRefOnValueChange(() => props.caster, internalCaster, true);
 
 const isChanged = computed(() =>
@@ -78,11 +79,14 @@ const isChanged = computed(() =>
     })))
 
 async function onSave() {
+    const newCaster = cloneDeep(internalCaster.value);
+    // @ts-ignore
+    delete newCaster.unsaved;
     if (props.unsaved) {
-        const newId = await sendMessage('casters:insert', internalCaster.value);
+        const newId = await sendMessage('casters:insert', newCaster);
         emit('save', newId);
     } else {
-        await sendMessage('casters:update', internalCaster.value);
+        await sendMessage('casters:update', newCaster);
     }
 }
 

@@ -10,8 +10,15 @@ interface CasterStore {
 
 export const useCasterStore = defineStore('casters', {
     state: () => ({
-        casters: []
-    } as CasterStore)
+        casters: null
+    } as unknown as CasterStore),
+    actions: {
+        setVisible(visible: boolean) {
+            if (casters.value) {
+                casters.value.visible = visible;
+            }
+        }
+    }
 });
 
 export const initCasterStore = createReplicantStoreInitializer([casters], useCasterStore);
