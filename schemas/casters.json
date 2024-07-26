@@ -1,37 +1,50 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "type": "array",
-    "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["id", "name", "socials", "pronouns"],
-        "properties": {
-            "id": {
-                "type": "string"
-            },
-            "name": {
-                "type": "string"
-            },
-            "pronouns": {
-                "type": "string"
-            },
-            "socials": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["type", "username"],
-                    "properties": {
-                        "type": {
-                            "type": "string"
-                        },
-                        "username": {
-                            "type": "string"
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["visible", "items"],
+    "properties": {
+        "visible": {
+            "type": "boolean"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "name", "socials", "pronouns"],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "pronouns": {
+                        "type": "string"
+                    },
+                    "socials": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["type", "username"],
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     },
-    "default": []
+    "default": {
+        "visible": false,
+        "items": []
+    }
 }
