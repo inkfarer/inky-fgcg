@@ -4,6 +4,7 @@ import { EntrantImportController } from './controllers/EntrantImportController';
 import { NextMatchController } from './controllers/NextMatchController';
 import { ActiveMatchController } from './controllers/ActiveMatchController';
 import { StartggClient } from './clients/StartggClient';
+import { CasterController } from './controllers/CasterController';
 
 export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     const startggClient = nodecg.bundleConfig?.startgg?.apiKey == null
@@ -13,4 +14,5 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     new EntrantImportController(nodecg, startggClient);
     new NextMatchController(nodecg, startggClient);
     new ActiveMatchController(nodecg);
+    new CasterController(nodecg);
 };

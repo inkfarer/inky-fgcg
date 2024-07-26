@@ -61,6 +61,14 @@
                 "file": "brackets.html",
                 "workspace": "1 - Main",
                 "headerColor": "#262F40"
+            },
+            {
+                "name": "casters",
+                "title": "Casters",
+                "width": 2,
+                "file": "casters.html",
+                "workspace": "1 - Main",
+                "headerColor": "#262F40"
             }
         ],
         "graphics": [
