@@ -20,8 +20,8 @@ export function createReplicantStoreInitializer(
     };
 }
 
-export function updateRefOnValueChange<T>(source: WatchSource<T>, targetRef: Ref<T>) {
+export function updateRefOnValueChange<T>(source: WatchSource<T>, targetRef: Ref<T>, clone = false) {
     watch(source, newValue => {
-        targetRef.value = newValue;
+        targetRef.value = clone ? cloneDeep(newValue) : newValue;
     }, { immediate: true });
 }
