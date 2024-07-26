@@ -37,5 +37,16 @@ export class CasterController extends BaseController {
 
             casters.value.splice(casterIndex, 1);
         });
+
+        this.listen('casters:setOrder', casterIds => {
+            if (casterIds.length !== casters.value.length) {
+                throw new Error('Cannot reorder; Some caster IDs were missing from input');
+            }
+            if (casterIds.some(id => casters.value.findIndex(caster => caster.id === id) === -1)) {
+                throw new Error('Cannot reorder; Some caster IDs were missing from input');
+            }
+
+            casters.value = casterIds.map(id => casters.value.find(caster => caster.id === id)!);
+        });
     }
 }
