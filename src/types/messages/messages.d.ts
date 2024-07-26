@@ -16,6 +16,7 @@ export interface MessageInputMap {
     'casters:update': Casters[number]
     'casters:insert': Omit<Casters[number], 'id'>
     'casters:remove': string
+    'casters:setOrder': string[]
 }
 
 type MessagesWithoutReturnValues = Exclude<keyof MessageInputMap, keyof InnerMessageResultMap>;

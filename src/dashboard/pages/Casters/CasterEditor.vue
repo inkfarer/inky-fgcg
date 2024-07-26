@@ -1,5 +1,12 @@
 <template>
     <ipl-expanding-space :key="caster.id">
+        <template #header-extra>
+            <font-awesome-icon
+                v-if="!props.unsaved"
+                icon="grip-vertical"
+                class="caster-elem-grip"
+            />
+        </template>
         <template #title>
             {{ internalCaster.name }}
             <ipl-badge v-show="!isBlank(internalCaster.pronouns)">{{ internalCaster.pronouns }}</ipl-badge>
@@ -45,8 +52,10 @@ import { IplBadge, IplExpandingSpace, IplInput, IplButton } from '@iplsplatoon/v
 import { isBlank } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faTimes);
+library.add(faTimes, faGripVertical);
 
 const props = withDefaults(defineProps<{
     caster: Casters[number]
@@ -86,3 +95,11 @@ const emit = defineEmits<{
     (event: 'remove'): void
 }>();
 </script>
+
+<style lang="scss" scoped>
+.caster-elem-grip {
+    color: var(--ipl-input-color);
+    margin: 0 4px;
+    position: relative;
+}
+</style>
