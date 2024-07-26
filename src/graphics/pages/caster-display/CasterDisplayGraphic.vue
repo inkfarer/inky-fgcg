@@ -59,6 +59,23 @@ function beforeCastersEnter(element: HTMLElement) {
     width: 400px;
     padding: 0 16px;
     font-size: 38px;
+    position: relative;
+    filter: drop-shadow(0 0 2px constants.$drop-shadow);
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        opacity: 0.05;
+        mix-blend-mode: soft-light;
+        border-radius: 16px;
+        background:
+            linear-gradient(to bottom, #fff 0%, transparent 24px, transparent calc(100% - 24px), #fff 100%),
+            linear-gradient(to right, #fff 0%, transparent 24px, transparent calc(100% - 24px), #fff 100%);
+    }
 }
 
 .pronouns {
