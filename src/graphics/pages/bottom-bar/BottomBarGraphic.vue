@@ -78,7 +78,7 @@ function getEntrantName(entrant: Entrant): string {
     border-radius: 16px;
     padding: 0 24px;
     position: relative;
-    filter: drop-shadow(0 0 2px rgba(208, 212, 251, 0.5));
+    filter: constants.$drop-shadow;
 
     &:after {
         content: '';

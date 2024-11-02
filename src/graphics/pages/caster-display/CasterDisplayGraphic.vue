@@ -60,7 +60,7 @@ function beforeCastersEnter(element: HTMLElement) {
     padding: 0 16px;
     font-size: 38px;
     position: relative;
-    filter: drop-shadow(0 0 2px constants.$drop-shadow);
+    filter: constants.$drop-shadow;
 
     &:after {
         content: '';
