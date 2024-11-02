@@ -61,7 +61,7 @@ $bottom-margin: 50px;
 
             &.type-team-name {
                 line-height: 1.2em;
-                color: constants.$text-color;
+                color: constants.$text-color-2;
                 border-radius: 5px;
                 padding: 2px 3px;
                 overflow: hidden;
