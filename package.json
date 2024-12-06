@@ -31,6 +31,14 @@
                 "headerColor": "#262F40"
             },
             {
+                "name": "settings",
+                "title": "Settings",
+                "width": 2,
+                "file": "settings.html",
+                "workspace": "2 - Setup",
+                "headerColor": "#262F40"
+            },
+            {
                 "name": "next-match",
                 "title": "Next Match",
                 "width": 2,
