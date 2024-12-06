@@ -54,7 +54,7 @@ const entrant = computed(() => {
 @use '../../styles/constants';
 
 .entrant {
-    width: 475px;
+    width: 450px;
     height: 56px;
     color: constants.$text-color-2;
     display: flex;
