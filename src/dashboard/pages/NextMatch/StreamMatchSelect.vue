@@ -156,12 +156,13 @@ const isChanged = computed(() =>
         || nextMatchStore.nextMatch.match.playType !== selectedStreamMatch.value.playType
         || nextMatchStore.nextMatch.match.numberOfGames !== numberOfGames.value));
 
-function onUpdate() {
+async function onUpdate() {
     if (selectedStreamMatch.value == null || numberOfGames.value == null) return;
 
     sendMessage('nextMatch:update', {
         entrantAId: selectedStreamMatch.value.entrantAId,
         entrantBId: selectedStreamMatch.value.entrantBId,
+    await sendMessage('nextMatch:update', {
         matchName: matchName.value,
         numberOfGames: numberOfGames.value,
         playType: selectedStreamMatch.value.playType
