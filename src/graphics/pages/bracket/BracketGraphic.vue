@@ -1,5 +1,14 @@
 <template>
-   <div
+    <div class="bracket-title-wrapper">
+        <div class="bracket-title">
+            <fitted-content align="center">
+                <opacity-swap-transition>
+                    <div :key="bracketTitle">{{ bracketTitle }}</div>
+                </opacity-swap-transition>
+            </fitted-content>
+        </div>
+    </div>
+    <div
         ref="wrapper"
         class="bracket-wrapper"
     />
@@ -7,11 +16,29 @@
 
 <script setup lang="ts">
 import { BracketRenderer, D3BracketAnimator } from '@tourneyview/renderer';
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useBracketStore } from 'client-shared/store/BracketStore';
+import FittedContent from 'components/FittedContent.vue';
+import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 
 const wrapper = ref<HTMLDivElement>();
 const bracketDataStore = useBracketStore();
+
+const bracketTitle = computed(() => {
+    const titleParts = [];
+    if (String(bracketDataStore.tournamentData.sourceSpecificData?.startgg?.eventId) != bracketDataStore.bracketData?.eventId) {
+        titleParts.push(bracketDataStore.bracketData?.eventName);
+    }
+
+    titleParts.push(bracketDataStore.bracketData?.name);
+
+    if (bracketDataStore.bracketData?.matchGroups[0]?.name !== bracketDataStore.bracketData?.name) {
+        titleParts.push(bracketDataStore.bracketData?.matchGroups[0]?.name);
+    }
+
+    return titleParts.filter(Boolean).join(' - ');
+});
+
 const renderer = new BracketRenderer({
     animator: new D3BracketAnimator(),
     swissOpts: {
@@ -39,8 +66,25 @@ onMounted(async () => {
 @use '../../styles/constants';
 
 $margin: 100px;
-$top-margin: 50px;
+$top-margin: 100px;
 $bottom-margin: 50px;
+
+.bracket-title-wrapper {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 28px;
+}
+
+.bracket-title {
+    background-color: constants.$neutral-2;
+    width: 800px;
+    font-size: 30px;
+    line-height: 32px;
+    border-radius: 8px;
+    padding: 8px;
+}
 
 .bracket-wrapper {
     line-height: 1.5em;
@@ -106,9 +150,7 @@ $bottom-margin: 50px;
     }
 
     .elimination-renderer {
-        .bracket-link {
-            stroke: constants.$accent-1a !important;
-        }
+        padding: 8px;
 
         .elimination-renderer__bracket-title {
             color: constants.$text-color-2;
@@ -167,8 +209,8 @@ $bottom-margin: 50px;
         }
 
         .bracket-link {
-            stroke: #fff;
-            stroke-width: 2px;
+            stroke: #0F1C9A;
+            stroke-width: 3px;
         }
     }
 
