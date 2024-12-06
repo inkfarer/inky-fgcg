@@ -52,6 +52,12 @@
                 name="matchName"
                 class="m-t-4"
             />
+            <div class="layout horizontal center-horizontal m-t-8">
+                <ipl-checkbox
+                    v-model="playersSwapped"
+                    label="Swap players"
+                />
+            </div>
             <ipl-button
                 label="Update"
                 :disabled="numberOfGames == null"
@@ -72,7 +78,7 @@
 
 <script setup lang="ts">
 import {
-    IplButton,
+    IplButton, IplCheckbox,
     IplDataRow, IplInput,
     IplMessage,
     IplMultiSelect,
@@ -92,6 +98,8 @@ import { formatPlayType } from 'client-shared/helpers/StringHelper';
 const entrantStore = useEntrantStore();
 const tournamentDataStore = useTournamentDataStore();
 const nextMatchStore = useNextMatchStore();
+
+const playersSwapped = ref(false);
 
 watch(() => (tournamentDataStore.tournamentData.sourceSpecificData?.startgg?.streams ?? []), streams => {
     selectedStreamOptions.value = selectedStreamOptions.value.filter(stream => stream.value === 'all' || streams.some(newStream => String(newStream.id) === stream.value));
@@ -140,6 +148,7 @@ watch(streamMatchOptions, newValue => {
 }, { immediate: true });
 watch(selectedStreamMatch, newValue => {
     matchName.value = newValue?.matchName ?? '';
+    playersSwapped.value = false;
 
     if (newValue == null || newValue.numberOfGames == null) {
         numberOfGames.value = null;
@@ -150,19 +159,23 @@ watch(selectedStreamMatch, newValue => {
 
 const isChanged = computed(() =>
     selectedStreamMatch.value != null
-    && (nextMatchStore.nextMatch.entrantA.id !== selectedStreamMatch.value.entrantAId
-        || nextMatchStore.nextMatch.entrantB.id !== selectedStreamMatch.value.entrantBId
-        || nextMatchStore.nextMatch.match.name !== matchName.value
-        || nextMatchStore.nextMatch.match.playType !== selectedStreamMatch.value.playType
-        || nextMatchStore.nextMatch.match.numberOfGames !== numberOfGames.value));
+    && (
+        (!playersSwapped.value && (nextMatchStore.nextMatch.entrantA.id !== selectedStreamMatch.value.entrantAId
+        || nextMatchStore.nextMatch.entrantB.id !== selectedStreamMatch.value.entrantBId))
+        || (playersSwapped.value && (nextMatchStore.nextMatch.entrantA.id !== selectedStreamMatch.value.entrantBId
+        || nextMatchStore.nextMatch.entrantB.id !== selectedStreamMatch.value.entrantAId)
+    )
+    || nextMatchStore.nextMatch.match.name !== matchName.value
+    || nextMatchStore.nextMatch.match.playType !== selectedStreamMatch.value.playType
+    || nextMatchStore.nextMatch.match.numberOfGames !== numberOfGames.value)
+);
 
 async function onUpdate() {
     if (selectedStreamMatch.value == null || numberOfGames.value == null) return;
 
-    sendMessage('nextMatch:update', {
-        entrantAId: selectedStreamMatch.value.entrantAId,
-        entrantBId: selectedStreamMatch.value.entrantBId,
     await sendMessage('nextMatch:update', {
+        entrantAId: playersSwapped.value ? selectedStreamMatch.value.entrantBId : selectedStreamMatch.value.entrantAId,
+        entrantBId: playersSwapped.value ? selectedStreamMatch.value.entrantAId : selectedStreamMatch.value.entrantBId,
         matchName: matchName.value,
         numberOfGames: numberOfGames.value,
         playType: selectedStreamMatch.value.playType
