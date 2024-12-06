@@ -1,7 +1,7 @@
 <template>
     <div
         class="entrant"
-        :class="`entrant-${props.entrant.toLowerCase()}`"
+        :class="[`entrant-${props.entrant.toLowerCase()}`, `game-${runtimeConfigStore.runtimeConfig.game}`]"
     >
         <div class="entrant-score">
             {{ entrant.score }}
@@ -24,12 +24,14 @@ import { computed } from 'vue';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 import FittedContent from 'components/FittedContent.vue';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
+import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 
 const props = defineProps<{
     entrant: 'A' | 'B'
 }>();
 
 const activeMatchStore = useActiveMatchStore();
+const runtimeConfigStore = useRuntimeConfigStore();
 const entrant = computed(() => {
     const entrantData = props.entrant === 'A' ? activeMatchStore.activeMatch.entrantA : activeMatchStore.activeMatch.entrantB;
     if (entrantData.participants.length <= 0) {
@@ -109,6 +111,10 @@ const entrant = computed(() => {
         flex-direction: row-reverse;
         border-bottom-left-radius: 12px;
 
+        &.game-SMASH {
+            border-top-left-radius: 12px;
+        }
+
         &:after {
             background:
                 linear-gradient(to bottom, transparent 0%, transparent 20%, transparent 80%, #fff 100%),
@@ -124,6 +130,10 @@ const entrant = computed(() => {
     &.entrant-b {
         background: linear-gradient(60deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
         border-bottom-right-radius: 12px;
+
+        &.game-SMASH {
+            border-top-right-radius: 12px;
+        }
 
         &:after {
             background:
