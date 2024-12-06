@@ -10,6 +10,8 @@ export * from './casters';
 // @ts-ignore
 export * from './entrants';
 // @ts-ignore
+export * from './intermissionData';
+// @ts-ignore
 export * from './nextMatch';
 // @ts-ignore
 export * from './runtimeConfig';
