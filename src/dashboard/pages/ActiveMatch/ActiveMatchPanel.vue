@@ -16,6 +16,11 @@
             color="red"
             @click="sendMessage('activeMatch:beginNextMatch')"
         />
+        <ipl-button
+            label="Swap players"
+            class="m-t-8"
+            @click="sendMessage('activeMatch:swapPlayers')"
+        />
     </ipl-space>
 </template>
 

@@ -49,5 +49,13 @@ export class ActiveMatchController extends BaseController {
                 match: nextMatchData.match
             }
         });
+
+        this.listen('activeMatch:swapPlayers', () => {
+            activeMatch.value = {
+                ...activeMatch.value,
+                entrantA: activeMatch.value.entrantB,
+                entrantB: activeMatch.value.entrantA
+            };
+        });
     }
 }
