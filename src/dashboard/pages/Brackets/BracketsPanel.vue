@@ -71,7 +71,7 @@ import ErrorDisplay from '../../components/ErrorDisplay.vue';
 import { IplDataRow, IplMessage, IplSpace, IplButton } from '@iplsplatoon/vue-components';
 import { computed, ref, Ref, watch } from 'vue';
 import { MatchQueryParameter, MatchImporter, MatchQueryResult, StartggImporter } from '@tourneyview/importer';
-import MatchQueryParamInput from './components/MatchQueryParamInput.vue';
+import MatchQueryParamInput from './MatchQueryParamInput.vue';
 import { Configschema } from 'types/schemas';
 import { useBracketStore } from 'client-shared/store/BracketStore';
 
@@ -115,33 +115,8 @@ watch(() => bracketStore.tournamentData.sourceSpecificData?.startgg?.eventId, ()
 async function getMatchQuery() {
     const importer = getImporter();
     bracketQuery.value = [];
-    const options = await Promise.all((await importer.getMatchQueryOptions(bracketStore.tournamentData.sourceSpecificData?.startgg?.slug ?? ''))
-        .map(async (option) => {
-            // If possible, select the correct event ID automatically.
-            const startggEventId = bracketStore.tournamentData.sourceSpecificData?.startgg?.eventId;
-            if (
-                startggEventId != null
-                && option.key === 'eventId'
-                && option.type === 'select'
-            ) {
-                const eventOption = option.options.find(eventOption => eventOption.value === startggEventId);
-                if (eventOption != null) {
-                    return [
-                        {
-                            name: 'Event',
-                            type: 'static',
-                            key: 'eventId',
-                            value: startggEventId
-                        } satisfies MatchQueryParameter,
-                        ...(eventOption.getParams == null ? [] : (await eventOption.getParams()))
-                    ];
-                }
-            }
 
-            return option;
-        }));
-
-    bracketQuery.value = options.flat();
+    bracketQuery.value = await importer.getMatchQueryOptions(bracketStore.tournamentData.sourceSpecificData?.startgg?.slug ?? '');
 }
 
 async function submitBracketQuery() {

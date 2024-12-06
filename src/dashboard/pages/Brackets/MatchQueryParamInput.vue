@@ -37,6 +37,9 @@ import type { MatchQueryParameter } from '@tourneyview/importer';
 import { IplSelect } from '@iplsplatoon/vue-components';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import MatchQueryNumberRangeInput from './MatchQueryNumberRangeInput.vue';
+import { useBracketStore } from 'client-shared/store/BracketStore';
+
+const bracketStore = useBracketStore();
 
 const props = defineProps<{ param: MatchQueryParameter, query: Record<string, string | number | undefined> }>();
 const emit = defineEmits<{
@@ -72,6 +75,11 @@ onMounted(() => {
     emit('parameterAdd', props.param.key);
     if (props.param.type === 'static') {
         emit('change', props.param.key, props.param.value);
+    } else if (props.param.type === 'select' && props.param.key === 'eventId') {
+        const startggEventId = bracketStore.tournamentData.sourceSpecificData?.startgg?.eventId;
+        if (startggEventId != null && props.param.options.some(eventOption => eventOption.value === startggEventId)) {
+            emit('change', props.param.key, startggEventId);
+        }
     }
 });
 

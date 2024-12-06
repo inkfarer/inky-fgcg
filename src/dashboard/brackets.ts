@@ -4,7 +4,7 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { initBracketStore } from 'client-shared/store/BracketStore';
 import { setUpErrorHandler } from './helpers/ErrorHandlerStore';
-import BracketsPanel from './pages/brackets/BracketsPanel.vue';
+import BracketsPanel from './pages/Brackets/BracketsPanel.vue';
 
 (async () => {
     const app = createApp(BracketsPanel);
