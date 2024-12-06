@@ -29,6 +29,12 @@
                 </fitted-content>
             </div>
         </div>
+        <div class="info-ticker">
+            Hello from Yo Mana!
+            <template v-if="tournamentDataStore.tournamentData.sourceSpecificData?.startgg != null">
+                — View the tournament bracket at start.gg/{{ tournamentDataStore.tournamentData.sourceSpecificData.startgg.shortSlug ?? tournamentDataStore.tournamentData.sourceSpecificData.startgg.slug }}
+            </template>
+        </div>
     </div>
 </template>
 
@@ -41,7 +47,9 @@ import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
 import FittedContent from 'components/FittedContent.vue';
 import { useAssetStore } from 'client-shared/store/AssetStore';
+import { useTournamentDataStore } from 'client-shared/store/TournamentDataStore';
 
+const tournamentDataStore = useTournamentDataStore();
 const nextMatchStore = useNextMatchStore();
 const intermissionStore = useIntermissionStore();
 const assetStore = useAssetStore();
@@ -62,23 +70,37 @@ function getEntrantName(entrant: Entrant): string {
     position: absolute;
     width: 100%;
     left: 0;
-    bottom: 16px;
+    bottom: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.info-ticker {
+    background-color: #101026;
+    border-radius: 8px 8px 0 0;
+    color: rgba(233, 254, 255, 0.75);
+    height: 30px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    width: 1600px;
+    text-align: center;
 }
 
 .bottom-bar {
     display: flex;
     align-items: center;
     width: 1600px;
-    height: 120px;
+    height: 100px;
     background: linear-gradient(120deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
     color: constants.$text-color-2;
     border-radius: 16px;
     padding: 0 24px;
     position: relative;
     filter: constants.$drop-shadow;
+    margin-bottom: 16px;
 
     &:after {
         content: '';
@@ -121,7 +143,7 @@ function getEntrantName(entrant: Entrant): string {
 
     .sponsors {
         min-width: 150px;
-        height: 95px;
+        height: 85px;
         position: relative;
     }
 }

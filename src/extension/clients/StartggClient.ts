@@ -74,6 +74,7 @@ query TournamentData($eventId: ID!) {
   event(id: $eventId) {
     tournament {
       slug
+      shortSlug
       name
       streams {
         id
@@ -166,6 +167,7 @@ interface GetTournamentDataResponse {
         event: {
             tournament: {
                 slug: string
+                shortSlug: string | null
                 name: string
                 streams: {
                     id: number
@@ -259,6 +261,7 @@ export class StartggClient {
             sourceSpecificData: {
                 startgg: {
                     slug: tournamentDataResponse.data.data.event.tournament.slug,
+                    shortSlug: tournamentDataResponse.data.data.event.tournament.shortSlug,
                     eventId,
                     streams: tournamentDataResponse.data.data.event.tournament.streams ?? []
                 }

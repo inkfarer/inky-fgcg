@@ -22,6 +22,9 @@
                         "slug": {
                             "type": "string"
                         },
+                        "shortSlug": {
+                            "type": ["string", "null"]
+                        },
                         "eventId": {
                             "type": "number"
                         },

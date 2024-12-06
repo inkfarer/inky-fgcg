@@ -11,6 +11,7 @@ export interface TournamentData {
 	sourceSpecificData?: {
 		startgg?: {
 			slug: string;
+			shortSlug?: string | null;
 			eventId: number;
 			streams: {
 				id: number;
