@@ -1,13 +1,13 @@
 $neutral-1: #FFF5E9;
 $neutral-2: #F2EDFB;
-$accent-1a: #3D1D82;
-$accent-1b: #2F1663;
-$accent-1c: #6432D1;
+$accent-1a: #3D019F;
+$accent-1b: #320181;
+$accent-1c: #5B01ED;
 
 $text-color: #070D47;
 $text-color-2: $neutral-2;
 $text-color-low-emphasis: #D0D4FB;
 $text-color-accent: #ffc900;
 
-$drop-shadow-color: rgba(34, 34, 34, 0.5);
-$drop-shadow: drop-shadow(0 0 12px $drop-shadow-color);
+$drop-shadow-color: rgba(34, 34, 34, 0.75);
+$drop-shadow: drop-shadow(-1px 1px 8px $drop-shadow-color);
