@@ -15,14 +15,14 @@ export class ActiveMatchController extends BaseController {
             const scoreSum = activeMatch.value.entrantA.score + activeMatch.value.entrantB.score;
             if (scoreSum >= activeMatch.value.match.numberOfGames) return;
 
-            if (scoreSum === 0) {
-                nextMatch.value.showOnStream = false;
-            }
-
             if (side === EntrantSide.ALPHA) {
                 activeMatch.value.entrantA.score++;
             } else if (side === EntrantSide.BRAVO) {
                 activeMatch.value.entrantB.score++;
+            }
+
+            if (scoreSum === 0) {
+                nextMatch.value.showOnStream = false;
             }
         });
 
@@ -46,7 +46,8 @@ export class ActiveMatchController extends BaseController {
                     ...nextMatchData.entrantB,
                     score: 0
                 },
-                match: nextMatchData.match
+                match: nextMatchData.match,
+                hideOnIntermission: false
             }
         });
 

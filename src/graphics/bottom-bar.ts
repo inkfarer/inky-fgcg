@@ -8,6 +8,7 @@ import { initNextMatchStore } from 'client-shared/store/NextMatchStore';
 import BottomBarGraphic from './pages/bottom-bar/BottomBarGraphic.vue';
 import { initIntermissionStore } from 'client-shared/store/IntermissionStore';
 import { initTournamentDataStore } from 'client-shared/store/TournamentDataStore';
+import { initActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 
 (async () => {
     const app = createApp(BottomBarGraphic);
@@ -15,6 +16,7 @@ import { initTournamentDataStore } from 'client-shared/store/TournamentDataStore
     app.use(createPinia());
     await Promise.all([
         initNextMatchStore(),
+        initActiveMatchStore(),
         initAssetStore(),
         initIntermissionStore(),
         initTournamentDataStore()

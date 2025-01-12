@@ -42,9 +42,12 @@
                 }
             },
             "required": ["name", "numberOfGames", "playType"]
+        },
+        "hideOnIntermission": {
+            "type": "boolean"
         }
     },
-    "required": ["entrantA", "entrantB", "match"],
+    "required": ["entrantA", "entrantB", "match", "hideOnIntermission"],
     "default": {
         "entrantA": {
             "id": "000",
@@ -72,6 +75,7 @@
             "name": "Placeholder Round",
             "numberOfGames": 3,
             "playType": "BEST_OF"
-        }
+        },
+        "hideOnIntermission": false
     }
 }

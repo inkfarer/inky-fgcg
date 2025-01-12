@@ -11,6 +11,11 @@
             :color="bottomBarChanged ? 'red' : 'blue'"
             @click="onBottomBarUpdate"
         />
+        <ipl-small-toggle
+            v-model="hideOnIntermission"
+            class="m-t-8"
+            label="Hide active match on bottom bar"
+        />
     </ipl-space>
     <ipl-space
         class="m-t-8"
@@ -33,9 +38,20 @@
 import { updateRefOnValueChange } from 'client-shared/store/StoreHelper';
 import { computed, ref } from 'vue';
 import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
-import { IplButton, IplInput, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplSmallToggle, IplSpace } from '@iplsplatoon/vue-components';
+import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 
 const intermissionStore = useIntermissionStore();
+const activeMatchStore = useActiveMatchStore();
+
+const hideOnIntermission = computed({
+    get() {
+        return activeMatchStore.activeMatch.hideOnIntermission;
+    },
+    set(newValue: boolean) {
+        activeMatchStore.setHideOnIntermission(newValue);
+    }
+});
 
 const bottomBarFlavorText = ref('');
 const intermissionFlavorText = ref('');
