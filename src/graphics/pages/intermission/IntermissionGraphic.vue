@@ -70,6 +70,7 @@ const intermissionStore = useIntermissionStore();
         flex-direction: column;
         position: relative;
         padding: 0 48px;
+        filter: drop-shadow(0 0 12px rgba(34, 34, 34, 0.5));
     }
 
     &.game-TEKKEN .game-name {
