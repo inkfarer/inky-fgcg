@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="info-ticker">
-            Hello from Yo Mana!
+            Hello from WinterCon!
             <template v-if="tournamentDataStore.tournamentData.sourceSpecificData?.startgg != null">
                 — View the tournament bracket at start.gg/{{ tournamentDataStore.tournamentData.sourceSpecificData.startgg.shortSlug ?? tournamentDataStore.tournamentData.sourceSpecificData.startgg.slug }}
             </template>
@@ -78,7 +78,7 @@ function getEntrantName(entrant: Entrant): string {
 }
 
 .info-ticker {
-    background-color: #101026;
+    background-color: #100822;
     border-radius: 8px 8px 0 0;
     color: rgba(233, 254, 255, 0.75);
     height: 30px;
