@@ -9,4 +9,5 @@ $text-color-2: $neutral-2;
 $text-color-low-emphasis: #D0D4FB;
 $text-color-accent: #ffc900;
 
-$drop-shadow: drop-shadow(0 0 12px rgba(34, 34, 34, 0.5));
+$drop-shadow-color: rgba(34, 34, 34, 0.5);
+$drop-shadow: drop-shadow(0 0 12px $drop-shadow-color);

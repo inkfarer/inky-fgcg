@@ -178,7 +178,24 @@ $bottom-margin: 50px;
         .match-cell {
             color: constants.$text-color-2;
             background-color: constants.$accent-1a;
-            filter: drop-shadow(0 0 2px rgba(208, 212, 251, 0.5));
+            filter: drop-shadow(0 0 8px constants.$drop-shadow-color);
+            position: relative;
+            border-radius: 4px;
+
+            &:after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                opacity: 0.2;
+                mix-blend-mode: soft-light;
+                border-radius: 4px;
+                background:
+                    linear-gradient(to bottom, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%),
+                    linear-gradient(to right, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%);
+            }
 
             .match-cell__score-wrapper {
                 background-color: constants.$accent-1c;
@@ -209,7 +226,7 @@ $bottom-margin: 50px;
         }
 
         .bracket-link {
-            stroke: #0F1C9A;
+            stroke: constants.$neutral-2;
             stroke-width: 3px;
         }
     }
