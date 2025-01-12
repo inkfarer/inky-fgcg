@@ -1,6 +1,7 @@
 import { ActiveMatch } from 'types/schemas';
 import { defineStore } from 'pinia';
 import { createReplicantStoreInitializer } from 'client-shared/store/StoreHelper';
+import { formatPlayType } from 'client-shared/helpers/StringHelper';
 
 const activeMatch = nodecg.Replicant<ActiveMatch>('activeMatch');
 
@@ -13,17 +14,7 @@ export const useActiveMatchStore = defineStore('activeMatch', {
         activeMatch: null
     } as unknown as ActiveMatchStore),
     getters: {
-        formattedPlayType: state => {
-            const numberOfGames = state.activeMatch.match.numberOfGames;
-            switch (state.activeMatch.match.playType) {
-                case 'BEST_OF':
-                    return `Best of ${numberOfGames}`;
-                case 'PLAY_ALL':
-                    return `Play all ${numberOfGames}`;
-                default:
-                    return `${numberOfGames} games`;
-            }
-        }
+        formattedPlayType: state => formatPlayType(state.activeMatch.match.playType, state.activeMatch.match.numberOfGames)
     }
 });
 

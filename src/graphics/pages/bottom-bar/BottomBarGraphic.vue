@@ -1,23 +1,33 @@
 <template>
     <div class="bottom-bar-wrapper">
         <div class="bottom-bar">
-            <clock />
-            <template v-if="assetStore.hasSponsors">
-                <div class="separator" />
-                <sponsor-rotation class="sponsors" />
-            </template>
-            <div class="separator" />
-            <div class="info-text">
+            <div class="bottom-bar-item">
+                <clock />
+            </div>
+            <div
+                class="info-text bottom-bar-item"
+                :class="{ hidden: !nextMatchStore.nextMatch.showOnStream && isBlank(intermissionStore.bottomBarData.flavorText) }"
+            >
                 <fitted-content align="center">
                     <opacity-swap-transition>
                         <div
                             v-if="nextMatchStore.nextMatch.showOnStream"
                             :key="`${getEntrantName(nextMatchStore.nextMatch.entrantA)}_${getEntrantName(nextMatchStore.nextMatch.entrantB)}`"
                         >
-                            <span class="low-emphasis">Next:</span>
-                            {{ $helpers.addDots(getEntrantName(nextMatchStore.nextMatch.entrantA)) }}
-                            <span class="low-emphasis">vs</span>
-                            {{ $helpers.addDots(getEntrantName(nextMatchStore.nextMatch.entrantB)) }}
+                            <div>
+                                <span class="low-emphasis">Next: </span>
+                                <span class="player-name">{{ $helpers.addDots(getEntrantName(nextMatchStore.nextMatch.entrantA)) }}</span>
+                                <span class="low-emphasis"> vs </span>
+                                <span class="player-name">{{ $helpers.addDots(getEntrantName(nextMatchStore.nextMatch.entrantB)) }}</span>
+                            </div>
+                            <opacity-swap-transition>
+                                <div
+                                    :key="`${nextMatchStore.nextMatch.match.name}_${nextMatchStore.formattedPlayType}`"
+                                    class="round-info"
+                                >
+                                    {{ nextMatchStore.nextMatch.match.name }}<span class="separator"> - </span>{{ nextMatchStore.formattedPlayType }}
+                                </div>
+                            </opacity-swap-transition>
                         </div>
                         <div
                             v-else
@@ -27,6 +37,12 @@
                         </div>
                     </opacity-swap-transition>
                 </fitted-content>
+            </div>
+            <div
+                v-if="assetStore.hasSponsors"
+                class="bottom-bar-item"
+            >
+                <sponsor-rotation class="sponsors" />
             </div>
         </div>
         <div class="info-ticker">
@@ -48,6 +64,7 @@ import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
 import FittedContent from 'components/FittedContent.vue';
 import { useAssetStore } from 'client-shared/store/AssetStore';
 import { useTournamentDataStore } from 'client-shared/store/TournamentDataStore';
+import { isBlank } from 'client-shared/helpers/StringHelper';
 
 const tournamentDataStore = useTournamentDataStore();
 const nextMatchStore = useNextMatchStore();
@@ -89,18 +106,18 @@ function getEntrantName(entrant: Entrant): string {
     text-align: center;
 }
 
-.bottom-bar {
+.bottom-bar-item {
+    background: linear-gradient(120deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
+    filter: constants.$drop-shadow;
+    height: 100%;
+    padding: 0 24px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
-    width: 1600px;
-    height: 100px;
-    background: linear-gradient(120deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
-    color: constants.$text-color-2;
-    border-radius: 16px;
-    padding: 0 24px;
-    position: relative;
-    filter: constants.$drop-shadow;
-    margin-bottom: 16px;
+
+    &:not(:last-child) {
+        margin-right: 16px;
+    }
 
     &:after {
         content: '';
@@ -116,6 +133,30 @@ function getEntrantName(entrant: Entrant): string {
             linear-gradient(to bottom, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%),
             linear-gradient(to right, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%);
     }
+}
+
+.clock-wrapper {
+    margin-bottom: 6px;
+}
+
+.round-info {
+    font-size: 0.6em;
+    color: constants.$text-color-low-emphasis;
+    margin-top: 2px;
+}
+
+.player-name {
+    font-weight: 550;
+}
+
+.bottom-bar {
+    display: flex;
+    align-items: center;
+    width: 1600px;
+    height: 100px;
+    color: constants.$text-color-2;
+    position: relative;
+    margin-bottom: 16px;
 
     > .separator {
         background-color: constants.$neutral-2;
@@ -124,20 +165,26 @@ function getEntrantName(entrant: Entrant): string {
         margin: 0 24px;
     }
 
-    .clock-wrapper {
-        margin-bottom: 3px;
-    }
-
     .info-text {
         flex-grow: 1;
         text-align: center;
         font-size: 38px;
         min-width: 0;
+        justify-content: center;
+        transition-duration: 350ms;
+        transition-property: opacity, transform;
+        transition-timing-function: ease-out;
 
         .low-emphasis {
             color: constants.$text-color-low-emphasis;
             font-size: 0.9em;
             font-weight: 400;
+        }
+
+        &.hidden {
+            opacity: 0;
+            transform: translateY(16px);
+            transition-timing-function: ease-in;
         }
     }
 

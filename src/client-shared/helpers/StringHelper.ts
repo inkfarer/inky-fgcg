@@ -21,5 +21,7 @@ export function formatPlayType(playType: 'BEST_OF' | 'PLAY_ALL', numberOfGames?:
             return numberOfGames == null ? 'Best of X' : `Best of ${numberOfGames}`;
         case 'PLAY_ALL':
             return numberOfGames == null ? 'Play all X' : `Play all ${numberOfGames}`;
+        default:
+            return numberOfGames == null ? '' : `${numberOfGames} games`;
     }
 }
