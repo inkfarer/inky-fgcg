@@ -3,7 +3,7 @@
         class="entrant"
         :class="[`entrant-${props.entrant.toLowerCase()}`, `game-${runtimeConfigStore.runtimeConfig.game}`]"
     >
-        <div class="entrant-score">
+        <div class="entrant-score font-numeric">
             {{ entrant.score }}
         </div>
         <div class="entrant-name">
@@ -98,7 +98,7 @@ const entrant = computed(() => {
     .entrant-score {
         background-color: constants.$accent-1c;
         color: constants.$text-color-2;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 45px;
         line-height: 55px;
         min-width: 68px;

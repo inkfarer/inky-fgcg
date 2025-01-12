@@ -126,6 +126,7 @@ $bottom-margin: 50px;
                 .score-layout {
                     margin-top: -2px;
                     font-weight: 700;
+                    font-family: 'Montserrat', sans-serif;
                     font-size: 1.75em;
                     
                     .team-score {
@@ -205,7 +206,8 @@ $bottom-margin: 50px;
             }
 
             .match-cell__score {
-                font-weight: 600;
+                font-weight: 700;
+                font-family: 'Montserrat', sans-serif;
 
                 &.is-disqualified {
                     font-size: 1em;
@@ -264,6 +266,7 @@ $bottom-margin: 50px;
             .match-row__scores {
                 border-radius: 5px;
                 font-weight: 700;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 1.4em;
                 width: 120px;
                 padding: 0 4px;
