@@ -6,14 +6,11 @@
             </div>
             <div
                 class="info-text bottom-bar-item"
-                :class="{ hidden: !nextMatchStore.nextMatch.showOnStream && isBlank(intermissionStore.bottomBarData.flavorText) }"
+                :class="{ hidden: mainSectionMode == null }"
             >
                 <fitted-content align="center">
-                    <opacity-swap-transition>
-                        <div
-                            v-if="nextMatchStore.nextMatch.showOnStream"
-                            :key="`${getEntrantName(nextMatchStore.nextMatch.entrantA)}_${getEntrantName(nextMatchStore.nextMatch.entrantB)}`"
-                        >
+                    <opacity-swap-transition mode="out-in">
+                        <div v-if="mainSectionMode === 'nextMatch'">
                             <div>
                                 <span class="low-emphasis">Next: </span>
                                 <span class="player-name">{{ $helpers.addDots(getEntrantName(nextMatchStore.nextMatch.entrantA)) }}</span>
@@ -29,8 +26,25 @@
                                 </div>
                             </opacity-swap-transition>
                         </div>
+                        <div v-else-if="mainSectionMode === 'activeMatch'">
+                            <div>
+                                <span class="player-name">{{ $helpers.addDots(getEntrantName(activeMatchStore.activeMatch.entrantA)) }}</span>
+                                <span class="player-score player-a-score font-numeric">{{ activeMatchStore.activeMatch.entrantA.score }}</span>
+                                <span class="score-separator"> - </span>
+                                <span class="player-score player-b-score font-numeric">{{ activeMatchStore.activeMatch.entrantB.score }}</span>
+                                <span class="player-name">{{ $helpers.addDots(getEntrantName(activeMatchStore.activeMatch.entrantB)) }}</span>
+                            </div>
+                            <opacity-swap-transition>
+                                <div
+                                    :key="`${activeMatchStore.activeMatch.match.name}_${activeMatchStore.formattedPlayType}`"
+                                    class="round-info"
+                                >
+                                    {{ activeMatchStore.activeMatch.match.name }}<span class="separator"> - </span>{{ activeMatchStore.formattedPlayType }}
+                                </div>
+                            </opacity-swap-transition>
+                        </div>
                         <div
-                            v-else
+                            v-else-if="mainSectionMode === 'flavorText'"
                             :key="intermissionStore.bottomBarData.flavorText"
                         >
                             {{ intermissionStore.bottomBarData.flavorText }}
@@ -65,11 +79,26 @@ import FittedContent from 'components/FittedContent.vue';
 import { useAssetStore } from 'client-shared/store/AssetStore';
 import { useTournamentDataStore } from 'client-shared/store/TournamentDataStore';
 import { isBlank } from 'client-shared/helpers/StringHelper';
+import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
+import { computed } from 'vue';
 
 const tournamentDataStore = useTournamentDataStore();
 const nextMatchStore = useNextMatchStore();
+const activeMatchStore = useActiveMatchStore();
 const intermissionStore = useIntermissionStore();
 const assetStore = useAssetStore();
+
+const mainSectionMode = computed(() => {
+    if (nextMatchStore.nextMatch.showOnStream) {
+        return 'nextMatch';
+    } else if (!activeMatchStore.activeMatch.hideOnIntermission && (activeMatchStore.activeMatch.entrantA.score > 0 || activeMatchStore.activeMatch.entrantB.score > 0)) {
+        return 'activeMatch';
+    } else if (!isBlank(intermissionStore.bottomBarData.flavorText)) {
+        return 'flavorText';
+    } else {
+        return null;
+    }
+});
 
 function getEntrantName(entrant: Entrant): string {
     if (entrant.participants.length >= 1) {
@@ -193,5 +222,23 @@ function getEntrantName(entrant: Entrant): string {
         height: 85px;
         position: relative;
     }
+}
+
+.player-score {
+    font-weight: 700;
+    display: inline-block;
+    color: constants.$text-color-accent;
+
+    &.player-a-score {
+        margin-left: 10px;
+    }
+
+    &.player-b-score {
+        margin-right: 10px;
+    }
+}
+
+.score-separator {
+    color: constants.$text-color-accent;
 }
 </style>

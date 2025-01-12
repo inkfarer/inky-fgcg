@@ -15,6 +15,11 @@ export const useActiveMatchStore = defineStore('activeMatch', {
     } as unknown as ActiveMatchStore),
     getters: {
         formattedPlayType: state => formatPlayType(state.activeMatch.match.playType, state.activeMatch.match.numberOfGames)
+    },
+    actions: {
+        setHideOnIntermission(newValue: boolean) {
+            activeMatch.value!.hideOnIntermission = newValue;
+        }
     }
 });
 

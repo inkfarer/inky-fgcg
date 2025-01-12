@@ -18,6 +18,7 @@ export interface ActiveMatch {
 		numberOfGames: number;
 		playType: 'PLAY_ALL' | 'BEST_OF';
 	};
+	hideOnIntermission: boolean;
 }
 export interface Entrant {
 	id: string;
