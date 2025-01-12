@@ -21,7 +21,8 @@ const runtimeConfigStore = useRuntimeConfigStore();
 const gameOptions: Option[] = [
     { name: 'Tekken', value: 'TEKKEN' },
     { name: 'Mortal Kombat', value: 'MORTAL_KOMBAT' },
-    { name: 'Smash', value: 'SMASH' }
+    { name: 'Smash', value: 'SMASH' },
+    { name: 'Street Fighter 6', value: 'STREET_FIGHTER_6' }
 ];
 
 const game = computed({
