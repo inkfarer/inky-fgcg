@@ -11,11 +11,17 @@
                     <template v-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT'">
                         MK11
                     </template>
-                    <template v-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN'">
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN'">
                         Tekken
                     </template>
-                    <template v-if="runtimeConfigStore.runtimeConfig.game === 'SMASH'">
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SMASH'">
                         Ultimate
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'STREET_FIGHTER_6'">
+                        SF6
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT_1'">
+                        MK1
                     </template>
                 </div>
             </div>

@@ -171,7 +171,7 @@ function getEntrantName(entrant: Entrant): string {
 .round-info {
     font-size: 0.6em;
     color: constants.$text-color-low-emphasis;
-    margin-top: 2px;
+    margin-top: -8px;
 }
 
 .player-name {
@@ -227,7 +227,7 @@ function getEntrantName(entrant: Entrant): string {
 .player-score {
     font-weight: 700;
     display: inline-block;
-    color: constants.$text-color-accent;
+    //color: constants.$text-color-accent;
 
     &.player-a-score {
         margin-left: 10px;
@@ -239,6 +239,6 @@ function getEntrantName(entrant: Entrant): string {
 }
 
 .score-separator {
-    color: constants.$text-color-accent;
+    //color: constants.$text-color-accent;
 }
 </style>
