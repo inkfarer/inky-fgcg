@@ -20,6 +20,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useBracketStore } from 'client-shared/store/BracketStore';
 import FittedContent from 'components/FittedContent.vue';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
+import * as d3 from 'd3';
 
 const wrapper = ref<HTMLDivElement>();
 const bracketDataStore = useBracketStore();
@@ -41,6 +42,9 @@ const bracketTitle = computed(() => {
 
 const renderer = new BracketRenderer({
     animator: new D3BracketAnimator(),
+    eliminationOpts: {
+        curveFunction: d3.curveStep,
+    },
     swissOpts: {
         rowHeight: 60,
         useScrollMask: false
@@ -68,6 +72,8 @@ onMounted(async () => {
 $margin: 100px;
 $top-margin: 100px;
 $bottom-margin: 50px;
+$skew-amount: 8deg;
+$inverse-skew-amount: -8deg;
 
 .bracket-title-wrapper {
     position: absolute;
@@ -78,12 +84,19 @@ $bottom-margin: 50px;
 }
 
 .bracket-title {
-    background-color: constants.$neutral-2;
+    background-color: constants.$neutral-1;
+    color: #FFFFFF;
     width: 800px;
-    font-size: 30px;
-    line-height: 32px;
-    border-radius: 8px;
-    padding: 8px;
+    font-size: 40px;
+    padding: 8px 8px;
+    transform: skew($inverse-skew-amount);
+    border-width: 0 8px;
+    border-style: solid;
+    border-color: constants.$accent-2;
+
+    > * {
+        transform: skew($skew-amount);
+    }
 }
 
 .bracket-wrapper {
@@ -175,20 +188,26 @@ $bottom-margin: 50px;
             font-weight: 500;
         }
 
+        .match-cell-wrapper {
+            transform: skew($inverse-skew-amount);
+        }
+
         .match-cell {
             color: constants.$text-color-2;
             background-color: constants.$accent-1a;
-            filter: drop-shadow(0 0 2px rgba(208, 212, 251, 0.5));
+            border-radius: 0;
 
             .match-cell__score-wrapper {
-                background-color: constants.$accent-1c;
+                background-color: constants.$accent-3;
+                border-left: 8px solid constants.$accent-2;
                 color: constants.$text-color-2;
-                line-height: 2em;
+                line-height: 1.9em;
                 height: 100%;
             }
 
             .match-cell__score {
                 font-weight: 600;
+                font-size: 1.9em;
 
                 &.is-disqualified {
                     font-size: 1em;
@@ -197,6 +216,13 @@ $bottom-margin: 50px;
 
             .match-cell__team-name {
                 font-weight: 400;
+                transform: skew($skew-amount);
+                margin-left: 6px;
+                margin-right: 4px;
+
+                &.match-cell__bottom-team-name {
+                    transform: skew($skew-amount);
+                }
             }
 
             .match-cell__top-team-name, .match-cell__top-score {
@@ -209,7 +235,7 @@ $bottom-margin: 50px;
         }
 
         .bracket-link {
-            stroke: #0F1C9A;
+            stroke: #C4C3C8;
             stroke-width: 3px;
         }
     }
