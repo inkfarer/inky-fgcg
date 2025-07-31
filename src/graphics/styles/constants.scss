@@ -6,8 +6,24 @@ $accent-1c: #1325C7;
 $accent-2: #92FE8C;
 $accent-3: #3F6DB7;
 
-$text-color: #070D47;
+$text-color: #FFFFFF;
 $text-color-2: #FFFFFF;
-$text-color-low-emphasis: #D0D4FB;
+$text-color-low-emphasis: #D7D5E4;
 
 $drop-shadow: drop-shadow(0 0 2px rgba(208, 212, 251, 0.5));
+
+@mixin skew-mask-x($size) {
+    clip-path: polygon(0% 0%, calc(100% - $size) 0%, 100% 100%, $size 100%);
+}
+
+@mixin skew-mask-x-inverse($size) {
+    clip-path: polygon($size 0%, 100% 0%, calc(100% - $size) 100%, 0% 100%);
+}
+
+@mixin skew-mask-y($size) {
+    clip-path: polygon($size 0%, calc(100% - $size) 0%, 100% 100%, 0% 100%);
+}
+
+@mixin skew-mask-y-inverse($size) {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - $size) 100%, $size 100%);
+}

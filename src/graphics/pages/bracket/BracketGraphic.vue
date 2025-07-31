@@ -44,6 +44,7 @@ const renderer = new BracketRenderer({
     animator: new D3BracketAnimator(),
     eliminationOpts: {
         curveFunction: d3.curveStep,
+        linkWidth: 30
     },
     swissOpts: {
         rowHeight: 60,
@@ -69,7 +70,7 @@ onMounted(async () => {
 @use 'sass:color';
 @use '../../styles/constants';
 
-$margin: 100px;
+$margin: 50px;
 $top-margin: 100px;
 $bottom-margin: 50px;
 $skew-amount: 8deg;
@@ -188,21 +189,33 @@ $inverse-skew-amount: -8deg;
             font-weight: 500;
         }
 
-        .match-cell-wrapper {
-            transform: skew($inverse-skew-amount);
-        }
-
         .match-cell {
+            @include constants.skew-mask-x-inverse(11px);
+            padding-left: 8px;
+
             color: constants.$text-color-2;
-            background-color: constants.$accent-1a;
+            background: linear-gradient(
+                100deg,
+                constants.$accent-1a 0%,
+                constants.$accent-1a calc(100% - 59px),
+                constants.$accent-2 calc(100% - 58px),
+                constants.$accent-2 calc(100% - 50px),
+                constants.$accent-3 calc(100% - 49px)
+            );
             border-radius: 0;
+            grid-template-columns: 1fr 50px;
 
             .match-cell__score-wrapper {
-                background-color: constants.$accent-3;
-                border-left: 8px solid constants.$accent-2;
+                @include constants.skew-mask-x-inverse(5.5px);
+
                 color: constants.$text-color-2;
                 line-height: 1.9em;
                 height: 100%;
+                padding-right: 4px;
+
+                &:nth-child(2) {
+                    margin-left: 6.5px;
+                }
             }
 
             .match-cell__score {
@@ -216,13 +229,8 @@ $inverse-skew-amount: -8deg;
 
             .match-cell__team-name {
                 font-weight: 400;
-                transform: skew($skew-amount);
                 margin-left: 6px;
                 margin-right: 4px;
-
-                &.match-cell__bottom-team-name {
-                    transform: skew($skew-amount);
-                }
             }
 
             .match-cell__top-team-name, .match-cell__top-score {
@@ -231,6 +239,10 @@ $inverse-skew-amount: -8deg;
 
             .match-cell__bottom-team-name, .match-cell__bottom-score {
                 margin-bottom: 2px;
+            }
+
+            .match-cell__bottom-team-name {
+                transform: translateX(-6.5px);
             }
         }
 
