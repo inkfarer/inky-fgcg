@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="info-ticker">
-            Hello from Yo Mana!
+            {{ greeting }}
             <template v-if="tournamentDataStore.tournamentData.sourceSpecificData?.startgg != null">
                 — View the tournament bracket at start.gg/{{ tournamentDataStore.tournamentData.sourceSpecificData.startgg.shortSlug ?? tournamentDataStore.tournamentData.sourceSpecificData.startgg.slug }}
             </template>
@@ -72,7 +72,7 @@
 import Clock from 'components/Clock.vue';
 import SponsorRotation from 'components/SponsorRotation.vue';
 import { useNextMatchStore } from 'client-shared/store/NextMatchStore';
-import { Entrant } from 'types/schemas';
+import { Configschema, Entrant } from 'types/schemas';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
 import FittedContent from 'components/FittedContent.vue';
@@ -87,6 +87,8 @@ const nextMatchStore = useNextMatchStore();
 const activeMatchStore = useActiveMatchStore();
 const intermissionStore = useIntermissionStore();
 const assetStore = useAssetStore();
+
+const greeting = (nodecg.bundleConfig as Configschema).event?.greeting ?? 'Hello from Yo Mana!';
 
 const mainSectionMode = computed(() => {
     if (nextMatchStore.nextMatch.showOnStream) {
