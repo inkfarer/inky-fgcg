@@ -1,8 +1,10 @@
 <template>
     <div class="bottom-bar-wrapper">
         <div class="bottom-bar">
-            <div class="bottom-bar-item">
-                <clock />
+            <div class="bottom-bar-item-shadow">
+                <div class="bottom-bar-item">
+                    <clock />
+                </div>
             </div>
             <div
                 class="info-text bottom-bar-item"
@@ -52,11 +54,13 @@
                     </opacity-swap-transition>
                 </fitted-content>
             </div>
-            <div
-                v-if="assetStore.hasSponsors"
-                class="bottom-bar-item"
-            >
-                <sponsor-rotation class="sponsors" />
+            <div class="bottom-bar-item-shadow">
+                <div
+                    v-if="assetStore.hasSponsors"
+                    class="bottom-bar-item"
+                >
+                    <sponsor-rotation class="sponsors" />
+                </div>
             </div>
         </div>
         <div class="info-ticker">
@@ -126,29 +130,24 @@ function getEntrantName(entrant: Entrant): string {
 }
 
 .info-ticker {
-    background-color: #101026;
-    border-radius: 8px 8px 0 0;
+    @include constants.skew-mask-y(7px);
+
+    background-color: constants.$neutral-1;
     color: rgba(233, 254, 255, 0.75);
     height: 30px;
     font-size: 20px;
     font-weight: 400;
     line-height: 30px;
-    width: 1600px;
+    width: 1620px;
     text-align: center;
 }
 
 .bottom-bar-item {
     background: linear-gradient(120deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
-    filter: constants.$drop-shadow;
     height: 100%;
-    padding: 0 24px;
-    border-radius: 16px;
+    padding: 0 35px;
     display: flex;
     align-items: center;
-
-    &:not(:last-child) {
-        margin-right: 16px;
-    }
 
     &:after {
         content: '';
@@ -159,11 +158,14 @@ function getEntrantName(entrant: Entrant): string {
         top: 0;
         opacity: 0.15;
         mix-blend-mode: soft-light;
-        border-radius: 16px;
         background:
-            linear-gradient(to bottom, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%),
-            linear-gradient(to right, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%);
+            linear-gradient(to bottom, transparent calc(100% - 12px), #fff 100%);
+            //linear-gradient(to right, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%);
     }
+}
+
+.bottom-bar-item-shadow {
+    height: 100%;
 }
 
 .clock-wrapper {
@@ -173,7 +175,7 @@ function getEntrantName(entrant: Entrant): string {
 .round-info {
     font-size: 0.6em;
     color: constants.$text-color-low-emphasis;
-    margin-top: -8px;
+    margin-top: -4px;
 }
 
 .player-name {
@@ -183,11 +185,39 @@ function getEntrantName(entrant: Entrant): string {
 .bottom-bar {
     display: flex;
     align-items: center;
-    width: 1600px;
+    width: 2000px;
     height: 100px;
     color: constants.$text-color-2;
     position: relative;
     margin-bottom: 16px;
+
+    > * {
+        &:first-child {
+            filter:
+                drop-shadow(16px 0 0 constants.$accent-4)
+                drop-shadow(16px 0 0 constants.$accent-2)
+                drop-shadow(16px 0 0 constants.$accent-3);
+
+            > * {
+                @include constants.skew-mask-x(20px);
+                padding-left: 220px;
+                margin-right: 64px;
+            }
+        }
+
+        &:last-child {
+            filter:
+                drop-shadow(-16px 0 0 constants.$accent-4)
+                drop-shadow(-16px 0 0 constants.$accent-2)
+                drop-shadow(-16px 0 0 constants.$accent-3);
+
+            > * {
+                @include constants.skew-mask-x-inverse(20px);
+                padding-right: 220px;
+                margin-left: 64px;
+            }
+        }
+    }
 
     > .separator {
         background-color: constants.$neutral-2;
@@ -197,7 +227,9 @@ function getEntrantName(entrant: Entrant): string {
     }
 
     .info-text {
-        flex-grow: 1;
+        @include constants.skew-mask-y-inverse(20px);
+
+        width: 100%;
         text-align: center;
         font-size: 38px;
         min-width: 0;
@@ -229,7 +261,7 @@ function getEntrantName(entrant: Entrant): string {
 .player-score {
     font-weight: 700;
     display: inline-block;
-    //color: constants.$text-color-accent;
+    color: constants.$accent-2;
 
     &.player-a-score {
         margin-left: 10px;
@@ -241,6 +273,6 @@ function getEntrantName(entrant: Entrant): string {
 }
 
 .score-separator {
-    //color: constants.$text-color-accent;
+    color: constants.$accent-2;
 }
 </style>

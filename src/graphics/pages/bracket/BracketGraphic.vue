@@ -116,11 +116,11 @@ $inverse-skew-amount: -8deg;
     .round-robin-renderer {
         .round-robin-grid-item {
             transition: background-color 500ms;
+            border-radius: 0;
 
             &.type-team-name {
                 line-height: 1.2em;
                 color: constants.$text-color-2;
-                border-radius: 5px;
                 padding: 2px 3px;
                 overflow: hidden;
 
@@ -170,14 +170,12 @@ $inverse-skew-amount: -8deg;
             color: constants.$text-color-2;
             display: inline-block;
             padding: 2px 6px;
-            border-radius: 4px;
             font-weight: 500;
         }
 
         .round-label {
             color: constants.$text-color-2;
             padding: 2px 6px;
-            border-radius: 4px;
             font-weight: 400;
         }
 
@@ -272,14 +270,14 @@ $inverse-skew-amount: -8deg;
             height: 100%;
             position: absolute;
             box-sizing: border-box;
-            border-radius: 12px;
+            border-radius: 0;
 
             .match-row__team-name {
                 font-size: 1.5em;
                 line-height: 2em;
                 padding: 0 8px;
                 height: 100%;
-                border-radius: 8px;
+                border-radius: 0;
             }
 
             .match-row__scores {
