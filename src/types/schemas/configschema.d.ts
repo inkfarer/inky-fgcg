@@ -9,6 +9,7 @@
 export interface Configschema {
 	event?: {
 		timezone?: string;
+		greeting?: string;
 		location?: string[];
 		[k: string]: unknown;
 	};
