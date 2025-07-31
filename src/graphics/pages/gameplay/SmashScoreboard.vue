@@ -2,7 +2,7 @@
     <div class="scoreboard-wrapper">
         <gameplay-scoreboard-entrant entrant="A" />
         <img
-            src="../../assets/flask.png"
+            src="../../assets/bfgl-logo-2.0.png"
         />
         <gameplay-scoreboard-entrant entrant="B" />
         <div class="scoreboard-round-info">
@@ -31,15 +31,15 @@ const activeMatchStore = useActiveMatchStore();
 
 .scoreboard-wrapper {
     position: absolute;
-    top: 4px;
+    top: 10px;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 110px 1fr;
+    grid-template-columns: 1fr 150px 1fr;
     row-gap: 8px;
 }
 
 img {
-    width: 75px;
+    height: 75px;
     justify-self: center;
 }
 
@@ -56,18 +56,21 @@ img {
 }
 
 .scoreboard-round-info {
-    background-color: constants.$neutral-2;
-    border-radius: 8px;
+    $skew-size: 11px;
+
+    background-color: constants.$neutral-1;
     color: constants.$text-color;
     height: 30px;
     font-size: 24px;
     line-height: 30px;
     width: 460px;
     text-align: center;
-    padding: 0 12px;
+    padding: 0 $skew-size + 8px;
     margin: 0 32px;
     grid-column: span 3;
     justify-self: center;
+
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - $skew-size) 100%, $skew-size 100%);
 
     > * {
         width: 100%;

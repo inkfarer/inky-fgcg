@@ -34,15 +34,16 @@ const activeMatchStore = useActiveMatchStore();
 }
 
 .scoreboard-round-info {
-    background-color: constants.$neutral-2;
-    border-radius: 0 0 8px 8px;
+    @include constants.skew-mask-y-inverse(11px);
+
+    background-color: constants.$neutral-1;
     color: constants.$text-color;
     height: 30px;
     font-size: 24px;
     line-height: 30px;
     width: 460px;
     text-align: center;
-    padding: 0 12px;
+    padding: 0 20px;
     margin: 0 32px;
 
     > * {

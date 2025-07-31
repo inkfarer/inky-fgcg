@@ -4,7 +4,9 @@
         :class="[`entrant-${props.entrant.toLowerCase()}`, `game-${runtimeConfigStore.runtimeConfig.game}`]"
     >
         <div class="entrant-score">
-            {{ entrant.score }}
+            <div>
+                {{ entrant.score }}
+            </div>
         </div>
         <div class="entrant-name">
             <fitted-content :align="props.entrant === 'A' ? 'right' : 'left'">
@@ -55,6 +57,10 @@ const entrant = computed(() => {
 <style scoped lang="scss">
 @use '../../styles/constants';
 
+$skew-amount: 20deg;
+$inverse-skew-amount: -20deg;
+$accent-border-size: 12px;
+
 .entrant {
     width: 450px;
     height: 56px;
@@ -62,6 +68,7 @@ const entrant = computed(() => {
     display: flex;
     position: relative;
     overflow: hidden;
+    background-color: constants.$neutral-1;
 
     &:after {
         content: '';
@@ -96,54 +103,52 @@ const entrant = computed(() => {
     }
 
     .entrant-score {
-        background-color: constants.$accent-1c;
+        background-color: constants.$neutral-2;
         color: constants.$text-color-2;
         font-weight: 600;
         font-size: 45px;
         line-height: 55px;
         min-width: 68px;
         text-align: center;
-        border: 0 solid constants.$neutral-2;
+        border: 0 solid constants.$accent-2;
     }
 
     &.entrant-a {
-        background: linear-gradient(300deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
+        //background: linear-gradient(300deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
         flex-direction: row-reverse;
-        border-bottom-left-radius: 12px;
-
-        &.game-SMASH {
-            border-top-left-radius: 12px;
-        }
-
-        &:after {
-            background:
-                linear-gradient(to bottom, transparent 0%, transparent 20%, transparent 80%, #fff 100%),
-                linear-gradient(to right, #fff 0%, transparent 2%);
-        }
+        box-shadow: $accent-border-size 0 0 constants.$accent-3;
+        transform: skew($skew-amount);
 
         .entrant-score {
-            border-right-width: 8px;
-            border-bottom-left-radius: 8px;
+            border-right-width: $accent-border-size;
+            padding-right: 2px;
+
+            > * {
+                transform: skew($inverse-skew-amount);
+            }
+        }
+
+        .entrant-name {
+            transform: skew($inverse-skew-amount);
         }
     }
 
     &.entrant-b {
-        background: linear-gradient(60deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
-        border-bottom-right-radius: 12px;
-
-        &.game-SMASH {
-            border-top-right-radius: 12px;
-        }
-
-        &:after {
-            background:
-                linear-gradient(to bottom, transparent 0%, transparent 20%, transparent 80%, #fff 100%),
-                linear-gradient(to left, #fff 0%, transparent 2%);
-        }
+        //background: linear-gradient(60deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
+        box-shadow: ($accent-border-size * -1) 0 0 constants.$accent-3;
+        transform: skew($inverse-skew-amount);
 
         .entrant-score {
-            border-left-width: 8px;
-            border-bottom-right-radius: 8px;
+            border-left-width: $accent-border-size;
+            padding-left: 2px;
+
+            > * {
+                transform: skew($skew-amount);
+            }
+        }
+
+        .entrant-name {
+            transform: skew($skew-amount);
         }
     }
 }
