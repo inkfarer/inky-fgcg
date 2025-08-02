@@ -81,8 +81,6 @@ function beforeCastersEnter(element: HTMLElement) {
     grid-auto-flow: column;
     grid-auto-columns: minmax(0, 1fr);
     grid-template-rows: 1fr;
-    //display: flex;
-    //justify-content: space-around;
 }
 
 .caster-shadow {
