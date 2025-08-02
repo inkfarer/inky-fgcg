@@ -25,7 +25,10 @@ export class CasterController extends BaseController {
                 throw new Error(`Could not find caster ${caster.id}`);
             }
 
-            casters.value.items[casterIndex] = caster;
+            casters.value.items[casterIndex] = {
+                ...caster,
+                socials: caster.socials.filter(social => social.username.length > 0)
+            };
         });
 
         this.listen('casters:remove', id => {
