@@ -56,13 +56,13 @@ const casterStore = useCasterStore();
 
 function castersEnter(element: HTMLElement, done: gsap.Callback) {
     const casterElems = element.querySelectorAll('.caster-shadow');
-    gsap.to(casterElems, { scaleX: 1, duration: 0.5, ease: 'power4.out', stagger: 0.1, onComplete: done });
-    gsap.to(casterElems, { opacity: 1, duration: 0.25, ease: 'none', stagger: 0.1, onComplete: done });
+    gsap.to(casterElems, { scaleX: 1, duration: 0.5, ease: 'power4.out', onComplete: done });
+    gsap.to(casterElems, { opacity: 1, duration: 0.15, ease: 'none', onComplete: done });
 }
 function castersLeave(element: HTMLElement, done: gsap.Callback) {
     const casterElems = element.querySelectorAll('.caster-shadow');
-    gsap.to(casterElems, { opacity: 0, duration: 0.25, delay: 0.25, ease: 'none', stagger: 0.1 });
-    gsap.to(casterElems, { scaleX: 0.75, duration: 0.5, ease: 'power4.in', stagger: 0.1, onComplete: done });
+    gsap.to(casterElems, { opacity: 0, duration: 0.15, delay: 0.35, ease: 'none' });
+    gsap.to(casterElems, { scaleX: 0.75, duration: 0.5, ease: 'power4.in', onComplete: done });
 }
 function beforeCastersEnter(element: HTMLElement) {
     gsap.set(element.querySelectorAll('.caster-shadow'), { opacity: 0, scaleX: 1.25 });
@@ -81,12 +81,17 @@ function beforeCastersEnter(element: HTMLElement) {
     grid-auto-flow: column;
     grid-auto-columns: minmax(0, 1fr);
     grid-template-rows: 1fr;
+    gap: 40px;
 }
 
 .caster-shadow {
     filter:
-        drop-shadow(8px 0 0 constants.$accent-2)
-        drop-shadow(-8px 0 0 constants.$accent-2);
+        drop-shadow(12px 0 0 constants.$accent-4)
+        drop-shadow(12px 0 0 constants.$accent-2)
+        drop-shadow(12px 0 0 constants.$accent-3)
+        drop-shadow(-12px 0 0 constants.$accent-4)
+        drop-shadow(-12px 0 0 constants.$accent-2)
+        drop-shadow(-12px 0 0 constants.$accent-3);
 }
 
 .caster {
