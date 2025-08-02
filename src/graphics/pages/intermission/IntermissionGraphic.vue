@@ -4,10 +4,9 @@
         :class="`game-${runtimeConfigStore.runtimeConfig.game}`"
     >
         <div class="logo">
-            <img src="../../assets/flask-solid.png" />
+            <img src="../../assets/bfgl-logo-white.png" />
             <div>
-                <div>Yo Mana</div>
-                <div>
+                <div class="game-name">
                     <template v-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT'">
                         MK11
                     </template>
@@ -24,6 +23,7 @@
                         MK1
                     </template>
                 </div>
+                <div class="host-name">at UniCon 2025</div>
             </div>
         </div>
         <div class="flavor-text">
@@ -62,9 +62,9 @@ const intermissionStore = useIntermissionStore();
     flex-direction: column;
 
     &.game-SMASH .logo > div {
-        > *:nth-child(2) {
+        > .game-name {
             font-size: 200px;
-            line-height: 112px;
+            line-height: 130px;
         }
     }
 }
@@ -89,15 +89,15 @@ const intermissionStore = useIntermissionStore();
     > div {
         margin-left: 32px;
 
-        > *:first-child {
+        > .host-name {
             font-size: 80px;
-            margin-top: -50px;
         }
 
-        > *:nth-child(2) {
+        > .game-name {
             font-size: 250px;
             font-weight: 700;
-            line-height: 150px;
+            line-height: 160px;
+            margin-top: 40px;
         }
     }
 }
