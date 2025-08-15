@@ -82,9 +82,12 @@ function beforeCastersEnter(element: HTMLElement) {
     grid-auto-columns: minmax(0, 1fr);
     grid-template-rows: 1fr;
     gap: 40px;
+    justify-items: center;
 }
 
 .caster-shadow {
+    max-width: 400px;
+    width: 100%;
     filter:
         drop-shadow(12px 0 0 constants.$accent-4)
         drop-shadow(12px 0 0 constants.$accent-2)
