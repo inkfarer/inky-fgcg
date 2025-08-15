@@ -27,11 +27,11 @@
             <template v-if="selectedStreamMatch != null">
                 <ipl-data-row
                     label="Entrant A"
-                    :value="entrantStore.entrantById(selectedStreamMatch.entrantAId)?.name ?? `Unknown entrant ${selectedStreamMatch.entrantAId}`"
+                    :value="formatEntrantName(playersSwapped ? selectedStreamMatch.entrantBId : selectedStreamMatch.entrantAId)"
                 />
                 <ipl-data-row
                     label="Entrant B"
-                    :value="entrantStore.entrantById(selectedStreamMatch.entrantBId)?.name ?? `Unknown entrant ${selectedStreamMatch.entrantBId}`"
+                    :value="formatEntrantName(playersSwapped ? selectedStreamMatch.entrantAId : selectedStreamMatch.entrantBId)"
                 />
                 <ipl-data-row
                     label="Type of play"
@@ -180,5 +180,9 @@ async function onUpdate() {
         numberOfGames: numberOfGames.value,
         playType: selectedStreamMatch.value.playType
     });
+}
+
+function formatEntrantName(entrantId: string): string {
+    return entrantStore.entrantById(entrantId)?.name ?? `Unknown entrant ${entrantId}`;
 }
 </script>

@@ -35,7 +35,9 @@ const props = defineProps<{
 const activeMatchStore = useActiveMatchStore();
 const runtimeConfigStore = useRuntimeConfigStore();
 const entrant = computed(() => {
-    const entrantData = props.entrant === 'A' ? activeMatchStore.activeMatch.entrantA : activeMatchStore.activeMatch.entrantB;
+    const entrantData = props.entrant === 'A'
+        ? runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantB : activeMatchStore.activeMatch.entrantA
+        : runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantA : activeMatchStore.activeMatch.entrantB;
     if (entrantData.participants.length <= 0) {
         return {
             name: entrantData.name,

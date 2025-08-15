@@ -9,6 +9,7 @@ import BottomBarGraphic from './pages/bottom-bar/BottomBarGraphic.vue';
 import { initIntermissionStore } from 'client-shared/store/IntermissionStore';
 import { initTournamentDataStore } from 'client-shared/store/TournamentDataStore';
 import { initActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
+import { initRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 
 (async () => {
     const app = createApp(BottomBarGraphic);
@@ -19,7 +20,8 @@ import { initActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
         initActiveMatchStore(),
         initAssetStore(),
         initIntermissionStore(),
-        initTournamentDataStore()
+        initTournamentDataStore(),
+        initRuntimeConfigStore()
     ]);
     app.mount('#app');
 })();
