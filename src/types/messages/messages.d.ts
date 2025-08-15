@@ -12,7 +12,6 @@ export interface MessageInputMap {
     'activeMatch:addScore': EntrantSide
     'activeMatch:subtractScore': EntrantSide
     'activeMatch:beginNextMatch': never
-    'activeMatch:swapPlayers': never
 
     'casters:update': Casters['items'][number]
     'casters:insert': Omit<Casters['items'][number], 'id'>

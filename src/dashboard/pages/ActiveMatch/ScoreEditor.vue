@@ -10,7 +10,7 @@
                     color="green"
                     small
                     :disabled="disableAddScore"
-                    @click="sendMessage('activeMatch:addScore', EntrantSide.ALPHA)"
+                    @click="sendMessage('activeMatch:addScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.BRAVO : EntrantSide.ALPHA)"
                 />
                 <ipl-button
                     class="m-t-4"
@@ -18,11 +18,11 @@
                     color="red"
                     small
                     :disabled="activeMatchStore.activeMatch.entrantA.score <= 0"
-                    @click="sendMessage('activeMatch:subtractScore', EntrantSide.ALPHA)"
+                    @click="sendMessage('activeMatch:subtractScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.BRAVO : EntrantSide.ALPHA)"
                 />
             </div>
             <div class="layout horizontal center-horizontal center-vertical score-wrapper left">
-                <span class="score">{{ activeMatchStore.activeMatch.entrantA.score }}</span>
+                <span class="score">{{ runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantB.score : activeMatchStore.activeMatch.entrantA.score }}</span>
             </div>
         </ipl-space>
         <span class="score-separator">:</span>
@@ -31,7 +31,7 @@
             class="layout horizontal score-display-space"
         >
             <div class="layout horizontal center-horizontal center-vertical score-wrapper right">
-                <span class="score">{{ activeMatchStore.activeMatch.entrantB.score }}</span>
+                <span class="score">{{ runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantA.score : activeMatchStore.activeMatch.entrantB.score }}</span>
             </div>
             <div class="layout vertical">
                 <ipl-button
@@ -39,7 +39,7 @@
                     color="green"
                     small
                     :disabled="disableAddScore"
-                    @click="sendMessage('activeMatch:addScore', EntrantSide.BRAVO)"
+                    @click="sendMessage('activeMatch:addScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.ALPHA : EntrantSide.BRAVO)"
                 />
                 <ipl-button
                     class="m-t-4"
@@ -47,13 +47,13 @@
                     color="red"
                     small
                     :disabled="activeMatchStore.activeMatch.entrantB.score <= 0"
-                    @click="sendMessage('activeMatch:subtractScore', EntrantSide.BRAVO)"
+                    @click="sendMessage('activeMatch:subtractScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.ALPHA : EntrantSide.BRAVO)"
                 />
             </div>
         </ipl-space>
-        <div class="entrant-name left">{{ $helpers.addDots(activeMatchStore.activeMatch.entrantA.name, 36) }}</div>
+        <div class="entrant-name left">{{ $helpers.addDots(runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantB.name : activeMatchStore.activeMatch.entrantA.name, 36) }}</div>
         <div class="versus">vs</div>
-        <div class="entrant-name right">{{ $helpers.addDots(activeMatchStore.activeMatch.entrantB.name, 36) }}</div>
+        <div class="entrant-name right">{{ $helpers.addDots(runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantA.name : activeMatchStore.activeMatch.entrantB.name, 36) }}</div>
     </ipl-space>
 </template>
 
@@ -66,10 +66,12 @@ import { sendMessage } from 'client-shared/helpers/NodecgHelper';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus';
+import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 
 library.add(faPlus, faMinus);
 
 const activeMatchStore = useActiveMatchStore();
+const runtimeConfigStore = useRuntimeConfigStore();
 
 const disableAddScore = computed(() =>
     activeMatchStore.activeMatch.entrantA.score + activeMatchStore.activeMatch.entrantB.score >= activeMatchStore.activeMatch.match.numberOfGames);

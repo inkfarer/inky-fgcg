@@ -8,15 +8,15 @@
                 class="info-text bottom-bar-item"
                 :class="{ hidden: mainSectionMode == null }"
             >
-                <fitted-content align="center">
-                    <opacity-swap-transition mode="out-in">
-                        <div v-if="mainSectionMode === 'nextMatch'">
-                            <div>
-                                <span class="low-emphasis">Next: </span>
-                                <span class="player-name">{{ $helpers.addDots(getEntrantName(nextMatchStore.nextMatch.entrantA)) }}</span>
-                                <span class="low-emphasis"> vs </span>
-                                <span class="player-name">{{ $helpers.addDots(getEntrantName(nextMatchStore.nextMatch.entrantB)) }}</span>
-                            </div>
+                <opacity-swap-transition mode="out-in">
+                    <div v-if="mainSectionMode === 'nextMatch'">
+                        <fitted-content align="center">
+                            <span class="low-emphasis">Next: </span>
+                            <span class="player-name">{{ $helpers.addDots(getEntrantName(swapNextMatchPlayers ? nextMatchStore.nextMatch.entrantB : nextMatchStore.nextMatch.entrantA)) }}</span>
+                            <span class="low-emphasis"> vs </span>
+                            <span class="player-name">{{ $helpers.addDots(getEntrantName(swapNextMatchPlayers ? nextMatchStore.nextMatch.entrantA : nextMatchStore.nextMatch.entrantB)) }}</span>
+                        </fitted-content>
+                        <fitted-content align="center">
                             <opacity-swap-transition>
                                 <div
                                     :key="`${nextMatchStore.nextMatch.match.name}_${nextMatchStore.formattedPlayType}`"
@@ -25,15 +25,17 @@
                                     {{ nextMatchStore.nextMatch.match.name }}<span class="separator"> - </span>{{ nextMatchStore.formattedPlayType }}
                                 </div>
                             </opacity-swap-transition>
-                        </div>
-                        <div v-else-if="mainSectionMode === 'activeMatch'">
-                            <div>
-                                <span class="player-name">{{ $helpers.addDots(getEntrantName(activeMatchStore.activeMatch.entrantA)) }}</span>
-                                <span class="player-score player-a-score font-numeric">{{ activeMatchStore.activeMatch.entrantA.score }}</span>
-                                <span class="score-separator"> - </span>
-                                <span class="player-score player-b-score font-numeric">{{ activeMatchStore.activeMatch.entrantB.score }}</span>
-                                <span class="player-name">{{ $helpers.addDots(getEntrantName(activeMatchStore.activeMatch.entrantB)) }}</span>
-                            </div>
+                        </fitted-content>
+                    </div>
+                    <div v-else-if="mainSectionMode === 'activeMatch'">
+                        <fitted-content align="center">
+                            <span class="player-name">{{ $helpers.addDots(getEntrantName(runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantB : activeMatchStore.activeMatch.entrantA)) }}</span>
+                            <span class="player-score player-a-score font-numeric">{{ runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantB.score : activeMatchStore.activeMatch.entrantA.score }}</span>
+                            <span class="score-separator"> - </span>
+                            <span class="player-score player-b-score font-numeric">{{ runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantA.score : activeMatchStore.activeMatch.entrantB.score }}</span>
+                            <span class="player-name">{{ $helpers.addDots(getEntrantName(runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantA : activeMatchStore.activeMatch.entrantB)) }}</span>
+                        </fitted-content>
+                        <fitted-content align="center">
                             <opacity-swap-transition>
                                 <div
                                     :key="`${activeMatchStore.activeMatch.match.name}_${activeMatchStore.formattedPlayType}`"
@@ -42,15 +44,16 @@
                                     {{ activeMatchStore.activeMatch.match.name }}<span class="separator"> - </span>{{ activeMatchStore.formattedPlayType }}
                                 </div>
                             </opacity-swap-transition>
-                        </div>
-                        <div
-                            v-else-if="mainSectionMode === 'flavorText'"
-                            :key="intermissionStore.bottomBarData.flavorText"
-                        >
-                            {{ intermissionStore.bottomBarData.flavorText }}
-                        </div>
-                    </opacity-swap-transition>
-                </fitted-content>
+                        </fitted-content>
+                    </div>
+                    <fitted-content v-else-if="mainSectionMode === 'flavorText'">
+                        <fitted-content align="center">
+                            <div :key="intermissionStore.bottomBarData.flavorText">
+                                {{ intermissionStore.bottomBarData.flavorText }}
+                            </div>
+                        </fitted-content>
+                    </fitted-content>
+                </opacity-swap-transition>
             </div>
             <div
                 v-if="assetStore.hasSponsors"
@@ -81,14 +84,20 @@ import { useTournamentDataStore } from 'client-shared/store/TournamentDataStore'
 import { isBlank } from 'client-shared/helpers/StringHelper';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 import { computed } from 'vue';
+import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 
 const tournamentDataStore = useTournamentDataStore();
 const nextMatchStore = useNextMatchStore();
 const activeMatchStore = useActiveMatchStore();
 const intermissionStore = useIntermissionStore();
+const runtimeConfigStore = useRuntimeConfigStore();
 const assetStore = useAssetStore();
 
 const greeting = (nodecg.bundleConfig as Configschema).event?.greeting ?? 'Hello from Yo Mana!';
+
+const swapNextMatchPlayers = computed(() => runtimeConfigStore.playerSwaps.intermission &&
+    activeMatchStore.activeMatch.entrantA.id === nextMatchStore.nextMatch.entrantA.id &&
+    activeMatchStore.activeMatch.entrantB.id === nextMatchStore.nextMatch.entrantB.id);
 
 const mainSectionMode = computed(() => {
     if (nextMatchStore.nextMatch.showOnStream) {
