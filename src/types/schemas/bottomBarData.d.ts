@@ -8,4 +8,5 @@
 
 export interface BottomBarData {
 	flavorText: string;
+	mode: 'EMPTY' | 'FLAVOR_TEXT' | 'ACTIVE_MATCH' | 'NEXT_MATCH';
 }

@@ -6,7 +6,6 @@ import { setUpErrorHandler } from './helpers/ErrorHandlerStore';
 import { installCommonHelpers } from 'client-shared/helpers/InstallCommonHelpers';
 import { initIntermissionStore } from 'client-shared/store/IntermissionStore';
 import IntermissionPanel from './pages/Intermission/IntermissionPanel.vue';
-import { initActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 
 (async () => {
     const app = createApp(IntermissionPanel);
@@ -14,8 +13,7 @@ import { initActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
     setUpErrorHandler(app);
     installCommonHelpers(app, false);
     await Promise.all([
-        initIntermissionStore(),
-        initActiveMatchStore()
+        initIntermissionStore()
     ]);
     app.mount('#app');
 })();

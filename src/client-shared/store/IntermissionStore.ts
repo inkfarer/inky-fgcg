@@ -1,4 +1,3 @@
-import type NodeCG from '@nodecg/types';
 import { createReplicantStoreInitializer } from 'client-shared/store/StoreHelper';
 import { defineStore } from 'pinia';
 import { BottomBarData, IntermissionData } from 'types/schemas';
@@ -19,6 +18,9 @@ export const useIntermissionStore = defineStore('intermission', {
     actions: {
         setBottomBarFlavorText(newValue: string) {
             bottomBarData.value!.flavorText = newValue;
+        },
+        setBottomBarMode(newValue: BottomBarData['mode']) {
+            bottomBarData.value!.mode = newValue;
         },
         setIntermissionFlavorText(newValue: string) {
             intermissionData.value!.flavorText = newValue;

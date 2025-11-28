@@ -1,5 +1,13 @@
 <template>
     <ipl-space>
+        <ipl-radio
+            v-model="bottomBarMode"
+            :options="bottomBarModeOptions"
+            label="Bottom bar mode"
+            name="bottomBarMode"
+        />
+    </ipl-space>
+    <ipl-space class="m-t-8">
         <ipl-input
             v-model="bottomBarFlavorText"
             label="Bottom bar flavor text"
@@ -11,15 +19,8 @@
             :color="bottomBarChanged ? 'red' : 'blue'"
             @click="onBottomBarUpdate"
         />
-        <ipl-small-toggle
-            v-model="hideOnIntermission"
-            class="m-t-8"
-            label="Hide active match on bottom bar"
-        />
     </ipl-space>
-    <ipl-space
-        class="m-t-8"
-    >
+    <ipl-space class="m-t-8">
         <ipl-input
             v-model="intermissionFlavorText"
             label="Intermission flavor text"
@@ -38,20 +39,10 @@
 import { updateRefOnValueChange } from 'client-shared/store/StoreHelper';
 import { computed, ref } from 'vue';
 import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
-import { IplButton, IplInput, IplSmallToggle, IplSpace } from '@iplsplatoon/vue-components';
-import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
+import { IplButton, IplInput, IplRadio, IplSpace } from '@iplsplatoon/vue-components';
+import { BottomBarData } from 'types/schemas';
 
 const intermissionStore = useIntermissionStore();
-const activeMatchStore = useActiveMatchStore();
-
-const hideOnIntermission = computed({
-    get() {
-        return activeMatchStore.activeMatch.hideOnIntermission;
-    },
-    set(newValue: boolean) {
-        activeMatchStore.setHideOnIntermission(newValue);
-    }
-});
 
 const bottomBarFlavorText = ref('');
 const intermissionFlavorText = ref('');
@@ -68,4 +59,19 @@ function onBottomBarUpdate() {
 function onIntermissionUpdate() {
     intermissionStore.setIntermissionFlavorText(intermissionFlavorText.value);
 }
+
+const bottomBarMode = computed({
+    get() {
+        return intermissionStore.bottomBarData.mode;
+    },
+    set(newValue: BottomBarData['mode']) {
+        intermissionStore.setBottomBarMode(newValue);
+    }
+});
+const bottomBarModeOptions = [
+    { name: 'Active Match', value: 'ACTIVE_MATCH' },
+    { name: 'Next Match', value: 'NEXT_MATCH' },
+    { name: 'Flavor Text', value: 'FLAVOR_TEXT' },
+    { name: 'Empty', value: 'EMPTY' }
+];
 </script>
