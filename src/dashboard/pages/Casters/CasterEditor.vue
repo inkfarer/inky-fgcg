@@ -27,6 +27,16 @@
             label="Pronouns"
             name="pronouns"
         />
+        <ipl-select
+            v-model="internalCaster.socials[0].type"
+            label="Social type"
+            :options="casterSocialOptions"
+        />
+        <ipl-input
+            v-model="internalCaster.socials[0].username"
+            label="Social username"
+            name="username"
+        />
         <div class="layout horizontal m-t-8">
             <ipl-button
                 :label="props.unsaved ? 'Save' : 'Update'"
@@ -46,9 +56,8 @@
 <script setup lang="ts">
 import { Casters } from 'types/schemas';
 import { sendMessage } from 'client-shared/helpers/NodecgHelper';
-import { computed, ref } from 'vue';
-import { updateRefOnValueChange } from 'client-shared/store/StoreHelper';
-import { IplBadge, IplExpandingSpace, IplInput, IplButton } from '@iplsplatoon/vue-components';
+import { computed, ref, watch } from 'vue';
+import { IplBadge, IplExpandingSpace, IplInput, IplButton, IplSelect } from '@iplsplatoon/vue-components';
 import { isBlank } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
@@ -65,18 +74,44 @@ const props = withDefaults(defineProps<{
     unsaved: false
 });
 
-const internalCaster = ref<Casters['items'][number]>(props.caster);
-updateRefOnValueChange(() => props.caster, internalCaster, true);
+function normalizeCaster(caster: Casters['items'][number]) {
+    return {
+        ...cloneDeep(caster),
+        socials: caster.socials.length === 0
+            ? [{
+                type: 'none',
+                username: ''
+            }]
+            : cloneDeep(caster.socials)
+    };
+}
 
-const isChanged = computed(() =>
-    !props.unsaved &&
-    (props.caster.name !== internalCaster.value.name
-    || props.caster.pronouns !== internalCaster.value.pronouns
-    || props.caster.socials.length !== internalCaster.value.socials.length
-    || props.caster.socials.some((social, i) => {
-        const internalCasterSocial = internalCaster.value.socials[i];
-        return internalCasterSocial.type !== social.type || internalCasterSocial.username !== social.username;
-    })))
+const internalCaster = ref<Casters['items'][number]>(normalizeCaster(props.caster));
+watch(() => props.caster, newValue => {
+    internalCaster.value = normalizeCaster(newValue);
+});
+
+const casterSocialOptions = [
+    { name: 'Twitter', value: 'twitter' },
+    { name: 'Bluesky', value: 'bluesky' },
+    { name: 'Twitch', value: 'twitch' },
+    { name: 'None', value: 'none' }
+];
+
+const isChanged = computed(() => {
+    if (!props.unsaved && (props.caster.name !== internalCaster.value.name || props.caster.pronouns !== internalCaster.value.pronouns)) {
+        return true;
+    }
+
+    if (props.caster.socials.length === 0) {
+        return !isBlank(internalCaster.value.socials[0].username);
+    }
+
+    return props.caster.socials.length !== internalCaster.value.socials.length
+        || props.caster.socials.some((caster, i) =>
+            internalCaster.value.socials[i].type !== caster.type
+            || internalCaster.value.socials[i].username !== caster.username);
+});
 
 async function onSave() {
     const newCaster = cloneDeep(internalCaster.value);
