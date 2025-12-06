@@ -1,5 +1,7 @@
 # inky-fgcg
 
+[Docs](/docs/installation.md)
+
 inky's Fighting Game Character Generator - broadcast graphics for FGC events. The `main` branch of this repository 
 contains graphics branded for events from [Yo Mana](https://yomana.ee/).
 
