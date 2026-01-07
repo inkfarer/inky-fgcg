@@ -14,7 +14,6 @@ export interface NextMatch {
 		numberOfGames: number;
 		playType: 'PLAY_ALL' | 'BEST_OF';
 	};
-	showOnStream: boolean;
 }
 export interface Entrant {
 	id: string;

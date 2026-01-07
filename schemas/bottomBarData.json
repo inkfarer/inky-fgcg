@@ -5,10 +5,15 @@
     "properties": {
         "flavorText": {
             "type": "string"
+        },
+        "mode": {
+            "type": "string",
+            "enum": ["EMPTY", "FLAVOR_TEXT", "ACTIVE_MATCH", "NEXT_MATCH"]
         }
     },
-    "required": ["flavorText"],
+    "required": ["flavorText", "mode"],
     "default": {
-        "flavorText": "Welcome to the stream!"
+        "flavorText": "Welcome to the stream!",
+        "mode": "FLAVOR_TEXT"
     }
 }

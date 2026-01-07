@@ -8,10 +8,10 @@
             </div>
             <div
                 class="info-text bottom-bar-item"
-                :class="{ hidden: mainSectionMode == null }"
+                :class="{ hidden: intermissionStore.bottomBarData.mode === 'EMPTY' }"
             >
                 <opacity-swap-transition mode="out-in">
-                    <div v-if="mainSectionMode === 'nextMatch'">
+                    <div v-if="intermissionStore.bottomBarData.mode === 'NEXT_MATCH'">
                         <fitted-content align="center">
                             <span class="low-emphasis">Next: </span>
                             <span class="player-name">{{ $helpers.addDots(getEntrantName(swapNextMatchPlayers ? nextMatchStore.nextMatch.entrantB : nextMatchStore.nextMatch.entrantA)) }}</span>
@@ -29,7 +29,7 @@
                             </opacity-swap-transition>
                         </fitted-content>
                     </div>
-                    <div v-else-if="mainSectionMode === 'activeMatch'">
+                    <div v-else-if="intermissionStore.bottomBarData.mode === 'ACTIVE_MATCH'">
                         <fitted-content align="center">
                             <span class="player-name">{{ $helpers.addDots(getEntrantName(runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantB : activeMatchStore.activeMatch.entrantA)) }}</span>
                             <span class="player-score player-a-score font-numeric">{{ runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantB.score : activeMatchStore.activeMatch.entrantA.score }}</span>
@@ -48,7 +48,7 @@
                             </opacity-swap-transition>
                         </fitted-content>
                     </div>
-                    <fitted-content v-else-if="mainSectionMode === 'flavorText'">
+                    <fitted-content v-else-if="intermissionStore.bottomBarData.mode === 'FLAVOR_TEXT'">
                         <fitted-content align="center">
                             <div :key="intermissionStore.bottomBarData.flavorText">
                                 {{ intermissionStore.bottomBarData.flavorText }}
@@ -85,7 +85,6 @@ import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
 import FittedContent from 'components/FittedContent.vue';
 import { useAssetStore } from 'client-shared/store/AssetStore';
 import { useTournamentDataStore } from 'client-shared/store/TournamentDataStore';
-import { isBlank } from 'client-shared/helpers/StringHelper';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 import { computed } from 'vue';
 import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
@@ -102,18 +101,6 @@ const greeting = (nodecg.bundleConfig as Configschema).event?.greeting ?? 'Hello
 const swapNextMatchPlayers = computed(() => runtimeConfigStore.playerSwaps.intermission &&
     activeMatchStore.activeMatch.entrantA.id === nextMatchStore.nextMatch.entrantA.id &&
     activeMatchStore.activeMatch.entrantB.id === nextMatchStore.nextMatch.entrantB.id);
-
-const mainSectionMode = computed(() => {
-    if (nextMatchStore.nextMatch.showOnStream) {
-        return 'nextMatch';
-    } else if (!activeMatchStore.activeMatch.hideOnIntermission && (activeMatchStore.activeMatch.entrantA.score > 0 || activeMatchStore.activeMatch.entrantB.score > 0)) {
-        return 'activeMatch';
-    } else if (!isBlank(intermissionStore.bottomBarData.flavorText)) {
-        return 'flavorText';
-    } else {
-        return null;
-    }
-});
 
 function getEntrantName(entrant: Entrant): string {
     if (entrant.participants.length >= 1) {

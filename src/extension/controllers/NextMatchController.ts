@@ -24,8 +24,7 @@ export class NextMatchController extends BaseController {
                      name: data.matchName,
                      numberOfGames: data.numberOfGames,
                      playType: data.playType
-                 },
-                 showOnStream: nextMatch.value.showOnStream
+                 }
              };
         });
 

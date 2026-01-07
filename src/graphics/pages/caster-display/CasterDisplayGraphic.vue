@@ -19,6 +19,18 @@
                         class="caster-name-wrapper"
                     >
                         <span class="caster-name">{{ caster.name }}</span> <span v-show="!isBlank(caster.pronouns)" class="pronouns">{{ caster.pronouns }}</span>
+                </fitted-content>
+                <div
+                    v-if="caster.socials.length > 0"
+                    class="caster-social-wrapper"
+                >
+                    <font-awesome-icon
+                        v-if="caster.socials[0].type !== 'none'"
+                        :icon="['fab', caster.socials[0].type]"
+                        class="caster-social-icon"
+                    />
+                    <fitted-content align="center">
+                        <span class="caster-social">{{ caster.socials[0].username }}</span>
                     </fitted-content>
                     <div
                         v-if="caster.socials.length > 0"
@@ -33,6 +45,7 @@
                             <span class="caster-social">{{ caster.socials[0].username }}</span>
                         </fitted-content>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -139,14 +152,40 @@ function beforeCastersEnter(element: HTMLElement) {
     font-size: 24px;
 }
 
+.caster-name {
+    font-size: 45px;
+    height: 45px;
+    font-weight: 500;
+}
+
+.caster-social-wrapper {
+    margin-top: -12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.85;
+}
+
+.caster-social-icon {
+    font-size: 24px;
+    margin-right: 4px;
+    transform: translateY(2px);
+}
+
+.caster-social {
+    font-size: 28px;
+    height: 32px;
+}
+
 .pronouns {
     background-color: white;
     border-radius: 4px;
-    font-size: 26px;
-    padding: 0 4px;
+    font-size: 22px;
+    padding: 2px 4px;
     color: #222;
-    line-height: 32px;
+    line-height: 24px;
     display: inline-block;
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    margin-left: 4px;
 }
 </style>

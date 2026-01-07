@@ -1,7 +1,7 @@
 {
-    "name": "yo-mana-fgc-overlays",
+    "name": "inky-fgcg",
     "version": "0.1.0",
-    "description": "Broadcast graphics for FGC tournaments from Yo Mana",
+    "description": "inky's Fighting Game Character Generator",
     "author": {
         "name": "inkfarer",
         "email": "inkfarer@inkfarer.com",

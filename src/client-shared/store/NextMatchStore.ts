@@ -18,13 +18,6 @@ export const useNextMatchStore = defineStore('nextMatch', {
     } as unknown as NextMatchStore),
     getters: {
         formattedPlayType: state => formatPlayType(state.nextMatch.match.playType, state.nextMatch.match.numberOfGames)
-    },
-    actions: {
-        setShowOnStream(newValue: boolean) {
-            if (nextMatch.value) {
-                nextMatch.value.showOnStream = newValue;
-            }
-        }
     }
 });
 

@@ -1,16 +1,19 @@
-# yo-mana-fgc-overlays
+# inky-fgcg
 
-Broadcast graphics for FGC tournaments from [Yo Mana](https://yomana.ee/)
+[Docs](/docs/installation.md)
+
+inky's Fighting Game Character Generator - broadcast graphics for FGC events. The `main` branch of this repository 
+contains graphics branded for events from [Yo Mana](https://yomana.ee/).
 
 ## Setup
 
-- Clone this repository to `[nodecg]/bundles/yo-mana-fgc-overlays`
+- Clone this repository to `[nodecg]/bundles/inky-fgcg`
 - Install dependencies: `npm i`
 - Run build: `npm run build`
 
 ### Configuration
 
-To configure this bundle, create the file `<nodecg>/cfg/yo-mana-fgc-overlays.json` with the following contents:
+To configure this bundle, create the file `<nodecg>/cfg/inky-fgcg.json` with the following contents:
 
 ```json
 {
