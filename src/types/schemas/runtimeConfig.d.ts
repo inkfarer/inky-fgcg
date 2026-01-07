@@ -7,5 +7,5 @@
  */
 
 export interface RuntimeConfig {
-	game: 'TEKKEN' | 'MORTAL_KOMBAT' | 'SMASH' | 'STREET_FIGHTER_6' | 'MORTAL_KOMBAT_1';
+	game: 'TEKKEN' | 'MORTAL_KOMBAT' | 'SMASH' | 'STREET_FIGHTER_6' | 'MORTAL_KOMBAT_1' | '2XKO' | 'GGST';
 }

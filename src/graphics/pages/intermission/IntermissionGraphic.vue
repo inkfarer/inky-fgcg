@@ -3,15 +3,21 @@
         class="intermission-layout"
         :class="`game-${runtimeConfigStore.runtimeConfig.game}`"
     >
-        <div class="logo">
-            <img src="../../assets/bfgl-logo-white.png" />
-            <div>
+        <div class="event-name">
+            Wintercon <span class="edition">X</span>
+        </div>
+        <div class="content">
+            <div class="title">
+
                 <div class="game-name">
                     <template v-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT'">
                         MK11
                     </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT_1'">
+                        MK1
+                    </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN'">
-                        Tekken
+                        Tekken 8
                     </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SMASH'">
                         Ultimate
@@ -19,22 +25,25 @@
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'STREET_FIGHTER_6'">
                         SF6
                     </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT_1'">
-                        MK1
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'GGST'">
+                        Guilty Gear: Strive
                     </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === '2XKO'">
+                        2XKO
+                    </template>
+                    <div class="game-name-extra">Tournament</div>
                 </div>
-                <div class="host-name">at UniCon 2025</div>
             </div>
-        </div>
-        <div class="flavor-text">
-            <fitted-content
-                align="center"
-                :max-width="1200"
-            >
-                <opacity-swap-transition>
-                    <div :key="intermissionStore.intermissionData.flavorText">{{ intermissionStore.intermissionData.flavorText }}</div>
-                </opacity-swap-transition>
-            </fitted-content>
+            <div class="flavor-text">
+                <fitted-content
+                    align="center"
+                    :max-width="1200"
+                >
+                    <opacity-swap-transition>
+                        <div :key="intermissionStore.intermissionData.flavorText">{{ intermissionStore.intermissionData.flavorText }}</div>
+                    </opacity-swap-transition>
+                </fitted-content>
+            </div>
         </div>
     </div>
 </template>
@@ -50,55 +59,83 @@ const intermissionStore = useIntermissionStore();
 </script>
 
 <style scoped lang="scss">
+@use '../../styles/constants';
+
 .intermission-layout {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    color: #fff;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
 
-    &.game-SMASH .logo > div {
-        > .game-name {
-            font-size: 200px;
-            line-height: 130px;
-        }
+    .content {
+        flex-grow: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        padding: 0 48px;
+        filter: drop-shadow(0 0 12px rgba(34, 34, 34, 0.5));
+    }
+
+    &.game-TEKKEN .game-name {
+        font-size: 12svw;
+        line-height: 10svw;
+    }
+
+    &.game-2XKO .game-name,
+    &.game-MORTAL_KOMBAT .game-name,
+    &.game-MORTAL_KOMBAT_1 .game-name,
+    &.game-STREET_FIGHTER_6 .game-name {
+        font-size: 14svw;
+        line-height: 11svw;
     }
 }
 
 .flavor-text {
     color: #fff;
-    font-size: 80px;
-    margin-top: 32px;
+    font-size: 5svw;
+    font-weight: 400;
+    font-family: 'Montserrat';
+    opacity: 0.9;
+    margin-bottom: 24px;
+    margin-top: 16px;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
+.event-name {
+    font-size: 22svw;
+    font-family: 'Staatliches';
+    line-height: 16.5svw;
+    text-align: center;
+    width: 100%;
+
+    .edition {
+        color: constants.$text-color;
+    }
+}
+
+.game-name-extra {
+    font-family: 'Montserrat';
+    font-size: 6svw;
+    font-weight: 700;
+    color: constants.$text-color;
+    margin-top: -32px;
+}
+
+.game-name {
+    font-size: 10svw;
+    line-height: 9.5svw;
+    font-family: 'Montserrat';
+    font-weight: 800;
+}
+
+.title {
+    //text-align: center;
     color: #fff;
-    margin-top: -16px;
-
-    img {
-        width: 256px;
-        height: 256px;
-    }
-
-    > div {
-        margin-left: 32px;
-
-        > .host-name {
-            font-size: 80px;
-        }
-
-        > .game-name {
-            font-size: 250px;
-            font-weight: 700;
-            line-height: 160px;
-            margin-top: 40px;
-        }
-    }
+    width: 100%;
 }
 </style>

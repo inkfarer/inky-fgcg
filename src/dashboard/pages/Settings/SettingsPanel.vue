@@ -23,7 +23,9 @@ const gameOptions: Option[] = [
     { name: 'Mortal Kombat 11', value: 'MORTAL_KOMBAT' },
     { name: 'Smash', value: 'SMASH' },
     { name: 'Street Fighter 6', value: 'STREET_FIGHTER_6' },
-    { name: 'Mortal Kombat 1', value: 'MORTAL_KOMBAT_1' }
+    { name: 'Mortal Kombat 1', value: 'MORTAL_KOMBAT_1' },
+    { name: '2XKO', value: '2XKO' },
+    { name: 'Guilty Gear: Strive', value: 'GGST' }
 ];
 
 const game = computed({
