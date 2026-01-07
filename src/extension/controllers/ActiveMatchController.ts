@@ -49,8 +49,7 @@ export class ActiveMatchController extends BaseController {
                     ...nextMatchData.entrantB,
                     score: 0
                 },
-                match: nextMatchData.match,
-                hideOnIntermission: false
+                match: nextMatchData.match
             }
 
             playerSwaps.value = {

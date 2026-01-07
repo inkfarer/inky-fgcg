@@ -19,18 +19,6 @@
                         class="caster-name-wrapper"
                     >
                         <span class="caster-name">{{ caster.name }}</span> <span v-show="!isBlank(caster.pronouns)" class="pronouns">{{ caster.pronouns }}</span>
-                </fitted-content>
-                <div
-                    v-if="caster.socials.length > 0"
-                    class="caster-social-wrapper"
-                >
-                    <font-awesome-icon
-                        v-if="caster.socials[0].type !== 'none'"
-                        :icon="['fab', caster.socials[0].type]"
-                        class="caster-social-icon"
-                    />
-                    <fitted-content align="center">
-                        <span class="caster-social">{{ caster.socials[0].username }}</span>
                     </fitted-content>
                     <div
                         v-if="caster.socials.length > 0"
@@ -45,7 +33,6 @@
                             <span class="caster-social">{{ caster.socials[0].username }}</span>
                         </fitted-content>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
