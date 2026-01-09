@@ -60,6 +60,7 @@ const intermissionStore = useIntermissionStore();
 
 <style scoped lang="scss">
 @use '../../styles/constants';
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 
 .intermission-layout {
     position: absolute;
@@ -100,7 +101,6 @@ const intermissionStore = useIntermissionStore();
     color: #fff;
     font-size: 5svw;
     font-weight: 400;
-    font-family: 'Montserrat';
     opacity: 0.9;
     margin-bottom: 24px;
     margin-top: 16px;
@@ -119,7 +119,6 @@ const intermissionStore = useIntermissionStore();
 }
 
 .game-name-extra {
-    font-family: 'Montserrat';
     font-size: 6svw;
     font-weight: 700;
     color: constants.$text-color;
@@ -129,7 +128,6 @@ const intermissionStore = useIntermissionStore();
 .game-name {
     font-size: 10svw;
     line-height: 9.5svw;
-    font-family: 'Montserrat';
     font-weight: 800;
 }
 
