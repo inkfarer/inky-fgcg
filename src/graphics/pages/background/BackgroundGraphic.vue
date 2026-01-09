@@ -6,6 +6,7 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import * as PIXI from 'pixi.js';
 import gsap from 'gsap';
+import { FillGradient } from 'pixi.js';
 
 type ParticleDefinition = {
     graphics: PIXI.Graphics
@@ -40,25 +41,32 @@ onMounted(async () => {
     app.stage.addChild(particleContainer);
 
     function createOrUpdateParticle(definition: Partial<ParticleDefinition>): ParticleDefinition {
-        if (definition.graphics == null) {
-            definition.graphics = new PIXI.Graphics();
-        } else {
-            definition.graphics.clear();
-        }
         // Bias towards small particles
         if (Math.random() > 0.75) {
             definition.size = gsap.utils.random(15, 40);
         } else {
             definition.size = gsap.utils.random(2, 8);
         }
-        const blurStrength = gsap.utils.random(Math.min(definition.size / 2, 3), Math.max(definition.size, 10));
-        definition.graphics.filters = new PIXI.BlurFilter({
-            strengthX: blurStrength * gsap.utils.random(0.9, 1.1),
-            strengthY: blurStrength * gsap.utils.random(0.9, 1.1)
+        if (definition.graphics == null) {
+            definition.graphics = new PIXI.Graphics();
+            definition.graphics.circle(0, 0, 40);
+        }
+        const fillInnerRadius = Math.random() > 0.75 ? gsap.utils.random(0.35, 0.45) : gsap.utils.random(0, 0.1);
+        const fill = new FillGradient({
+            type: 'radial',
+            center: { x: 0.5, y: 0.5 },
+            innerRadius: fillInnerRadius,
+            outerCenter: { x: 0.5, y: 0.5 },
+            outerRadius: 0.5,
+            colorStops: [
+                { offset: 0, color: { r: 255, g: 255, b: 255, a: 1 } },
+                { offset: 1, color: { r: 255, g: 255, b: 255, a: 0 } }
+            ],
+            textureSpace: 'local'
         });
+        definition.graphics.fill(fill);
+        definition.graphics.scale = definition.size / 40;
         definition.graphics.alpha = gsap.utils.random(0.1, 0.9);
-        definition.graphics.circle(0, 0, definition.size);
-        definition.graphics.fill(0xFFFFFF);
         definition.speed = (definition.size / 2) * gsap.utils.random(0.5, 1.5);
         definition.wiggleIntensity = gsap.utils.random(5, 50);
         definition.wiggleOffset = gsap.utils.random(0, 50);
