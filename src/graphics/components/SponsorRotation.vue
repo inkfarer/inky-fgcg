@@ -30,6 +30,7 @@ onMounted(async () => {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 
     > img {
         position: absolute;

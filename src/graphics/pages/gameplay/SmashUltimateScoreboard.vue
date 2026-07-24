@@ -4,11 +4,11 @@
             v-show="scoreboardVisible"
             class="scoreboard-wrapper"
         >
-            <gameplay-scoreboard-entrant entrant="A" />
+            <gameplay-scoreboard-entrant entrant="A" direction="normal" />
             <img
                 src="../../assets/bfgl-logo-2.0.png"
             />
-            <gameplay-scoreboard-entrant entrant="B" />
+            <gameplay-scoreboard-entrant entrant="B" direction="inverse" />
             <div class="scoreboard-round-info">
                 <fitted-content align="center">
                     <opacity-swap-transition>

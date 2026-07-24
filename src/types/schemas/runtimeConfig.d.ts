@@ -7,5 +7,18 @@
  */
 
 export interface RuntimeConfig {
-	game: 'TEKKEN' | 'MORTAL_KOMBAT' | 'SMASH' | 'STREET_FIGHTER_6' | 'MORTAL_KOMBAT_1' | '2XKO' | 'GGST';
+	game:
+		| 'TEKKEN'
+		| 'TEKKEN_BALL'
+		| 'MORTAL_KOMBAT'
+		| 'SSBU'
+		| 'SSBM'
+		| 'STREET_FIGHTER_6'
+		| 'MORTAL_KOMBAT_1'
+		| '2XKO'
+		| 'GGST'
+		| 'MAIDEN_SPELL'
+		| 'LETHAL_LEAGUE_BLAZE'
+		| 'BLAZBLUE_CROSS_TAG_BATTLE'
+		| 'MARVEL_TOKON';
 }

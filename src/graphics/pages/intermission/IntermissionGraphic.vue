@@ -13,7 +13,7 @@
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN'">
                         Tekken 8
                     </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SMASH'">
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SSBU'">
                         Ultimate
                     </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'STREET_FIGHTER_6'">

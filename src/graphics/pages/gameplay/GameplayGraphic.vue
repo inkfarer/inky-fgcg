@@ -1,12 +1,15 @@
 <template>
-    <smash-scoreboard
-        v-if="runtimeConfigStore.runtimeConfig.game === 'SMASH'"
+    <smash-ultimate-scoreboard
+        v-if="runtimeConfigStore.runtimeConfig.game === 'SSBU'"
+    />
+    <smash-melee-scoreboard
+        v-else-if="runtimeConfigStore.runtimeConfig.game === 'SSBM'"
     />
     <generic-scoreboard
         v-else
     />
     <sponsor-rotation
-        v-if="assetStore.hasSponsors"
+        v-if="runtimeConfigStore.runtimeConfig.game !== 'SSBM' && assetStore.hasSponsors"
         class="sponsor-rotation"
     />
 </template>
@@ -16,7 +19,8 @@ import SponsorRotation from 'components/SponsorRotation.vue';
 import { useAssetStore } from 'client-shared/store/AssetStore';
 import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 import GenericScoreboard from './GenericScoreboard.vue';
-import SmashScoreboard from './SmashScoreboard.vue';
+import SmashUltimateScoreboard from './SmashUltimateScoreboard.vue';
+import SmashMeleeScoreboard from './SmashMeleeScoreboard.vue';
 
 const assetStore = useAssetStore();
 const runtimeConfigStore = useRuntimeConfigStore();
@@ -33,6 +37,5 @@ const runtimeConfigStore = useRuntimeConfigStore();
     height: 150px;
     left: 50%;
     transform: translateX(-50%);
-    align-items: flex-end;
 }
 </style>

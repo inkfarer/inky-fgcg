@@ -1,7 +1,11 @@
 <template>
     <div
         class="entrant"
-        :class="[`entrant-${props.entrant.toLowerCase()}`, `game-${runtimeConfigStore.runtimeConfig.game}`]"
+        :class="[
+            `entrant-${props.entrant.toLowerCase()}`,
+            `game-${runtimeConfigStore.runtimeConfig.game}`,
+            `direction-${props.direction}`
+        ]"
     >
         <div class="entrant-score">
             <div>
@@ -9,7 +13,7 @@
             </div>
         </div>
         <div class="entrant-name">
-            <fitted-content :align="props.entrant === 'A' ? 'right' : 'left'">
+            <fitted-content :align="props.direction === 'normal' ? 'right' : 'left'">
                 <opacity-swap-transition>
                     <span :key="`${entrant.name}_${entrant.prefix}`">
                         <span class="prefix">{{ $helpers.addDots(entrant.prefix) }}</span>
@@ -30,6 +34,7 @@ import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 
 const props = defineProps<{
     entrant: 'A' | 'B'
+    direction: 'normal' | 'inverse'
 }>();
 
 const activeMatchStore = useActiveMatchStore();
@@ -116,27 +121,32 @@ $accent-border-size: 12px;
     }
 
     &.entrant-a {
-        //background: linear-gradient(300deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
-        flex-direction: row-reverse;
-        box-shadow: $accent-border-size 0 0 constants.$accent-3;
         transform: skew($skew-amount);
 
-        .entrant-score {
-            border-right-width: $accent-border-size;
-            padding-right: 2px;
-
-            > * {
-                transform: skew($inverse-skew-amount);
-            }
-        }
-
-        .entrant-name {
+        .entrant-score > *, .entrant-name {
             transform: skew($inverse-skew-amount);
         }
     }
 
     &.entrant-b {
-        //background: linear-gradient(60deg, constants.$accent-1a 0%, constants.$accent-1b 100%);
+        transform: skew($inverse-skew-amount);
+
+        .entrant-score > *, .entrant-name {
+            transform: skew($skew-amount);
+        }
+    }
+
+    &.direction-normal {
+        flex-direction: row-reverse;
+        box-shadow: $accent-border-size 0 0 constants.$accent-3;
+
+        .entrant-score {
+            border-right-width: $accent-border-size;
+            padding-right: 2px;
+        }
+    }
+
+    &.direction-inverse {
         box-shadow: ($accent-border-size * -1) 0 0 constants.$accent-3;
         transform: skew($inverse-skew-amount);
 

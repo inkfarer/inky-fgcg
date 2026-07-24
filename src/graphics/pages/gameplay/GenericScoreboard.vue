@@ -1,6 +1,6 @@
 <template>
     <div class="scoreboard-wrapper">
-        <gameplay-scoreboard-entrant entrant="A" />
+        <gameplay-scoreboard-entrant entrant="A" direction="normal" />
         <div class="scoreboard-round-info">
             <fitted-content align="center">
                 <opacity-swap-transition>
@@ -10,7 +10,7 @@
                 </opacity-swap-transition>
             </fitted-content>
         </div>
-        <gameplay-scoreboard-entrant entrant="B" />
+        <gameplay-scoreboard-entrant entrant="B" direction="inverse" />
     </div>
 </template>
 
