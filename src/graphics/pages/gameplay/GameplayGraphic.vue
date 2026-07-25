@@ -30,7 +30,7 @@ const runtimeConfigStore = useRuntimeConfigStore();
 @use '../../styles/constants';
 
 .sponsor-rotation {
-    position: absolute;
+    position: absolute !important;
     bottom: 16px;
     margin: 0 auto;
     width: 200px;
