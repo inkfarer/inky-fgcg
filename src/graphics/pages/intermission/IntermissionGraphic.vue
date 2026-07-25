@@ -13,8 +13,14 @@
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN'">
                         Tekken 8
                     </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN_BALL'">
+                        Tekken Ball
+                    </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SSBU'">
                         Ultimate
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SSBM'">
+                        MELEE
                     </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'STREET_FIGHTER_6'">
                         SF6
@@ -28,8 +34,20 @@
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === '2XKO'">
                         2XKO
                     </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MARVEL_TOKON'">
+                        Marvel Tōkon
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'BLAZBLUE_CROSS_TAG_BATTLE'">
+                        BlazBlue: Cross Tag Battle
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'LETHAL_LEAGUE_BLAZE'">
+                        Lethal League Blaze
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MAIDEN_SPELL'">
+                        Maiden & Spell
+                    </template>
                 </div>
-                <div class="host-name">at PIXO Fest 2026</div>
+                <div class="host-name">at Yo Melee IV</div>
             </div>
         </div>
         <div class="flavor-text">
