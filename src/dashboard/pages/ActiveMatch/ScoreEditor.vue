@@ -1,6 +1,6 @@
 <template>
     <ipl-space class="score-editor-layout">
-        <div v-for="entrant of entrants">
+        <div v-for="(entrant, i) of entrants">
             <ipl-space
                 color="secondary"
                 class="layout horizontal score-display-space"
@@ -24,11 +24,24 @@
                 </div>
                 <div class="layout horizontal center-horizontal center-vertical score-wrapper">
                     <span
+                        v-if="editingScoreForIndex !== i"
                         class="score"
                         :class="{ smaller: entrant.score >= 100 }"
+                        @click="editScoreForEntrant(i)"
                     >
                         {{ entrant.score }}
                     </span>
+                    <ipl-input
+                        v-else
+                        v-model="scoreInputContent"
+                        name="score"
+                        type="number"
+                        centered
+                        ref="scoreInput"
+                        @keydown.esc="editingScoreForIndex = -1"
+                        @keydown.enter="submitNewEntrantScore"
+                        @blur="submitNewEntrantScore"
+                    />
                 </div>
             </ipl-space>
             <div class="entrant-name">{{ $helpers.addDots(entrant.name, 36) }}</div>
@@ -37,9 +50,9 @@
 </template>
 
 <script setup lang="ts">
-import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplSpace } from '@iplsplatoon/vue-components';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
-import { computed } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { sendMessage } from 'client-shared/helpers/NodecgHelper';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
@@ -50,6 +63,29 @@ library.add(faPlus, faMinus);
 
 const activeMatchStore = useActiveMatchStore();
 const runtimeConfigStore = useRuntimeConfigStore();
+
+const scoreInput = ref<InstanceType<typeof IplInput>[]>([]);
+const scoreInputContent = ref(0);
+const editingScoreForIndex = ref(-1);
+
+function editScoreForEntrant(entrantIndex: number) {
+    if (!runtimeConfigStore.runtimeConfig.allowAnyScore) return;
+
+    scoreInputContent.value = activeMatchStore.activeMatch.entrants[entrantIndex].score;
+    editingScoreForIndex.value = entrantIndex;
+
+    nextTick(() => {
+        scoreInput.value[0]?.focus();
+        scoreInput.value[0]?.select();
+    });
+}
+
+function submitNewEntrantScore() {
+    if (runtimeConfigStore.runtimeConfig.allowAnyScore && scoreInputContent.value >= 0) {
+        activeMatchStore.overrideEntrantScore(editingScoreForIndex.value, scoreInputContent.value);
+    }
+    editingScoreForIndex.value = -1;
+}
 
 const disableAddScore = computed(() => {
     if (runtimeConfigStore.runtimeConfig.allowAnyScore) return false;
@@ -104,6 +140,10 @@ const entrants = computed(() => {
 
     span {
         user-select: none;
+    }
+
+    .ipl-input__wrapper {
+        font-size: 0.5em !important;
     }
 }
 

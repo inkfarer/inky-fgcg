@@ -24,6 +24,11 @@ export const useActiveMatchStore = defineStore('activeMatch', {
 
             return state.activeMatch.entrants;
         }
+    },
+    actions: {
+        overrideEntrantScore(entrantIndex: number, newScore: number) {
+            activeMatch.value!.entrants[entrantIndex].score = newScore;
+        }
     }
 });
 
