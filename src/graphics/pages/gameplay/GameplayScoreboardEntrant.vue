@@ -15,10 +15,18 @@
         <div class="entrant-name">
             <fitted-content :align="props.direction === 'normal' ? 'right' : 'left'">
                 <opacity-swap-transition>
-                    <span :key="`${entrant.name}_${entrant.prefix}`">
-                        <span class="prefix">{{ $helpers.addDots(entrant.prefix) }}</span>
-                        {{ $helpers.addDots(entrant.name) }}
-                    </span>
+                    <div :key="String(runtimeConfigStore.playerSwaps.gameplay)">
+                        <template v-for="(participant, i) of entrant.participants">
+                            <span
+                                v-if="i === 0 || !entrant.allPrefixesMatch"
+                                class="prefix"
+                            >
+                                {{ $helpers.addDots(participant.prefix) }}
+                            </span>
+                            {{ $helpers.addDots(participant.name) }}
+                            <template v-if="i !== entrant.participants.length - 1">/ </template>
+                        </template>
+                    </div>
                 </opacity-swap-transition>
             </fitted-content>
         </div>
@@ -29,8 +37,8 @@
 import { computed } from 'vue';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 import FittedContent from 'components/FittedContent.vue';
-import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
+import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 
 const props = defineProps<{
     entrant: 'A' | 'B'
@@ -45,18 +53,26 @@ const entrant = computed(() => {
         : runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantA : activeMatchStore.activeMatch.entrantB;
     if (entrantData.participants.length <= 0) {
         return {
-            name: entrantData.name,
-            prefix: null,
+            allPrefixesMatch: true,
+            participants: [
+                {
+                    name: entrantData.name,
+                    prefix: null
+                }
+            ],
             score: entrantData.score
-        }
+        };
     } else {
-        const participant = entrantData.participants[0];
-
         return {
-            name: participant.name,
-            prefix: participant.prefix,
+            allPrefixesMatch:
+                entrantData.participants.length === 1 ||
+                entrantData.participants.every((participant) => participant.prefix === entrantData.participants[0].prefix),
+            participants: entrantData.participants.map((participant) => ({
+                name: participant.name,
+                prefix: participant.prefix
+            })),
             score: entrantData.score
-        }
+        };
     }
 });
 </script>
