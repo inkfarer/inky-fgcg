@@ -7,7 +7,7 @@
             `direction-${props.direction}`
         ]"
     >
-        <div class="entrant-score">
+        <div class="entrant-score font-numeric">
             <div>
                 {{ entrant.score }}
             </div>
