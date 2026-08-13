@@ -40,6 +40,10 @@ export class ActiveMatchController extends BaseController {
         this.listen('activeMatch:beginNextMatch', () => {
             const nextMatchData = cloneDeep(nextMatch.value);
 
+            const entrantsChanging =
+                nextMatchData.entrantA.id !== activeMatch.value.entrantA.id ||
+                nextMatchData.entrantB.id !== activeMatch.value.entrantB.id;
+
             activeMatch.value = {
                 entrantA: {
                     ...nextMatchData.entrantA,
@@ -52,10 +56,12 @@ export class ActiveMatchController extends BaseController {
                 match: nextMatchData.match
             }
 
-            playerSwaps.value = {
-                gameplay: false,
-                intermission: false
-            };
+            if (entrantsChanging) {
+                playerSwaps.value = {
+                    gameplay: false,
+                    intermission: false
+                };
+            }
 
             if (bottomBarData.value.mode === 'ACTIVE_MATCH') {
                 bottomBarData.value.mode = 'NEXT_MATCH';
