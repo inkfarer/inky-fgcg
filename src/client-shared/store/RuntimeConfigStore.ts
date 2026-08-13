@@ -1,4 +1,4 @@
-import { Casters, RuntimeConfig } from 'types/schemas';
+import { RuntimeConfig } from 'types/schemas';
 import { defineStore } from 'pinia';
 import { createReplicantStoreInitializer } from 'client-shared/store/StoreHelper';
 import { PlayerSwaps } from 'types/schemas/playerSwaps';
@@ -25,6 +25,9 @@ export const useRuntimeConfigStore = defineStore('runtimeConfig', {
         },
         setGameplayPlayersSwapped(newValue: boolean) {
             playerSwaps.value!.gameplay = newValue;
+        },
+        setAllowAnyScore(newValue: boolean) {
+            runtimeConfig.value!.allowAnyScore = newValue;
         }
     }
 });

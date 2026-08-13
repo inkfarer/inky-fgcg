@@ -1,6 +1,6 @@
 import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
-import { ActiveMatch, BottomBarData, Configschema, NextMatch } from 'types/schemas';
+import { ActiveMatch, BottomBarData, Configschema, NextMatch, RuntimeConfig } from 'types/schemas';
 import cloneDeep from 'lodash/cloneDeep';
 import { PlayerSwaps } from 'types/schemas/playerSwaps';
 
@@ -12,13 +12,14 @@ export class ActiveMatchController extends BaseController {
         const nextMatch = nodecg.Replicant('nextMatch') as unknown as NodeCG.ServerReplicantWithSchemaDefault<NextMatch>;
         const playerSwaps = nodecg.Replicant('playerSwaps') as unknown as NodeCG.ServerReplicantWithSchemaDefault<PlayerSwaps>;
         const bottomBarData = nodecg.Replicant('bottomBarData') as unknown as NodeCG.ServerReplicantWithSchemaDefault<BottomBarData>;
+        const runtimeConfig = nodecg.Replicant('runtimeConfig') as unknown as NodeCG.ServerReplicantWithSchemaDefault<RuntimeConfig>;
 
-        // todo: some kind of "arbitrary scoring" mode which doesn't limit score
         this.listen('activeMatch:addScore', (entrantIndex) => {
             const scoreSum = activeMatch.value.entrants.reduce(
                 (result, entrant) => result + entrant.score,
                 0);
-            if (scoreSum >= activeMatch.value.match.numberOfGames) return;
+
+            if (!runtimeConfig.value.allowAnyScore && scoreSum >= activeMatch.value.match.numberOfGames) return;
 
             const entrant = activeMatch.value.entrants[entrantIndex];
             if (entrant == null) {

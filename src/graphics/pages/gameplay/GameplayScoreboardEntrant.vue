@@ -130,7 +130,6 @@ $accent-border-size: 12px;
         font-weight: 600;
         font-size: 45px;
         line-height: 55px;
-        min-width: 68px;
         text-align: center;
         border: 0 solid constants.$accent-2;
     }
@@ -141,8 +140,8 @@ $accent-border-size: 12px;
 
         .entrant-score {
             border-right-width: $accent-border-size;
-            padding-right: 8px;
-            padding-left: 4px;
+            padding-right: 16px;
+            padding-left: 12px;
         }
     }
 
@@ -152,8 +151,8 @@ $accent-border-size: 12px;
 
         .entrant-score {
             border-left-width: $accent-border-size;
-            padding-left: 8px;
-            padding-right: 4px;
+            padding-left: 16px;
+            padding-right: 12px;
 
             > * {
                 transform: skew($skew-amount);

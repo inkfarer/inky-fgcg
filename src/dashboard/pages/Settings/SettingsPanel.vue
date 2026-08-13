@@ -13,13 +13,20 @@
             @click="runtimeConfigStore.setGame(game)"
         />
     </ipl-space>
+    <ipl-space class="m-t-8">
+        <ipl-small-toggle
+            :model-value="runtimeConfigStore.runtimeConfig.allowAnyScore"
+            label="Allow arbitrary non-negative scores"
+            @update:model-value="runtimeConfigStore.setAllowAnyScore($event)"
+        />
+    </ipl-space>
 </template>
 
 <script setup lang="ts">
 import { Option } from '@iplsplatoon/vue-components/dist/types/select';
 import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 import { Ref, ref } from 'vue';
-import { IplButton, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplSelect, IplSmallToggle, IplSpace } from '@iplsplatoon/vue-components';
 import { updateRefOnValueChange } from 'client-shared/store/StoreHelper';
 import { RuntimeConfig } from 'types/schemas';
 
@@ -46,4 +53,6 @@ const gameOptions: Option[] = [
 
 const game = ref('') as unknown as Ref<RuntimeConfig['game']>;
 updateRefOnValueChange(() => runtimeConfigStore.runtimeConfig.game, game);
+
+
 </script>

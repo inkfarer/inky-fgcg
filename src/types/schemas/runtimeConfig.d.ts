@@ -24,4 +24,5 @@ export interface RuntimeConfig {
 		| 'MARVEL_TOKON'
 		| 'SONIC_RACING_CROSSWORLDS'
 		| 'FF_COTW';
+	allowAnyScore: boolean;
 }

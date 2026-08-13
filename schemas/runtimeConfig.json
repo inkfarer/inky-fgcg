@@ -23,10 +23,14 @@
                 "SONIC_RACING_CROSSWORLDS",
                 "FF_COTW"
             ]
+        },
+        "allowAnyScore": {
+            "type": "boolean"
         }
     },
-    "required": ["game"],
+    "required": ["game", "allowAnyScore"],
     "default": {
-        "game": "TEKKEN"
+        "game": "TEKKEN",
+        "allowAnyScore": false
     }
 }

@@ -23,7 +23,12 @@
                     />
                 </div>
                 <div class="layout horizontal center-horizontal center-vertical score-wrapper">
-                    <span class="score">{{ entrant.score }}</span>
+                    <span
+                        class="score"
+                        :class="{ smaller: entrant.score >= 100 }"
+                    >
+                        {{ entrant.score }}
+                    </span>
                 </div>
             </ipl-space>
             <div class="entrant-name">{{ $helpers.addDots(entrant.name, 36) }}</div>
@@ -46,8 +51,9 @@ library.add(faPlus, faMinus);
 const activeMatchStore = useActiveMatchStore();
 const runtimeConfigStore = useRuntimeConfigStore();
 
-// todo: arbitrary score mode
 const disableAddScore = computed(() => {
+    if (runtimeConfigStore.runtimeConfig.allowAnyScore) return false;
+
     const scoreSum = activeMatchStore.activeMatch.entrants.reduce((result, entrant) => result + entrant.score, 0);
     return scoreSum >= activeMatchStore.activeMatch.match.numberOfGames;
 });
@@ -69,7 +75,7 @@ const entrants = computed(() => {
 <style lang="scss" scoped>
 .score-editor-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4px 12px;
 
     > *:nth-child(even) {
@@ -99,6 +105,10 @@ const entrants = computed(() => {
     span {
         user-select: none;
     }
+}
+
+.score.smaller {
+    font-size: 0.75em;
 }
 
 .ipl-space.score-display-space {
