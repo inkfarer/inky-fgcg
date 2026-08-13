@@ -2,8 +2,8 @@
     <div class="page-layout">
         <div class="sidebar">
             <div class="player-cam-space" />
-            <gameplay-scoreboard-entrant entrant="A" direction="normal" />
-            <gameplay-scoreboard-entrant entrant="B" direction="normal" />
+            <gameplay-scoreboard-entrant :entrant-index="0" direction="normal" />
+            <gameplay-scoreboard-entrant :entrant-index="1" direction="normal" />
             <div class="scoreboard-round-info">
                 <fitted-content align="center">
                     <opacity-swap-transition>
@@ -71,12 +71,12 @@ const activeMatchStore = useActiveMatchStore();
     margin-top: 16px;
     border: 2px solid constants.$accent-3;
 
-    &.entrant-a {
+    &.even-entrant {
         align-self: flex-start;
         margin-left: 16px;
     }
 
-    &.entrant-b {
+    &.odd-entrant {
         align-self: flex-end;
         margin-right: 22px;
     }

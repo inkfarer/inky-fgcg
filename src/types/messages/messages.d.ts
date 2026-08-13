@@ -1,5 +1,4 @@
 import { GetStreamMatchesMessage, UpdateNextMatchMessage } from './NextMatch';
-import { EntrantSide } from '../enums/EntrantSide';
 import { Casters } from '../schemas';
 
 export interface MessageInputMap {
@@ -9,8 +8,8 @@ export interface MessageInputMap {
     'nextMatch:update': UpdateNextMatchMessage
     'nextMatch:getStreamMatches': GetStreamMatchesMessage
 
-    'activeMatch:addScore': EntrantSide
-    'activeMatch:subtractScore': EntrantSide
+    'activeMatch:addScore': number
+    'activeMatch:subtractScore': number
     'activeMatch:beginNextMatch': never
 
     'casters:update': Casters['items'][number]

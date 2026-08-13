@@ -3,11 +3,11 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-        "entrantA": {
-            "$ref": "defs/entrant.json#/entrant"
-        },
-        "entrantB": {
-            "$ref": "defs/entrant.json#/entrant"
+        "entrants": {
+            "type": "array",
+            "items": {
+                "$ref": "defs/entrant.json#/entrant"
+            }
         },
         "match": {
             "type": "object",
@@ -26,28 +26,30 @@
             "required": ["name", "numberOfGames", "playType"]
         }
     },
-    "required": ["entrantA", "entrantB", "match"],
+    "required": ["entrants", "match"],
     "default": {
-        "entrantA": {
-            "id": "000",
-            "name": "Placeholder Entrant 1",
-            "participants": [
-                {
-                    "id": "0001",
-                    "name": "Placeholder Entrant 1"
-                }
-            ]
-        },
-        "entrantB": {
-            "id": "111",
-            "name": "Placeholder Entrant 2",
-            "participants": [
-                {
-                    "id": "1111",
-                    "name": "Placeholder Entrant 2"
-                }
-            ]
-        },
+        "entrants": [
+            {
+                "id": "000",
+                "name": "Placeholder Entrant 1",
+                "participants": [
+                    {
+                        "id": "0001",
+                        "name": "Placeholder Entrant 1"
+                    }
+                ]
+            },
+            {
+                "id": "111",
+                "name": "Placeholder Entrant 2",
+                "participants": [
+                    {
+                        "id": "1111",
+                        "name": "Placeholder Entrant 2"
+                    }
+                ]
+            }
+        ],
         "match": {
             "name": "Next Placeholder Round",
             "numberOfGames": 3,

@@ -1,6 +1,5 @@
 export interface UpdateNextMatchMessage {
-    entrantAId: string
-    entrantBId: string
+    entrantIds: string[]
     matchName: string
     numberOfGames: number
     playType: 'BEST_OF' | 'PLAY_ALL'

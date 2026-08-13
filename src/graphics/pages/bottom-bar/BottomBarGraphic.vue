@@ -14,9 +14,10 @@
                     <div v-if="intermissionStore.bottomBarData.mode === 'NEXT_MATCH'">
                         <fitted-content align="center">
                             <span class="low-emphasis">Next: </span>
-                            <span class="player-name">{{ $helpers.addDots(getEntrantName(swapNextMatchPlayers ? nextMatchStore.nextMatch.entrantB : nextMatchStore.nextMatch.entrantA)) }}</span>
-                            <span class="low-emphasis"> vs </span>
-                            <span class="player-name">{{ $helpers.addDots(getEntrantName(swapNextMatchPlayers ? nextMatchStore.nextMatch.entrantA : nextMatchStore.nextMatch.entrantB)) }}</span>
+                            <template v-for="(entrant, i) of entrants">
+                                <span class="player-name">{{ $helpers.addDots(getEntrantName(entrant)) }}</span>
+                                <span v-if="i !== entrants.length - 1" class="low-emphasis"> vs </span>
+                            </template>
                         </fitted-content>
                         <fitted-content align="center">
                             <opacity-swap-transition>
@@ -31,11 +32,20 @@
                     </div>
                     <div v-else-if="intermissionStore.bottomBarData.mode === 'ACTIVE_MATCH'">
                         <fitted-content align="center">
-                            <span class="player-name">{{ $helpers.addDots(getEntrantName(runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantB : activeMatchStore.activeMatch.entrantA)) }}</span>
-                            <span class="player-score player-a-score font-numeric">{{ runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantB.score : activeMatchStore.activeMatch.entrantA.score }}</span>
-                            <span class="score-separator"> - </span>
-                            <span class="player-score player-b-score font-numeric">{{ runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantA.score : activeMatchStore.activeMatch.entrantB.score }}</span>
-                            <span class="player-name">{{ $helpers.addDots(getEntrantName(runtimeConfigStore.playerSwaps.intermission ? activeMatchStore.activeMatch.entrantA : activeMatchStore.activeMatch.entrantB)) }}</span>
+                            <template v-if="entrants.length === 2">
+                                <span class="player-name">{{ $helpers.addDots(getEntrantName(entrants[0])) }}</span>
+                                <span class="player-score player-a-score font-numeric">{{ entrants[0].score }}</span>
+                                <span class="score-separator"> - </span>
+                                <span class="player-score player-b-score font-numeric">{{ entrants[1].score }}</span>
+                                <span class="player-name">{{ $helpers.addDots(getEntrantName(entrants[1])) }}</span>
+                            </template>
+                            <template v-else>
+                                <template v-for="(entrant, i) of entrants">
+                                    <span class="player-name">{{ $helpers.addDots(getEntrantName(entrant)) }}</span>
+                                    <span class="player-score player-a-score font-numeric">{{ entrant.score }}</span>
+                                    <span v-if="i !== entrants.length - 1"> - </span>
+                                </template>
+                            </template>
                         </fitted-content>
                         <fitted-content align="center">
                             <opacity-swap-transition>
@@ -99,8 +109,27 @@ const assetStore = useAssetStore();
 const greeting = (nodecg.bundleConfig as Configschema).event?.greeting ?? 'Hello from Yo Mana!';
 
 const swapNextMatchPlayers = computed(() => runtimeConfigStore.playerSwaps.intermission &&
-    activeMatchStore.activeMatch.entrantA.id === nextMatchStore.nextMatch.entrantA.id &&
-    activeMatchStore.activeMatch.entrantB.id === nextMatchStore.nextMatch.entrantB.id);
+    activeMatchStore.activeMatch.entrants.length === 2 &&
+    activeMatchStore.activeMatch.entrants.length === nextMatchStore.nextMatch.entrants.length &&
+    activeMatchStore.activeMatch.entrants.every((entrant, i) => nextMatchStore.nextMatch.entrants[i].id === entrant.id));
+
+const entrants = computed(() => {
+    if (intermissionStore.bottomBarData.mode === 'ACTIVE_MATCH') {
+        if (activeMatchStore.activeMatch.entrants.length === 2 && runtimeConfigStore.playerSwaps.gameplay) {
+            return activeMatchStore.activeMatch.entrants.toReversed();
+        }
+
+        return activeMatchStore.activeMatch.entrants;
+    } else if (intermissionStore.bottomBarData.mode === 'NEXT_MATCH') {
+        if (swapNextMatchPlayers.value) {
+            return nextMatchStore.nextMatch.entrants.toReversed();
+        }
+
+        return nextMatchStore.nextMatch.entrants;
+    } else {
+        return [];
+    }
+});
 
 function getEntrantName(entrant: Entrant): string {
     if (entrant.participants.length >= 1) {

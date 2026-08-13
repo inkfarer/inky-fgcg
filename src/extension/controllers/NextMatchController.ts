@@ -13,13 +13,9 @@ export class NextMatchController extends BaseController {
         const tournamentData = nodecg.Replicant('tournamentData') as unknown as NodeCG.ServerReplicantWithSchemaDefault<TournamentData>;
         const streamMatches = nodecg.Replicant('streamMatches') as unknown as NodeCG.ServerReplicantWithSchemaDefault<StreamMatches>;
 
-        this.listen('nextMatch:update', data => {
-             const entrantA = getEntrant(entrants.value!, data.entrantAId);
-             const entrantB = getEntrant(entrants.value!, data.entrantBId);
-
+        this.listen('nextMatch:update', (data) => {
              nextMatch.value = {
-                 entrantA,
-                 entrantB,
+                 entrants: data.entrantIds.map((entrantId) => getEntrant(entrants.value!, entrantId)),
                  match: {
                      name: data.matchName,
                      numberOfGames: data.numberOfGames,

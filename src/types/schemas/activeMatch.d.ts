@@ -6,14 +6,11 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type ActiveMatchEntrant = Entrant & {
-	score: number;
-	[k: string]: unknown;
-};
-
 export interface ActiveMatch {
-	entrantA: ActiveMatchEntrant;
-	entrantB: ActiveMatchEntrant;
+	entrants: (Entrant & {
+		score: number;
+		[k: string]: unknown;
+	})[];
 	match: {
 		name: string;
 		numberOfGames: number;

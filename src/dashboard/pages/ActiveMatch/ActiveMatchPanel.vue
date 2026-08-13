@@ -20,10 +20,12 @@
     <ipl-space class="m-t-8">
         <ipl-small-toggle
             v-model="swapPlayersOnIntermission"
+            :disabled="activeMatchStore.activeMatch.entrants.length !== 2"
             label="Swap players on intermission"
         />
         <ipl-small-toggle
             v-model="swapPlayersOnGameplay"
+            :disabled="activeMatchStore.activeMatch.entrants.length !== 2"
             class="m-t-8"
             label="Swap players on gameplay"
         />

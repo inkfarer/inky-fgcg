@@ -3,16 +3,16 @@
     "type": "array",
     "items": {
         "type": "object",
-        "required": ["id", "entrantAId", "entrantBId", "matchName", "playType"],
+        "required": ["id", "entrantIds", "matchName", "playType"],
         "properties": {
             "id": {
                 "type": "string"
             },
-            "entrantAId": {
-                "type": "string"
-            },
-            "entrantBId": {
-                "type": "string"
+            "entrantIds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
             },
             "matchName": {
                 "type": "string"

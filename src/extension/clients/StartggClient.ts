@@ -298,13 +298,12 @@ export class StartggClient {
             .filter(queueItem => (getAllStreams || streamIds?.includes(queueItem.stream.id)))
             .flatMap(queueItem => queueItem.sets
                 .filter(set =>
-                    set.slots.length === 2
-                    && !set.slots.some(slot => slot.entrant === null)
+                    set.slots.length >= 2
+                    && !set.slots.some(slot => slot.entrant == null)
                     && set.event.id === eventId)
                 .map(set => ({
                     id: String(set.id),
-                    entrantAId: String(set.slots[0].entrant.id),
-                    entrantBId: String(set.slots[1].entrant.id),
+                    entrantIds: set.slots.map((slot) => String(slot.entrant.id)),
                     playType: set.setGamesType === 1 ? 'BEST_OF' : 'PLAY_ALL',
                     matchName: set.phaseGroup.phase.groupCount > 1
                         ? `${set.phaseGroup.phase.name} - Pool ${set.phaseGroup.displayIdentifier} - ${set.fullRoundText}`

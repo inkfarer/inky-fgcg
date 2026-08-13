@@ -7,8 +7,7 @@
  */
 
 export interface NextMatch {
-	entrantA: Entrant;
-	entrantB: Entrant;
+	entrants: Entrant[];
 	match: {
 		name: string;
 		numberOfGames: number;

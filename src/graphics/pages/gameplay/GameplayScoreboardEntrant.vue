@@ -2,7 +2,7 @@
     <div
         class="entrant"
         :class="[
-            `entrant-${props.entrant.toLowerCase()}`,
+            (props.invertSkew ? props.entrantIndex + 1 : props.entrantIndex) % 2 === 0 ? 'even-entrant' : 'odd-entrant',
             `game-${runtimeConfigStore.runtimeConfig.game}`,
             `direction-${props.direction}`
         ]"
@@ -41,16 +41,15 @@ import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 
 const props = defineProps<{
-    entrant: 'A' | 'B'
+    entrantIndex: number
     direction: 'normal' | 'inverse'
+    invertSkew?: boolean
 }>();
 
 const activeMatchStore = useActiveMatchStore();
 const runtimeConfigStore = useRuntimeConfigStore();
 const entrant = computed(() => {
-    const entrantData = props.entrant === 'A'
-        ? runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantB : activeMatchStore.activeMatch.entrantA
-        : runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantA : activeMatchStore.activeMatch.entrantB;
+    const entrantData = activeMatchStore.entrants[props.entrantIndex];
     if (entrantData.participants.length <= 0) {
         return {
             allPrefixesMatch: true,
@@ -136,29 +135,14 @@ $accent-border-size: 12px;
         border: 0 solid constants.$accent-2;
     }
 
-    &.entrant-a {
-        transform: skew($skew-amount);
-
-        .entrant-score > *, .entrant-name {
-            transform: skew($inverse-skew-amount);
-        }
-    }
-
-    &.entrant-b {
-        transform: skew($inverse-skew-amount);
-
-        .entrant-score > *, .entrant-name {
-            transform: skew($skew-amount);
-        }
-    }
-
     &.direction-normal {
         flex-direction: row-reverse;
         box-shadow: $accent-border-size 0 0 constants.$accent-3;
 
         .entrant-score {
             border-right-width: $accent-border-size;
-            padding-right: 2px;
+            padding-right: 8px;
+            padding-left: 4px;
         }
     }
 
@@ -168,7 +152,8 @@ $accent-border-size: 12px;
 
         .entrant-score {
             border-left-width: $accent-border-size;
-            padding-left: 2px;
+            padding-left: 8px;
+            padding-right: 4px;
 
             > * {
                 transform: skew($skew-amount);
@@ -176,6 +161,22 @@ $accent-border-size: 12px;
         }
 
         .entrant-name {
+            transform: skew($skew-amount);
+        }
+    }
+
+    &.even-entrant {
+        transform: skew($skew-amount);
+
+        .entrant-score > *, .entrant-name {
+            transform: skew($inverse-skew-amount);
+        }
+    }
+
+    &.odd-entrant {
+        transform: skew($inverse-skew-amount);
+
+        .entrant-score > *, .entrant-name {
             transform: skew($skew-amount);
         }
     }

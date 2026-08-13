@@ -8,6 +8,7 @@ import { initNextMatchStore } from 'client-shared/store/NextMatchStore';
 import NextMatchPanel from './pages/NextMatch/NextMatchPanel.vue';
 import { installCommonHelpers } from 'client-shared/helpers/InstallCommonHelpers';
 import { initTournamentDataStore } from 'client-shared/store/TournamentDataStore';
+import { initRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 
 (async () => {
     const app = createApp(NextMatchPanel);
@@ -17,5 +18,6 @@ import { initTournamentDataStore } from 'client-shared/store/TournamentDataStore
     await initEntrantStore();
     await initNextMatchStore();
     await initTournamentDataStore();
+    await initRuntimeConfigStore();
     app.mount('#app');
 })();

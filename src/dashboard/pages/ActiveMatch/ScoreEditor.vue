@@ -1,59 +1,33 @@
 <template>
     <ipl-space class="score-editor-layout">
-        <ipl-space
-            color="light"
-            class="layout horizontal score-display-space"
-        >
-            <div class="layout vertical">
-                <ipl-button
-                    icon="plus"
-                    color="green"
-                    small
-                    :disabled="disableAddScore"
-                    @click="sendMessage('activeMatch:addScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.BRAVO : EntrantSide.ALPHA)"
-                />
-                <ipl-button
-                    class="m-t-4"
-                    icon="minus"
-                    color="red"
-                    small
-                    :disabled="activeMatchStore.activeMatch.entrantA.score <= 0"
-                    @click="sendMessage('activeMatch:subtractScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.BRAVO : EntrantSide.ALPHA)"
-                />
-            </div>
-            <div class="layout horizontal center-horizontal center-vertical score-wrapper left">
-                <span class="score">{{ runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantB.score : activeMatchStore.activeMatch.entrantA.score }}</span>
-            </div>
-        </ipl-space>
-        <span class="score-separator">:</span>
-        <ipl-space
-            color="light"
-            class="layout horizontal score-display-space"
-        >
-            <div class="layout horizontal center-horizontal center-vertical score-wrapper right">
-                <span class="score">{{ runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantA.score : activeMatchStore.activeMatch.entrantB.score }}</span>
-            </div>
-            <div class="layout vertical">
-                <ipl-button
-                    icon="plus"
-                    color="green"
-                    small
-                    :disabled="disableAddScore"
-                    @click="sendMessage('activeMatch:addScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.ALPHA : EntrantSide.BRAVO)"
-                />
-                <ipl-button
-                    class="m-t-4"
-                    icon="minus"
-                    color="red"
-                    small
-                    :disabled="activeMatchStore.activeMatch.entrantB.score <= 0"
-                    @click="sendMessage('activeMatch:subtractScore', runtimeConfigStore.playerSwaps.gameplay ? EntrantSide.ALPHA : EntrantSide.BRAVO)"
-                />
-            </div>
-        </ipl-space>
-        <div class="entrant-name left">{{ $helpers.addDots(runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantB.name : activeMatchStore.activeMatch.entrantA.name, 36) }}</div>
-        <div class="versus">vs</div>
-        <div class="entrant-name right">{{ $helpers.addDots(runtimeConfigStore.playerSwaps.gameplay ? activeMatchStore.activeMatch.entrantA.name : activeMatchStore.activeMatch.entrantB.name, 36) }}</div>
+        <div v-for="entrant of entrants">
+            <ipl-space
+                color="secondary"
+                class="layout horizontal score-display-space"
+            >
+                <div class="layout vertical">
+                    <ipl-button
+                        icon="plus"
+                        color="green"
+                        small
+                        :disabled="disableAddScore"
+                        @click="sendMessage('activeMatch:addScore', entrant.actualIndex)"
+                    />
+                    <ipl-button
+                        class="m-t-4"
+                        icon="minus"
+                        color="red"
+                        small
+                        :disabled="entrant.score <= 0"
+                        @click="sendMessage('activeMatch:subtractScore', entrant.actualIndex)"
+                    />
+                </div>
+                <div class="layout horizontal center-horizontal center-vertical score-wrapper">
+                    <span class="score">{{ entrant.score }}</span>
+                </div>
+            </ipl-space>
+            <div class="entrant-name">{{ $helpers.addDots(entrant.name, 36) }}</div>
+        </div>
     </ipl-space>
 </template>
 
@@ -61,7 +35,6 @@
 import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 import { computed } from 'vue';
-import { EntrantSide } from 'types/enums/EntrantSide';
 import { sendMessage } from 'client-shared/helpers/NodecgHelper';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
@@ -73,15 +46,41 @@ library.add(faPlus, faMinus);
 const activeMatchStore = useActiveMatchStore();
 const runtimeConfigStore = useRuntimeConfigStore();
 
-const disableAddScore = computed(() =>
-    activeMatchStore.activeMatch.entrantA.score + activeMatchStore.activeMatch.entrantB.score >= activeMatchStore.activeMatch.match.numberOfGames);
+// todo: arbitrary score mode
+const disableAddScore = computed(() => {
+    const scoreSum = activeMatchStore.activeMatch.entrants.reduce((result, entrant) => result + entrant.score, 0);
+    return scoreSum >= activeMatchStore.activeMatch.match.numberOfGames;
+});
+
+const entrants = computed(() => {
+    const result = activeMatchStore.activeMatch.entrants.map((entrant, i) => ({
+        ...entrant,
+        actualIndex: i
+    }));
+
+    if (activeMatchStore.activeMatch.entrants.length === 2 && runtimeConfigStore.playerSwaps.gameplay) {
+        return result.toReversed();
+    }
+
+    return result;
+});
 </script>
 
 <style lang="scss" scoped>
 .score-editor-layout {
     display: grid;
-    grid-template-columns: 1fr 25px 1fr;
-    row-gap: 4px;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px;
+
+    > *:nth-child(even) {
+        > .entrant-name {
+            text-align: right;
+        }
+
+        > .score-display-space {
+            flex-direction: row-reverse !important;
+        }
+    }
 }
 
 .score-wrapper {
@@ -106,19 +105,10 @@ const disableAddScore = computed(() =>
     padding: 4px;
 }
 
-.versus {
-    text-align: center;
-    font-size: 0.85em;
-    align-self: center;
-}
-
 .entrant-name {
     font-size: 0.85em;
     overflow-wrap: anywhere;
-
-    &.right {
-        text-align: right;
-    }
+    margin-top: 4px;
 }
 
 .score-separator {

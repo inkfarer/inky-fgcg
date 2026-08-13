@@ -1,7 +1,6 @@
 import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
 import { ActiveMatch, BottomBarData, Configschema, NextMatch } from 'types/schemas';
-import { EntrantSide } from 'types/enums/EntrantSide';
 import cloneDeep from 'lodash/cloneDeep';
 import { PlayerSwaps } from 'types/schemas/playerSwaps';
 
@@ -14,26 +13,33 @@ export class ActiveMatchController extends BaseController {
         const playerSwaps = nodecg.Replicant('playerSwaps') as unknown as NodeCG.ServerReplicantWithSchemaDefault<PlayerSwaps>;
         const bottomBarData = nodecg.Replicant('bottomBarData') as unknown as NodeCG.ServerReplicantWithSchemaDefault<BottomBarData>;
 
-        this.listen('activeMatch:addScore', side => {
-            const scoreSum = activeMatch.value.entrantA.score + activeMatch.value.entrantB.score;
+        // todo: some kind of "arbitrary scoring" mode which doesn't limit score
+        this.listen('activeMatch:addScore', (entrantIndex) => {
+            const scoreSum = activeMatch.value.entrants.reduce(
+                (result, entrant) => result + entrant.score,
+                0);
             if (scoreSum >= activeMatch.value.match.numberOfGames) return;
 
-            if (side === EntrantSide.ALPHA) {
-                activeMatch.value.entrantA.score++;
-            } else if (side === EntrantSide.BRAVO) {
-                activeMatch.value.entrantB.score++;
+            const entrant = activeMatch.value.entrants[entrantIndex];
+            if (entrant == null) {
+                throw new Error(`Entrant #${entrantIndex + 1} not found`);
             }
+
+            entrant.score++;
 
             if (scoreSum === 0 && bottomBarData.value.mode === 'NEXT_MATCH') {
                 bottomBarData.value.mode = 'ACTIVE_MATCH';
             }
         });
 
-        this.listen('activeMatch:subtractScore', side => {
-            if (side === EntrantSide.ALPHA && activeMatch.value.entrantA.score > 0) {
-                activeMatch.value.entrantA.score--;
-            } else if (side === EntrantSide.BRAVO && activeMatch.value.entrantB.score > 0) {
-                activeMatch.value.entrantB.score--;
+        this.listen('activeMatch:subtractScore', (entrantIndex) => {
+            const entrant = activeMatch.value.entrants[entrantIndex];
+            if (entrant == null) {
+                throw new Error(`Entrant #${entrantIndex + 1} not found`);
+            }
+
+            if (entrant.score > 0) {
+                entrant.score--;
             }
         });
 
@@ -41,22 +47,18 @@ export class ActiveMatchController extends BaseController {
             const nextMatchData = cloneDeep(nextMatch.value);
 
             const entrantsChanging =
-                nextMatchData.entrantA.id !== activeMatch.value.entrantA.id ||
-                nextMatchData.entrantB.id !== activeMatch.value.entrantB.id;
+                activeMatch.value.entrants.length !== nextMatchData.entrants.length ||
+                activeMatch.value.entrants.some((activeEntrant, i) => activeEntrant.id !== nextMatchData.entrants[i].id);
 
             activeMatch.value = {
-                entrantA: {
-                    ...nextMatchData.entrantA,
+                entrants: nextMatchData.entrants.map((entrant) => ({
+                    ...entrant,
                     score: 0
-                },
-                entrantB: {
-                    ...nextMatchData.entrantB,
-                    score: 0
-                },
+                })),
                 match: nextMatchData.match
             }
 
-            if (entrantsChanging) {
+            if (entrantsChanging || activeMatch.value.entrants.length !== 2) {
                 playerSwaps.value = {
                     gameplay: false,
                     intermission: false

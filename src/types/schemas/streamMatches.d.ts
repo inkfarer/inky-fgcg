@@ -8,8 +8,7 @@
 
 export type StreamMatches = {
 	id: string;
-	entrantAId: string;
-	entrantBId: string;
+	entrantIds: string[];
 	matchName: string;
 	playType: 'PLAY_ALL' | 'BEST_OF';
 	numberOfGames?: number;
