@@ -38,7 +38,10 @@ const gameOptions: Option[] = [
     { name: 'Maiden & Spell', value: 'MAIDEN_SPELL' },
     { name: 'Lethal League Blaze', value: 'LETHAL_LEAGUE_BLAZE' },
     { name: 'BlazBlue: Cross Tag Battle', value: 'BLAZBLUE_CROSS_TAG_BATTLE' },
+    { name: 'BlazBlue: Central Fiction', value: 'BLAZBLUE_CENTRAL_FICTION' },
     { name: 'Marvel Tōkon', value: 'MARVEL_TOKON' },
+    { name: 'Sonic Racing: CrossWorlds', value: 'SONIC_RACING_CROSSWORLDS' },
+    { name: 'Fatal Fury: City of the Wolves', value: 'FF_COTW' }
 ];
 
 const game = ref('') as unknown as Ref<RuntimeConfig['game']>;

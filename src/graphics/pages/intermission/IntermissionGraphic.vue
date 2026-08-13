@@ -35,19 +35,28 @@
                         2XKO
                     </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MARVEL_TOKON'">
-                        Marvel Tōkon
+                        Marvel<br>Tokon
                     </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'BLAZBLUE_CROSS_TAG_BATTLE'">
-                        BlazBlue: Cross Tag Battle
+                        BlazBlue:<br>Cross Tag<br>Battle
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'BLAZBLUE_CENTRAL_FICTION'">
+                        BlazBlue:<br>Central<br>Fiction
                     </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'LETHAL_LEAGUE_BLAZE'">
-                        Lethal League Blaze
+                        Lethal<br>League<br>Blaze
                     </template>
                     <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MAIDEN_SPELL'">
-                        Maiden & Spell
+                        Maiden<br>& Spell
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SONIC_RACING_CROSSWORLDS'">
+                        Sonic Racing:<br>CrossWorlds
+                    </template>
+                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'FF_COTW'">
+                        Fatal Fury:<br>CotW
                     </template>
                 </div>
-                <div class="host-name">at Yo Melee IV</div>
+                <div class="host-name">at UniCon 2026</div>
             </div>
         </div>
         <div class="flavor-text">
@@ -91,6 +100,30 @@ const intermissionStore = useIntermissionStore();
             line-height: 130px;
         }
     }
+
+    &.game-STREET_FIGHTER_6 .game-name {
+        font-size: 300px;
+    }
+
+    &.game-MAIDEN_SPELL .game-name {
+        font-size: 225px;
+        margin-bottom: 35px;
+    }
+
+    &.game-LETHAL_LEAGUE_BLAZE .game-name,
+    &.game-BLAZBLUE_CROSS_TAG_BATTLE .game-name,
+    &.game-BLAZBLUE_CENTRAL_FICTION .game-name {
+        font-size: 200px;
+    }
+
+    &.game-SONIC_RACING_CROSSWORLDS .game-name {
+        font-size: 200px;
+        line-height: 95%;
+    }
+
+    &.game-FF_COTW .game-name {
+        font-size: 200px;
+    }
 }
 
 .flavor-text {
@@ -120,7 +153,7 @@ const intermissionStore = useIntermissionStore();
         > .game-name {
             font-size: 250px;
             font-weight: 700;
-            line-height: 160px;
+            line-height: 80%;
             margin-top: 40px;
         }
     }
