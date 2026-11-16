@@ -46,12 +46,12 @@ const renderer = new BracketRenderer({
         curveFunction: d3.curveStep,
         linkWidth: 30
     },
-    swissOpts: {
-        rowHeight: 60,
-        useScrollMask: false
-    },
     roundRobinOpts: {
         maxScale: 1.75
+    },
+    swissOpts: {
+        columnGap: 8,
+        rowGap: 16
     }
 });
 
@@ -105,13 +105,13 @@ $inverse-skew-amount: -8deg;
     position: absolute;
     top: $top-margin;
     left: $margin;
-    font-weight: 600;
 }
 
-.bracket-wrapper :deep(> div) {
+.bracket-wrapper :deep(> .bracket-renderer) {
     width: 1920px - $margin * 2;
     height: 1080px - ($bottom-margin + $top-margin);
     overflow: visible;
+    font-weight: 600;
 
     .round-robin-renderer {
         .round-robin-grid-item {
@@ -163,7 +163,7 @@ $inverse-skew-amount: -8deg;
         }
     }
 
-    .elimination-renderer {
+    .elimination-renderer, .swiss-renderer {
         padding: 8px;
 
         .elimination-renderer__bracket-title {
@@ -251,45 +251,8 @@ $inverse-skew-amount: -8deg;
     }
 
     .swiss-renderer {
-        width: 60%;
         justify-items: center;
-
-        .match-row-wrapper {
-            margin: 8px 0;
-            width: 1000px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            justify-content: center;
-        }
-
-        .match-row {
-            background-color: constants.$accent-1a;
-            color: constants.$text-color-2;
-            width: 1000px;
-            height: 100%;
-            position: absolute;
-            box-sizing: border-box;
-            border-radius: 0;
-
-            .match-row__team-name {
-                font-size: 1.5em;
-                line-height: 2em;
-                padding: 0 8px;
-                height: 100%;
-                border-radius: 0;
-            }
-
-            .match-row__scores {
-                border-radius: 5px;
-                font-weight: 700;
-                font-size: 1.4em;
-                width: 120px;
-                padding: 0 4px;
-                background-color: constants.$accent-1a;
-                color: constants.$text-color-2;
-            }
-        }
+        width: 80%;
     }
 }
 </style>
