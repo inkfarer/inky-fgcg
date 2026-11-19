@@ -42,12 +42,14 @@ import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import { GenericScoreboardSize } from '../../helpers/GenericScoreboardSize';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     entrantIndex: number
     direction: 'normal' | 'inverse'
     invertSkew?: boolean
-    size: GenericScoreboardSize
-}>();
+    size?: GenericScoreboardSize
+}>(), {
+    size: 'normal'
+});
 
 const activeMatchStore = useActiveMatchStore();
 const runtimeConfigStore = useRuntimeConfigStore();

@@ -13,7 +13,7 @@
             <fitted-content align="center">
                 <opacity-swap-transition>
                     <span :key="`${activeMatchStore.activeMatch.match.name}_${activeMatchStore.formattedPlayType}`">
-                        {{ activeMatchStore.activeMatch.match.name }}<span class="separator">-</span>{{ props.small ? activeMatchStore.shortPlayType : activeMatchStore.formattedPlayType }}
+                        {{ activeMatchStore.activeMatch.match.name }}<span class="separator">-</span>{{ props.size === 'small' ? activeMatchStore.shortPlayType : activeMatchStore.formattedPlayType }}
                     </span>
                 </opacity-swap-transition>
             </fitted-content>
