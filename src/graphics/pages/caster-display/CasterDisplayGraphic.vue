@@ -110,6 +110,20 @@ function beforeCastersEnter(element: HTMLElement) {
     flex-direction: column;
     justify-content: center;
     position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        opacity: 0.15;
+        mix-blend-mode: overlay;
+        background: url('../../assets/hexagon-pattern.webp');
+        background-size: 32px;
+        background-position: 0 2px;
+    }
 }
 
 .caster-name-wrapper {
