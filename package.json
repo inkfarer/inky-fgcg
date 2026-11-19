@@ -110,11 +110,6 @@
                 "file": "intermission.html",
                 "width": 1920,
                 "height": 1080
-            },
-            {
-                "file": "background.html",
-                "width": 1920,
-                "height": 1080
             }
         ],
         "assetCategories": [
@@ -168,7 +163,6 @@
         "axios": "^1.6.8",
         "d3": "^7.9.0",
         "luxon": "^3.4.4",
-        "pixi.js": "^8.15.0",
         "uuid": "^10.0.0"
     }
 }
