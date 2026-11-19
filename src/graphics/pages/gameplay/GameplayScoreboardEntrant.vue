@@ -108,6 +108,11 @@ $accent-border-size: 12px;
             font-size: 32px;
             line-height: 36px;
         }
+
+        &:after {
+            background-size: auto, 24px;
+            background-position: 0, 0 1px;
+        }
     }
 
     &.size-slight-shrink {
@@ -116,6 +121,24 @@ $accent-border-size: 12px;
         .entrant-score {
             line-height: 52px;
         }
+
+        &:after {
+            background-position: 0, 0 2px;
+        }
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        opacity: 0.15;
+        mix-blend-mode: overlay;
+        background: linear-gradient(to bottom, transparent calc(100% - 12px), rgba(255, 255, 255, 0.5) 100%), url('../../assets/hexagon-pattern.webp');
+        background-size: auto, 32px;
+        background-position: 0, 0 5px;
     }
 
     .entrant-name {

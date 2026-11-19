@@ -168,9 +168,7 @@ function getEntrantName(entrant: Entrant): string {
 }
 
 .bottom-bar-item {
-    background: constants.$accent-1a url('../../assets/hexagon-pattern.png');
-    background-size: auto 100px;
-    background-position: center 65px;
+    background: constants.$accent-1a;
     height: 100%;
     padding: 0 35px;
     display: flex;
@@ -184,10 +182,9 @@ function getEntrantName(entrant: Entrant): string {
         left: 0;
         top: 0;
         opacity: 0.15;
-        mix-blend-mode: soft-light;
-        background:
-            linear-gradient(to bottom, transparent calc(100% - 12px), #fff 100%);
-            //linear-gradient(to right, #fff 0%, transparent 12px, transparent calc(100% - 12px), #fff 100%);
+        mix-blend-mode: overlay;
+        background: linear-gradient(to bottom, transparent calc(100% - 12px), #fff 100%), url('../../assets/hexagon-pattern.webp');
+        background-size: auto, 32px;
     }
 }
 
