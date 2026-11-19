@@ -1,13 +1,13 @@
 <template>
     <div
         class="scoreboard-wrapper"
-        :class="{ inverted: props.inverted, small: props.small }"
+        :class="{ inverted: props.inverted, [`size-${props.size}`]: true }"
     >
         <gameplay-scoreboard-entrant
             :entrant-index="0"
             direction="normal"
             :invert-skew="props.inverted"
-            :small="props.small"
+            :size="props.size"
         />
         <div class="scoreboard-round-info">
             <fitted-content align="center">
@@ -22,7 +22,7 @@
             :entrant-index="1"
             direction="inverse"
             :invert-skew="props.inverted"
-            :small="props.small"
+            :size="props.size"
         />
     </div>
 </template>
@@ -32,11 +32,14 @@ import FittedContent from 'components/FittedContent.vue';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import GameplayScoreboardEntrant from './GameplayScoreboardEntrant.vue';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
+import { GenericScoreboardSize } from '../../helpers/GenericScoreboardSize';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     inverted?: boolean
-    small?: boolean
-}>();
+    size?: GenericScoreboardSize
+}>(), {
+    size: 'normal'
+});
 
 const activeMatchStore = useActiveMatchStore();
 </script>

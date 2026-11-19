@@ -11,7 +11,7 @@
     <generic-scoreboard
         v-else
         :inverted="runtimeConfigStore.runtimeConfig.game === 'RESISTANCE_204X'"
-        :small="runtimeConfigStore.runtimeConfig.game === 'MARVEL_TOKON' || runtimeConfigStore.runtimeConfig.game === '2XKO'"
+        :size="genericScoreboardSize"
     />
     <sponsor-rotation
         v-if="
@@ -37,10 +37,24 @@ import SmashUltimateScoreboard from './SmashUltimateScoreboard.vue';
 import SmashMeleeScoreboard from './SmashMeleeScoreboard.vue';
 import SplitscreenMultiplayerScoreboard from './SplitscreenMultiplayerScoreboard.vue';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
+import { computed } from 'vue';
+import { GenericScoreboardSize } from '../../helpers/GenericScoreboardSize';
 
 const assetStore = useAssetStore();
 const runtimeConfigStore = useRuntimeConfigStore();
 const activeMatchStore = useActiveMatchStore();
+
+const genericScoreboardSize = computed<GenericScoreboardSize>(() => {
+    switch (runtimeConfigStore.runtimeConfig.game) {
+        case 'MARVEL_TOKON':
+        case '2XKO':
+            return 'small';
+        case 'UNDER_NIGHT_IN_BIRTH_2':
+            return 'slight-shrink';
+        default:
+            return 'normal';
+    }
+});
 </script>
 
 <style lang="scss" scoped>

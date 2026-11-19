@@ -5,7 +5,7 @@
             (props.invertSkew ? props.entrantIndex + 1 : props.entrantIndex) % 2 === 0 ? 'even-entrant' : 'odd-entrant',
             `game-${runtimeConfigStore.runtimeConfig.game}`,
             `direction-${props.direction}`,
-            { small: props.small }
+            `size-${props.size}`
         ]"
     >
         <div class="entrant-score font-numeric">
@@ -40,12 +40,13 @@ import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
 import FittedContent from 'components/FittedContent.vue';
 import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
+import { GenericScoreboardSize } from '../../helpers/GenericScoreboardSize';
 
 const props = defineProps<{
     entrantIndex: number
     direction: 'normal' | 'inverse'
     invertSkew?: boolean
-    small?: boolean
+    size: GenericScoreboardSize
 }>();
 
 const activeMatchStore = useActiveMatchStore();
@@ -94,7 +95,7 @@ $accent-border-size: 12px;
     overflow: hidden;
     background-color: constants.$accent-1a;
 
-    &.small {
+    &.size-small {
         height: 36px;
         width: 350px;
 
@@ -106,6 +107,14 @@ $accent-border-size: 12px;
         .entrant-score {
             font-size: 32px;
             line-height: 36px;
+        }
+    }
+
+    &.size-slight-shrink {
+        height: 50px;
+
+        .entrant-score {
+            line-height: 52px;
         }
     }
 
