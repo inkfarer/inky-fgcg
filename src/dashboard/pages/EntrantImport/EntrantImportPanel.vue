@@ -11,37 +11,43 @@
     </ipl-message>
     <ipl-space>
         <template v-if="eventOptions.length > 0">
-            <ipl-select
-                v-model="selectedEvent"
-                label="Event"
-                :options="eventOptions"
-            />
-            <ipl-button
-                class="m-t-8"
-                label="Import"
-                async
-                :disabled="selectedEvent == null"
-                @click="onEventImport"
-            />
-            <ipl-button
-                class="m-t-8"
-                label="Back"
-                color="red"
-                @click="eventOptions = []; selectedEvent = null"
-            />
+            <form @submit.prevent>
+                <ipl-select
+                    v-model="selectedEvent"
+                    label="Event"
+                    :options="eventOptions"
+                />
+                <ipl-button
+                    class="m-t-8"
+                    label="Import"
+                    async
+                    :disabled="selectedEvent == null"
+                    type="submit"
+                    @click="onEventImport"
+                />
+                <ipl-button
+                    class="m-t-8"
+                    label="Back"
+                    color="red"
+                    @click="eventOptions = []; selectedEvent = null"
+                />
+            </form>
         </template>
         <template v-else>
-            <ipl-input
-                v-model="slug"
-                label="Tournament Slug"
-                name="slug"
-            />
-            <ipl-button
-                class="m-t-8"
-                label="Import"
-                async
-                @click="onImport"
-            />
+            <form @submit.prevent>
+                <ipl-input
+                    v-model="slug"
+                    label="Tournament Slug"
+                    name="slug"
+                />
+                <ipl-button
+                    class="m-t-8"
+                    label="Import"
+                    async
+                    type="submit"
+                    @click="onImport"
+                />
+            </form>
         </template>
     </ipl-space>
     <ipl-space class="m-t-8">

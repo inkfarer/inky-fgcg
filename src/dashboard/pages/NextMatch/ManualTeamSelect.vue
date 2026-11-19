@@ -1,34 +1,37 @@
 <template>
     <ipl-space>
-        <div class="entrant-selects">
-            <entrant-select
-                v-for="i of entrantCount"
-                v-model="entrants[i - 1]"
-                :label="`Entrant ${String.fromCharCode(64 + i)}`"
-                :optional="i > 2"
+        <form @submit.prevent>
+            <div class="entrant-selects">
+                <entrant-select
+                    v-for="i of entrantCount"
+                    v-model="entrants[i - 1]"
+                    :label="`Entrant ${String.fromCharCode(64 + i)}`"
+                    :optional="i > 2"
+                />
+            </div>
+            <ipl-input
+                v-model="matchName"
+                class="m-t-8"
+                label="Match Name"
+                name="matchName"
             />
-        </div>
-        <ipl-input
-            v-model="matchName"
-            class="m-t-8"
-            label="Match Name"
-            name="matchName"
-        />
-        <ipl-radio
-            :model-value="String(numberOfGames)"
-            :options="numberOfGamesOptions"
-            label="Number of Games"
-            name="numberOfGames"
-            class="m-t-8"
-            @update:model-value="numberOfGames = Number($event)"
-        />
-        <ipl-button
-            label="Update"
-            :color="isChanged ? 'red' : 'blue'"
-            :disabled="!allowUpdate"
-            class="m-t-8"
-            @click="onUpdate"
-        />
+            <ipl-radio
+                :model-value="String(numberOfGames)"
+                :options="numberOfGamesOptions"
+                label="Number of Games"
+                name="numberOfGames"
+                class="m-t-8"
+                @update:model-value="numberOfGames = Number($event)"
+            />
+            <ipl-button
+                label="Update"
+                :color="isChanged ? 'red' : 'blue'"
+                :disabled="!allowUpdate"
+                class="m-t-8"
+                type="submit"
+                @click="onUpdate"
+            />
+        </form>
     </ipl-space>
 </template>
 
