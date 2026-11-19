@@ -168,9 +168,7 @@ function getEntrantName(entrant: Entrant): string {
 }
 
 .bottom-bar-item {
-    background: constants.$accent-1a url('../../assets/hexagon-pattern.png');
-    background-size: auto 100px;
-    background-position: center 65px;
+    background: constants.$accent-1a;
     height: 100%;
     padding: 0 35px;
     display: flex;
