@@ -195,10 +195,10 @@ $inverse-skew-amount: -8deg;
             background: linear-gradient(
                 100deg,
                 constants.$accent-1a 0%,
-                constants.$accent-1a calc(100% - 59px),
-                constants.$accent-2 calc(100% - 58px),
-                constants.$accent-2 calc(100% - 50px),
-                constants.$accent-3 calc(100% - 49px)
+                constants.$accent-1a calc(100% - 55px),
+                constants.$neutral-1 calc(100% - 54px),
+                constants.$neutral-1 calc(100% - 16px),
+                constants.$accent-2 calc(100% - 16px)
             );
             border-radius: 0;
             grid-template-columns: 1fr 50px;
@@ -209,7 +209,7 @@ $inverse-skew-amount: -8deg;
                 color: constants.$text-color-2;
                 line-height: 1.9em;
                 height: 100%;
-                padding-right: 4px;
+                padding-right: 13px;
 
                 &:nth-child(2) {
                     margin-left: 6.5px;
@@ -228,7 +228,7 @@ $inverse-skew-amount: -8deg;
             .match-cell__team-name {
                 font-weight: 400;
                 margin-left: 6px;
-                margin-right: 4px;
+                margin-right: 2px;
             }
 
             .match-cell__top-team-name, .match-cell__top-score {

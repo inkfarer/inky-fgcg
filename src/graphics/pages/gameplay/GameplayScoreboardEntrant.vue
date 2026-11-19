@@ -4,7 +4,8 @@
         :class="[
             (props.invertSkew ? props.entrantIndex + 1 : props.entrantIndex) % 2 === 0 ? 'even-entrant' : 'odd-entrant',
             `game-${runtimeConfigStore.runtimeConfig.game}`,
-            `direction-${props.direction}`
+            `direction-${props.direction}`,
+            { small: props.small }
         ]"
     >
         <div class="entrant-score font-numeric">
@@ -44,6 +45,7 @@ const props = defineProps<{
     entrantIndex: number
     direction: 'normal' | 'inverse'
     invertSkew?: boolean
+    small?: boolean
 }>();
 
 const activeMatchStore = useActiveMatchStore();
@@ -90,17 +92,21 @@ $accent-border-size: 12px;
     display: flex;
     position: relative;
     overflow: hidden;
-    background-color: constants.$neutral-1;
+    background-color: constants.$accent-1a;
 
-    &:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        opacity: 0.25;
-        mix-blend-mode: soft-light;
+    &.small {
+        height: 36px;
+        width: 350px;
+
+        .entrant-name {
+            font-size: 28px;
+            margin-top: -4px;
+        }
+
+        .entrant-score {
+            font-size: 32px;
+            line-height: 36px;
+        }
     }
 
     .entrant-name {
@@ -125,13 +131,14 @@ $accent-border-size: 12px;
     }
 
     .entrant-score {
-        background-color: constants.$neutral-2;
+        background-color: constants.$neutral-1;
         color: constants.$text-color-2;
         font-weight: 600;
         font-size: 45px;
         line-height: 55px;
         text-align: center;
         border: 0 solid constants.$accent-2;
+        z-index: 2;
     }
 
     &.direction-normal {
@@ -141,7 +148,7 @@ $accent-border-size: 12px;
         .entrant-score {
             border-right-width: $accent-border-size;
             padding-right: 16px;
-            padding-left: 12px;
+            padding-left: 16px;
         }
     }
 
@@ -152,14 +159,14 @@ $accent-border-size: 12px;
         .entrant-score {
             border-left-width: $accent-border-size;
             padding-left: 16px;
-            padding-right: 12px;
+            padding-right: 16px;
 
             > * {
                 transform: skew($skew-amount);
             }
         }
 
-        .entrant-name {
+        .entrant-name, &:after {
             transform: skew($skew-amount);
         }
     }
@@ -167,7 +174,7 @@ $accent-border-size: 12px;
     &.even-entrant {
         transform: skew($skew-amount);
 
-        .entrant-score > *, .entrant-name {
+        .entrant-score > *, .entrant-name, &:after {
             transform: skew($inverse-skew-amount);
         }
     }
@@ -175,7 +182,7 @@ $accent-border-size: 12px;
     &.odd-entrant {
         transform: skew($inverse-skew-amount);
 
-        .entrant-score > *, .entrant-name {
+        .entrant-score > *, .entrant-name, &:after {
             transform: skew($skew-amount);
         }
     }

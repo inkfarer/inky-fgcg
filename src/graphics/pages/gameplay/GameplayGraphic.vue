@@ -10,6 +10,8 @@
     />
     <generic-scoreboard
         v-else
+        :inverted="runtimeConfigStore.runtimeConfig.game === 'RESISTANCE_204X'"
+        :small="runtimeConfigStore.runtimeConfig.game === 'MARVEL_TOKON' || runtimeConfigStore.runtimeConfig.game === '2XKO'"
     />
     <sponsor-rotation
         v-if="
@@ -18,6 +20,11 @@
             assetStore.hasSponsors
         "
         class="sponsor-rotation"
+        :class="{
+            cornered: runtimeConfigStore.runtimeConfig.game === 'RESISTANCE_204X'
+                || runtimeConfigStore.runtimeConfig.game === 'LETHAL_LEAGUE_BLAZE',
+            raised: runtimeConfigStore.runtimeConfig.game === 'MARVEL_TOKON'
+        }"
     />
 </template>
 
@@ -47,5 +54,15 @@ const activeMatchStore = useActiveMatchStore();
     height: 150px;
     left: 50%;
     transform: translateX(-50%);
+
+    &.cornered {
+        transform: unset;
+        left: 25px;
+    }
+
+    &.raised {
+        bottom: 48px;
+        height: 125px;
+    }
 }
 </style>

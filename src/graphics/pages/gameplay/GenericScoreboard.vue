@@ -1,16 +1,29 @@
 <template>
-    <div class="scoreboard-wrapper">
-        <gameplay-scoreboard-entrant :entrant-index="0" direction="normal" />
+    <div
+        class="scoreboard-wrapper"
+        :class="{ inverted: props.inverted, small: props.small }"
+    >
+        <gameplay-scoreboard-entrant
+            :entrant-index="0"
+            direction="normal"
+            :invert-skew="props.inverted"
+            :small="props.small"
+        />
         <div class="scoreboard-round-info">
             <fitted-content align="center">
                 <opacity-swap-transition>
                     <span :key="`${activeMatchStore.activeMatch.match.name}_${activeMatchStore.formattedPlayType}`">
-                        {{ activeMatchStore.activeMatch.match.name }}<span class="separator">-</span>{{ activeMatchStore.formattedPlayType }}
+                        {{ activeMatchStore.activeMatch.match.name }}<span class="separator">-</span>{{ props.small ? activeMatchStore.shortPlayType : activeMatchStore.formattedPlayType }}
                     </span>
                 </opacity-swap-transition>
             </fitted-content>
         </div>
-        <gameplay-scoreboard-entrant :entrant-index="1" direction="inverse" />
+        <gameplay-scoreboard-entrant
+            :entrant-index="1"
+            direction="inverse"
+            :invert-skew="props.inverted"
+            :small="props.small"
+        />
     </div>
 </template>
 
@@ -19,6 +32,11 @@ import FittedContent from 'components/FittedContent.vue';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
 import GameplayScoreboardEntrant from './GameplayScoreboardEntrant.vue';
 import { useActiveMatchStore } from 'client-shared/store/ActiveMatchStore';
+
+const props = defineProps<{
+    inverted?: boolean
+    small?: boolean
+}>();
 
 const activeMatchStore = useActiveMatchStore();
 </script>
@@ -31,6 +49,23 @@ const activeMatchStore = useActiveMatchStore();
     width: 100%;
     display: flex;
     justify-content: center;
+
+    &.inverted {
+        bottom: 0;
+
+        .scoreboard-round-info {
+            @include constants.skew-mask-y(11px);
+
+            margin-top: auto;
+        }
+    }
+
+    &.small {
+        .scoreboard-round-info {
+            width: 300px;
+            margin: 0 5px;
+        }
+    }
 }
 
 .scoreboard-round-info {

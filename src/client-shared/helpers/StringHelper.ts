@@ -25,3 +25,14 @@ export function formatPlayType(playType: 'BEST_OF' | 'PLAY_ALL', numberOfGames?:
             return numberOfGames == null ? '' : `${numberOfGames} games`;
     }
 }
+
+export function formatShortPlayType(playType: 'BEST_OF' | 'PLAY_ALL', numberOfGames?: number): string {
+    switch (playType) {
+        case 'BEST_OF':
+            return numberOfGames == null ? 'BO?' : `BO${numberOfGames}`;
+        case 'PLAY_ALL':
+            return numberOfGames == null ? 'PA?' : `PA${numberOfGames}`;
+        default:
+            return '';
+    }
+}
