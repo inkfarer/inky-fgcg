@@ -1,68 +1,74 @@
 <template>
     <div>
         <ipl-space>
-            <ipl-multi-select
-                v-model="selectedStreamOptions"
-                :options="streamOptions"
-                label="Stream"
-            />
-            <ipl-button
-                class="m-t-8"
-                label="Import"
-                async
-                :disabled="selectedStreamOptions.length === 0"
-                @click="onImport"
-            />
+            <form @submit.prevent>
+                <ipl-multi-select
+                    v-model="selectedStreamOptions"
+                    :options="streamOptions"
+                    label="Stream"
+                />
+                <ipl-button
+                    class="m-t-8"
+                    label="Import"
+                    async
+                    :disabled="selectedStreamOptions.length === 0"
+                    type="submit"
+                    @click="onImport"
+                />
+            </form>
         </ipl-space>
         <ipl-space
             v-if="streamMatchOptions.length > 0"
             class="m-t-8"
         >
-            <ipl-select
-                label="Match"
-                :model-value="selectedStreamMatch?.id ?? null"
-                :options="streamMatchOptions"
-                @update:model-value="(_, option) => selectedStreamMatch = option.match"
-            />
-            <template v-if="selectedStreamMatch != null">
-                <ipl-data-row
-                    v-for="(id, i) of entrantIds"
-                    :label="`Entrant ${String.fromCharCode(65 + i)}`"
-                    :value="formatEntrantName(id)"
+            <form @submit.prevent>
+                <ipl-select
+                    label="Match"
+                    :model-value="selectedStreamMatch?.id ?? null"
+                    :options="streamMatchOptions"
+                    @update:model-value="(_, option) => selectedStreamMatch = option.match"
                 />
-                <ipl-data-row
-                    label="Type of play"
-                    :value="formatPlayType(selectedStreamMatch.playType, selectedStreamMatch.numberOfGames)"
+                <template v-if="selectedStreamMatch != null">
+                    <ipl-data-row
+                        v-for="(id, i) of entrantIds"
+                        :label="`Entrant ${String.fromCharCode(65 + i)}`"
+                        :value="formatEntrantName(id)"
+                    />
+                    <ipl-data-row
+                        label="Type of play"
+                        :value="formatPlayType(selectedStreamMatch.playType, selectedStreamMatch.numberOfGames)"
+                    />
+                </template>
+                <ipl-radio
+                    :model-value="String(numberOfGames)"
+                    :options="numberOfGamesOptions"
+                    label="Number of Games"
+                    name="numberOfGames"
+                    class="m-t-4"
+                    @update:model-value="numberOfGames = Number($event)"
                 />
-            </template>
-            <ipl-radio
-                :model-value="String(numberOfGames)"
-                :options="numberOfGamesOptions"
-                label="Number of Games"
-                name="numberOfGames"
-                class="m-t-4"
-                @update:model-value="numberOfGames = Number($event)"
-            />
-            <ipl-input
-                v-model="matchName"
-                label="Match name"
-                name="matchName"
-                class="m-t-4"
-            />
-            <div class="layout horizontal center-horizontal m-t-8">
-                <ipl-checkbox
-                    v-model="playersSwapped"
-                    :disabled="entrantIds.length > 2"
-                    label="Swap players"
+                <ipl-input
+                    v-model="matchName"
+                    label="Match name"
+                    name="matchName"
+                    class="m-t-4"
                 />
-            </div>
-            <ipl-button
-                label="Update"
-                :disabled="numberOfGames == null"
-                class="m-t-8"
-                :color="isChanged ? 'red' : 'blue'"
-                @click="onUpdate"
-            />
+                <div class="layout horizontal center-horizontal m-t-8">
+                    <ipl-checkbox
+                        v-model="playersSwapped"
+                        :disabled="entrantIds.length > 2"
+                        label="Swap players"
+                    />
+                </div>
+                <ipl-button
+                    label="Update"
+                    :disabled="numberOfGames == null"
+                    class="m-t-8"
+                    :color="isChanged ? 'red' : 'blue'"
+                    type="submit"
+                    @click="onUpdate"
+                />
+            </form>
         </ipl-space>
         <ipl-message
             v-else

@@ -8,30 +8,36 @@
         />
     </ipl-space>
     <ipl-space class="m-t-8">
-        <ipl-input
-            v-model="bottomBarFlavorText"
-            label="Bottom bar flavor text"
-            name="bottomBarFlavorText"
-        />
-        <ipl-button
-            class="m-t-8"
-            label="Update"
-            :color="bottomBarChanged ? 'red' : 'blue'"
-            @click="onBottomBarUpdate"
-        />
+        <form @submit.prevent>
+            <ipl-input
+                v-model="bottomBarFlavorText"
+                label="Bottom bar flavor text"
+                name="bottomBarFlavorText"
+            />
+            <ipl-button
+                class="m-t-8"
+                label="Update"
+                :color="bottomBarChanged ? 'red' : 'blue'"
+                type="submit"
+                @click="onBottomBarUpdate"
+            />
+        </form>
     </ipl-space>
     <ipl-space class="m-t-8">
-        <ipl-input
-            v-model="intermissionFlavorText"
-            label="Intermission flavor text"
-            name="intermissionFlavorText"
-        />
-        <ipl-button
-            class="m-t-8"
-            label="Update"
-            :color="intermissionChanged ? 'red' : 'blue'"
-            @click="onIntermissionUpdate"
-        />
+        <form @submit.prevent>
+            <ipl-input
+                v-model="intermissionFlavorText"
+                label="Intermission flavor text"
+                name="intermissionFlavorText"
+            />
+            <ipl-button
+                class="m-t-8"
+                label="Update"
+                :color="intermissionChanged ? 'red' : 'blue'"
+                type="submit"
+                @click="onIntermissionUpdate"
+            />
+        </form>
     </ipl-space>
 </template>
 

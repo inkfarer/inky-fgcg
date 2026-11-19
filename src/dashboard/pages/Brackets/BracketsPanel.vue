@@ -42,25 +42,28 @@
                 async
                 @click="getMatchQuery"
             />
-            <match-query-param-input
-                v-for="param in bracketQuery"
-                :key="param.key"
-                :param="param"
-                :query="queryResult"
-                @change="(key, value) => queryResult[key] = value"
-                @parameter-add="key => activeParams.add(key)"
-                @parameter-remove="key => activeParams.delete(key)"
-                @loading="isLoading = $event"
-            />
-            <ipl-button
-                v-if="bracketQuery.length > 0"
-                async
-                label="Submit"
-                data-test="submit-bracket-query-button"
-                class="m-t-8"
-                :disabled="!activeParamsFilled || isLoading"
-                @click="submitBracketQuery"
-            />
+            <form @submit.prevent>
+                <match-query-param-input
+                    v-for="param in bracketQuery"
+                    :key="param.key"
+                    :param="param"
+                    :query="queryResult"
+                    @change="(key, value) => queryResult[key] = value"
+                    @parameter-add="key => activeParams.add(key)"
+                    @parameter-remove="key => activeParams.delete(key)"
+                    @loading="isLoading = $event"
+                />
+                <ipl-button
+                    v-if="bracketQuery.length > 0"
+                    async
+                    label="Submit"
+                    data-test="submit-bracket-query-button"
+                    class="m-t-8"
+                    :disabled="!activeParamsFilled || isLoading"
+                    type="submit"
+                    @click="submitBracketQuery"
+                />
+            </form>
         </ipl-space>
     </template>
 </template>

@@ -1,17 +1,20 @@
 <template>
     <ipl-space>
-        <ipl-select
-            v-model="game"
-            label="Game"
-            name="game"
-            :options="gameOptions"
-        />
-        <ipl-button
-            class="m-t-8"
-            label="Update"
-            :color="game !== runtimeConfigStore.runtimeConfig.game ? 'red' : 'blue'"
-            @click="runtimeConfigStore.setGame(game)"
-        />
+        <form @submit.prevent>
+            <ipl-select
+                v-model="game"
+                label="Game"
+                name="game"
+                :options="gameOptions"
+            />
+            <ipl-button
+                class="m-t-8"
+                label="Update"
+                :color="game !== runtimeConfigStore.runtimeConfig.game ? 'red' : 'blue'"
+                type="submit"
+                @click="runtimeConfigStore.setGame(game)"
+            />
+        </form>
     </ipl-space>
     <ipl-space class="m-t-8">
         <ipl-small-toggle

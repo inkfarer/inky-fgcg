@@ -17,39 +17,42 @@
                 Unsaved
             </ipl-badge>
         </template>
-        <ipl-input
-            v-model="internalCaster.name"
-            label="Name"
-            name="name"
-        />
-        <ipl-input
-            v-model="internalCaster.pronouns"
-            label="Pronouns"
-            name="pronouns"
-        />
-        <ipl-select
-            v-model="internalCaster.socials[0].type"
-            label="Social type"
-            :options="casterSocialOptions"
-        />
-        <ipl-input
-            v-model="internalCaster.socials[0].username"
-            label="Social username"
-            name="username"
-        />
-        <div class="layout horizontal m-t-8">
-            <ipl-button
-                :label="props.unsaved ? 'Save' : 'Update'"
-                :color="props.unsaved ? 'green' : isChanged ? 'red' : 'blue'"
-                @click="onSave"
+        <form @submit.prevent>
+            <ipl-input
+                v-model="internalCaster.name"
+                label="Name"
+                name="name"
             />
-            <ipl-button
-                icon="times"
-                color="red"
-                class="m-l-8"
-                @click="onRemove"
+            <ipl-input
+                v-model="internalCaster.pronouns"
+                label="Pronouns"
+                name="pronouns"
             />
-        </div>
+            <ipl-select
+                v-model="internalCaster.socials[0].type"
+                label="Social type"
+                :options="casterSocialOptions"
+            />
+            <ipl-input
+                v-model="internalCaster.socials[0].username"
+                label="Social username"
+                name="username"
+            />
+            <div class="layout horizontal m-t-8">
+                <ipl-button
+                    :label="props.unsaved ? 'Save' : 'Update'"
+                    :color="props.unsaved ? 'green' : isChanged ? 'red' : 'blue'"
+                    type="submit"
+                    @click="onSave"
+                />
+                <ipl-button
+                    icon="times"
+                    color="red"
+                    class="m-l-8"
+                    @click="onRemove"
+                />
+            </div>
+        </form>
     </ipl-expanding-space>
 </template>
 
