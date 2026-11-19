@@ -1,63 +1,19 @@
 <template>
-    <div
-        class="intermission-layout"
-        :class="`game-${runtimeConfigStore.runtimeConfig.game}`"
-    >
+    <div class="intermission-layout">
         <div class="logo">
-            <img src="../../assets/bfgl-logo-white.png" />
-            <div>
-                <div class="game-name">
-                    <template v-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT'">
-                        MK11
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN'">
-                        Tekken 8
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'TEKKEN_BALL'">
-                        Tekken Ball
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SSBU'">
-                        Ultimate
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SSBM'">
-                        MELEE
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'STREET_FIGHTER_6'">
-                        SF6
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MORTAL_KOMBAT_1'">
-                        MK1
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'GGST'">
-                        Strive
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === '2XKO'">
-                        2XKO
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MARVEL_TOKON'">
-                        Marvel<br>Tokon
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'BLAZBLUE_CROSS_TAG_BATTLE'">
-                        BlazBlue:<br>Cross Tag<br>Battle
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'BLAZBLUE_CENTRAL_FICTION'">
-                        BlazBlue:<br>Central<br>Fiction
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'LETHAL_LEAGUE_BLAZE'">
-                        Lethal<br>League<br>Blaze
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'MAIDEN_SPELL'">
-                        Maiden<br>& Spell
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'SONIC_RACING_CROSSWORLDS'">
-                        Sonic Racing:<br>CrossWorlds
-                    </template>
-                    <template v-else-if="runtimeConfigStore.runtimeConfig.game === 'FF_COTW'">
-                        Fatal Fury:<br>CotW
-                    </template>
-                </div>
-                <div class="host-name">at UniCon 2026</div>
-            </div>
+            <img
+                src="../../assets/event-logo.png"
+                class="event-logo"
+            />
+            <opacity-swap-transition>
+                <img
+                    v-if="gameImage != null"
+                    :src="gameImage"
+                    :key="gameImage"
+                    class="game-image"
+                    :class="`game-${runtimeConfigStore.runtimeConfig.game}`"
+                />
+            </opacity-swap-transition>
         </div>
         <div class="flavor-text">
             <fitted-content
@@ -77,9 +33,89 @@ import { useRuntimeConfigStore } from 'client-shared/store/RuntimeConfigStore';
 import { useIntermissionStore } from 'client-shared/store/IntermissionStore';
 import FittedContent from 'components/FittedContent.vue';
 import OpacitySwapTransition from 'components/OpacitySwapTransition.vue';
+import { computed } from 'vue';
+import { getStaticAsset } from '../../helpers/ImageHelper';
 
 const runtimeConfigStore = useRuntimeConfigStore();
 const intermissionStore = useIntermissionStore();
+
+const gameImage = computed(() => {
+    let basePath: string | null = null;
+
+    switch (runtimeConfigStore.runtimeConfig.game) {
+        case '2XKO':
+            basePath = 'games/2XKO.webp';
+            break;
+        case 'AVATAR_LEGENDS':
+            basePath = 'games/AVATAR LEGENDS.webp';
+            break;
+        case 'BLAZBLUE_CENTRAL_FICTION':
+            basePath = 'games/BLAZBLUE.webp';
+            break;
+        case 'TEKKEN_DANCEPAD':
+            basePath = 'games/DANCEPAD TEKKEN.webp';
+            break;
+        case 'TEKKEN':
+            basePath = 'games/TEKKEN 8.webp';
+            break;
+        case 'TEKKEN_BALL':
+            basePath = 'games/TEKKEN BALL.webp';
+            break;
+        case 'FF_COTW':
+            basePath = 'games/FATAL FURY.webp';
+            break;
+        case 'GRANBLUE_FANTASY_VERSUS_RISING':
+            basePath = 'games/GRANBLUE.webp';
+            break;
+        case 'GGST':
+            basePath = 'games/GUILTY GEAR STRIVE.webp';
+            break;
+        case 'GG_XRD_REV2':
+            basePath = 'games/GUILTY GEAR XRD.webp';
+            break;
+        case 'KILLER_INSTINCT':
+            basePath = 'games/KILLER INSTINCT.webp';
+            break;
+        case 'KOF_15':
+            basePath = 'games/KING OF FIGHTERS.webp';
+            break;
+        case 'MARVEL_TOKON':
+            basePath = 'games/MARVEL TOKON.webp';
+            break;
+        case 'MORTAL_KOMBAT_1':
+            basePath = 'games/MORTAL KOMBAT.webp';
+            break;
+        case 'NARUTO_SHIPPUDEN_CONR3':
+            basePath = 'games/NARUTO.webp';
+            break;
+        case 'RESISTANCE_204X':
+            basePath = 'games/RESISTANCE.webp';
+            break;
+        case 'SSBU':
+            basePath = 'games/SMASH BROS.webp';
+            break;
+        case 'SONIC_RACING_CROSSWORLDS':
+            basePath = 'games/SONIC RACING.webp';
+            break;
+        case 'SOULCALIBUR_6':
+            basePath = 'games/SOUL CALIBUR.webp';
+            break;
+        case 'STREET_FIGHTER_6':
+            basePath = 'games/STREET FIGHTER 6.webp';
+            break;
+        case 'UMA_MUSUME':
+            basePath = 'games/UMA MUSUME.webp';
+            break;
+        case 'UNDER_NIGHT_IN_BIRTH_2':
+            basePath = 'games/UNDER NIGHT.webp';
+            break;
+        case 'MYSTERY_GAME':
+            basePath = 'games/mystery-game.webp';
+            break;
+    }
+
+    return basePath == null ? null : getStaticAsset(basePath);
+});
 </script>
 
 <style scoped lang="scss">
@@ -93,68 +129,43 @@ const intermissionStore = useIntermissionStore();
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
-    &.game-SMASH .logo > div {
-        > .game-name {
-            font-size: 200px;
-            line-height: 130px;
-        }
-    }
-
-    &.game-STREET_FIGHTER_6 .game-name {
-        font-size: 300px;
-    }
-
-    &.game-MAIDEN_SPELL .game-name {
-        font-size: 225px;
-        margin-bottom: 35px;
-    }
-
-    &.game-LETHAL_LEAGUE_BLAZE .game-name,
-    &.game-BLAZBLUE_CROSS_TAG_BATTLE .game-name,
-    &.game-BLAZBLUE_CENTRAL_FICTION .game-name {
-        font-size: 200px;
-    }
-
-    &.game-SONIC_RACING_CROSSWORLDS .game-name {
-        font-size: 200px;
-        line-height: 95%;
-    }
-
-    &.game-FF_COTW .game-name {
-        font-size: 200px;
-    }
 }
 
 .flavor-text {
     color: #fff;
     font-size: 80px;
-    margin-top: 32px;
 }
 
 .logo {
     display: flex;
+    flex-direction: column;
     align-items: center;
     color: #fff;
     margin-top: -16px;
 
-    img {
-        width: 256px;
-        height: 256px;
+    .event-logo {
+        height: 320px;
     }
 
-    > div {
-        margin-left: 32px;
+    .game-image {
+        height: 256px;
+        width: 1024px;
+        object-fit: contain;
+        margin: 16px 0;
 
-        > .host-name {
-            font-size: 80px;
+        &.game-AVATAR_LEGENDS,
+        &.game-GG_XRD_REV2,
+        &.game-KILLER_INSTINCT,
+        &.game-STREET_FIGHTER_6 {
+            height: 288px;
+            margin: 0;
         }
 
-        > .game-name {
-            font-size: 250px;
-            font-weight: 700;
-            line-height: 80%;
-            margin-top: 40px;
+        &.game-TEKKEN,
+        &.game-2XKO {
+            height: 192px;
+            width: 800px;
+            margin: 48px 0;
         }
     }
 }

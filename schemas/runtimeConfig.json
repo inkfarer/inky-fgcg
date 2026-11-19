@@ -8,6 +8,7 @@
             "enum": [
                 "TEKKEN",
                 "TEKKEN_BALL",
+                "TEKKEN_DANCEPAD",
                 "MORTAL_KOMBAT",
                 "SSBU",
                 "SSBM",
@@ -15,13 +16,24 @@
                 "MORTAL_KOMBAT_1",
                 "2XKO",
                 "GGST",
+                "GG_XRD_REV2",
                 "MAIDEN_SPELL",
                 "LETHAL_LEAGUE_BLAZE",
                 "BLAZBLUE_CROSS_TAG_BATTLE",
                 "BLAZBLUE_CENTRAL_FICTION",
                 "MARVEL_TOKON",
                 "SONIC_RACING_CROSSWORLDS",
-                "FF_COTW"
+                "FF_COTW",
+                "AVATAR_LEGENDS",
+                "KOF_15",
+                "SOULCALIBUR_6",
+                "NARUTO_SHIPPUDEN_CONR3",
+                "UNDER_NIGHT_IN_BIRTH_2",
+                "GRANBLUE_FANTASY_VERSUS_RISING",
+                "KILLER_INSTINCT",
+                "RESISTANCE_204X",
+                "UMA_MUSUME",
+                "MYSTERY_GAME"
             ]
         },
         "allowAnyScore": {

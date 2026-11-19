@@ -21,6 +21,12 @@
     },
     "nodecg": {
         "compatibleRange": "^1.7.0 || ^2.0.0",
+        "mount": [
+            {
+                "directory": "static",
+                "endpoint": "static"
+            }
+        ],
         "dashboardPanels": [
             {
                 "name": "entrant-import",
