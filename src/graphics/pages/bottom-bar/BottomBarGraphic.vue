@@ -115,7 +115,7 @@ const swapNextMatchPlayers = computed(() => runtimeConfigStore.playerSwaps.inter
 
 const entrants = computed(() => {
     if (intermissionStore.bottomBarData.mode === 'ACTIVE_MATCH') {
-        if (activeMatchStore.activeMatch.entrants.length === 2 && runtimeConfigStore.playerSwaps.gameplay) {
+        if (activeMatchStore.activeMatch.entrants.length === 2 && runtimeConfigStore.playerSwaps.intermission) {
             return activeMatchStore.activeMatch.entrants.toReversed();
         }
 
